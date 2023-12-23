@@ -10,7 +10,9 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
 <VBox alignment="TOP_CENTER" prefHeight="380.0" prefWidth="420.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.HarvestDiary.UiController.LoginUiController">
@@ -30,11 +32,16 @@
                   <Insets right="20.0" />
                </HBox.margin>
             </VBox>
-            <ImageView fx:id="avatar" fitHeight="70.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../image/kls.png" />
-               </image>
-            </ImageView>
+            <StackPane prefHeight="70.0" prefWidth="70.0">
+               <children>
+                  <ImageView fx:id="avatar" fitHeight="70.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../image/kls.png" />
+                     </image>
+                  </ImageView>
+                  <Circle fill="#1f93ff00" radius="35.0" stroke="#f8bc31" strokeType="INSIDE" strokeWidth="2.0" />
+               </children>
+            </StackPane>
             <VBox alignment="CENTER" prefHeight="70.0" prefWidth="135.0">
                <children>
                   <Separator prefWidth="200.0" />

@@ -11,7 +11,7 @@ import java.util.Objects;
 
 public class MainHome extends Application {
     @Getter
-    private static Stage mainUiStage;
+    private static Stage mainHomeUiStage;
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -23,7 +23,7 @@ public class MainHome extends Application {
         Scene scene = new Scene(root);
         scene.getRoot().requestFocus();
         stage.setScene(scene);
-        mainUiStage = stage;
+        mainHomeUiStage = stage;
         stage.show();
     }
 }

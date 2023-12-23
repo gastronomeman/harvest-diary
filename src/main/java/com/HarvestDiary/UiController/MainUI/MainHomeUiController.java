@@ -1,18 +1,25 @@
 package com.HarvestDiary.UiController.MainUI;
 
+import com.HarvestDiary.Ui.Login;
+import com.HarvestDiary.Ui.Main.MainHome;
+import com.HarvestDiary.Ui.Register;
 import com.HarvestDiary.otherTools.SettingFontIcon;
 import com.jfoenix.controls.JFXButton;
 import de.felixroske.jfxsupport.FXMLController;
 import javafx.fxml.FXML;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.stage.Stage;
+import lombok.extern.slf4j.Slf4j;
 import org.kordamp.ikonli.antdesignicons.AntDesignIconsOutlined;
 
 import java.io.IOException;
 
 @FXMLController
+@Slf4j
 public class MainHomeUiController {
     @FXML
     private StackPane avatarBackground;
@@ -36,7 +43,6 @@ public class MainHomeUiController {
     private JFXButton exit;
 
 
-
     /**
      * 初始化方法，用于设置 JavaFX 控制器的初始状态。
      */
@@ -57,11 +63,20 @@ public class MainHomeUiController {
 
 
         //设置按钮图标
-        home.setGraphic(SettingFontIcon.setSizeAndColor(AntDesignIconsOutlined.HOME, 30, Color.web("#617172")));
-        today.setGraphic(SettingFontIcon.setSizeAndColor(AntDesignIconsOutlined.CALENDAR, 30, Color.web("#617172")));
-        diary.setGraphic(SettingFontIcon.setSizeAndColor(AntDesignIconsOutlined.BOOK, 30, Color.web("#617172")));
-        setting.setGraphic(SettingFontIcon.setSizeAndColor(AntDesignIconsOutlined.SETTING, 30, Color.web("#617172")));
-        exit.setGraphic(SettingFontIcon.setSizeAndColor(AntDesignIconsOutlined.EXPORT, 30, Color.web("#617172")));
+        home.setGraphic(SettingFontIcon.setSizeAndColor(AntDesignIconsOutlined.HOME, 25, Color.web("#f7e8aa")));
+        today.setGraphic(SettingFontIcon.setSizeAndColor(AntDesignIconsOutlined.CALENDAR, 25, Color.web("#f9e9cd")));
+        diary.setGraphic(SettingFontIcon.setSizeAndColor(AntDesignIconsOutlined.BOOK, 25, Color.web("#f9e9cd")));
+        setting.setGraphic(SettingFontIcon.setSizeAndColor(AntDesignIconsOutlined.SETTING, 25, Color.web("#f9e9cd")));
+        exit.setGraphic(SettingFontIcon.setSizeAndColor(AntDesignIconsOutlined.IMPORT, 25, Color.web("#f9e9cd")));
+    }
+
+    @FXML
+    void changeUi(MouseEvent event) throws Exception {
+        MainHome.getMainHomeUiStage().close();
+        log.info("关闭主页");
+
+        new Login().start(new Stage());
+        log.info("回到登录页面");
     }
 
 
