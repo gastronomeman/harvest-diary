@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.HarvestDiary.UiController.MainUiController">
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.HarvestDiary.UiController.MainUI.MainHomeUiController">
     <children>
         <VBox alignment="TOP_CENTER" prefHeight="500.0" prefWidth="80.0">
             <children>
@@ -16,7 +16,7 @@
                <children>
                   <ImageView fx:id="avatar" fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../image/kls.png" />
+                        <Image url="@../../image/kls.png" />
                      </image>
                   </ImageView>
                   <JFXButton prefHeight="60.0" prefWidth="60.0" text=" " />

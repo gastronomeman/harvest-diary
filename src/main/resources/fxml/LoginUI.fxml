@@ -112,13 +112,14 @@
             <Insets bottom="10.0" top="10.0" />
          </VBox.margin>
       </HBox>
-      <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="450.0">
+      <HBox alignment="CENTER" prefHeight="30.0" prefWidth="450.0">
          <children>
             <JFXButton fx:id="registerUI" onMouseClicked="#changeUi" prefHeight="35.0" prefWidth="75.0" text="注册账号" textFill="#617172">
                <HBox.margin>
-                  <Insets left="10.0" />
+                  <Insets />
                </HBox.margin>
             </JFXButton>
+            <JFXButton fx:id="registerUI1" onMouseClicked="#changeUi" prefHeight="35.0" prefWidth="75.0" text="游客登录" textFill="#617172" />
          </children>
       </HBox>
    </children>

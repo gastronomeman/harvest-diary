@@ -1,4 +1,4 @@
-package com.HarvestDiary.Ui;
+package com.HarvestDiary.Ui.Main;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -9,14 +9,14 @@ import lombok.Getter;
 
 import java.util.Objects;
 
-public class Main extends Application {
+public class MainHome extends Application {
     @Getter
     private static Stage mainUiStage;
 
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(
-                Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/MainUI.fxml"))
+                Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/MainUI/MainHomeUI.fxml"))
         );
 
         stage.setTitle("日记");

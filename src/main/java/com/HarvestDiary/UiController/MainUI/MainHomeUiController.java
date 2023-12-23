@@ -1,25 +1,19 @@
-package com.HarvestDiary.UiController;
+package com.HarvestDiary.UiController.MainUI;
 
 import com.HarvestDiary.otherTools.SettingFontIcon;
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXTreeView;
 import de.felixroske.jfxsupport.FXMLController;
 import javafx.fxml.FXML;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeView;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import org.kordamp.ikonli.Ikon;
 import org.kordamp.ikonli.antdesignicons.AntDesignIconsOutlined;
-import org.kordamp.ikonli.bootstrapicons.BootstrapIcons;
-import org.kordamp.ikonli.javafx.FontIcon;
 
 import java.io.IOException;
 
 @FXMLController
-public class MainUiController {
+public class MainHomeUiController {
     @FXML
     private StackPane avatarBackground;
 
