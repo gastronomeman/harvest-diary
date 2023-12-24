@@ -13,15 +13,16 @@ public class MainDiary extends Application {
 
     @Getter
     private static Stage mainDiaryUistage;
+
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root= FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/MainUI/MainDiaryUI.fxml")));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/MainUI/MainDiaryUI.fxml")));
         stage.setTitle("写日记");
-        Scene scene=new Scene(root);
+        Scene scene = new Scene(root);
         scene.getRoot().requestFocus();
         stage.setScene(scene);
         stage.setResizable(false);
-        mainDiaryUistage =stage;
+        mainDiaryUistage = stage;
         stage.show();
     }
 

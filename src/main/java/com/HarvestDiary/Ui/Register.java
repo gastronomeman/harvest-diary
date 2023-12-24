@@ -30,6 +30,7 @@ public class Register extends Application {
         Scene scene = new Scene(root);
         scene.getRoot().requestFocus();
         stage.setScene(scene);
+        stage.setResizable(false);
         RegisterUiStage = stage;
         stage.show();
     }

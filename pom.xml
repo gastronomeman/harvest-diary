@@ -97,6 +97,13 @@
 			<version>12.3.1</version>
 		</dependency>
 
+		<!-- 功能丰富且易用的Java工具库 -->
+		<dependency>
+			<groupId>cn.hutool</groupId>
+			<artifactId>hutool-all</artifactId>
+			<version>5.8.23</version>
+		</dependency>
+
 
 	</dependencies>
 

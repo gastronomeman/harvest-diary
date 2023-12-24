@@ -144,7 +144,7 @@
                         </HBox>
                         <HBox alignment="CENTER" prefHeight="95.0" prefWidth="177.0" GridPane.columnIndex="1" GridPane.rowSpan="2">
                            <children>
-                              <ImageView fx:id="captcha" fitHeight="60.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="captcha" fitHeight="60.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true">
                                  <HBox.margin>
                                     <Insets left="5.0" />
                                  </HBox.margin>

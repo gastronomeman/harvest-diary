@@ -23,6 +23,7 @@ public class MainHome extends Application {
         Scene scene = new Scene(root);
         scene.getRoot().requestFocus();
         stage.setScene(scene);
+        stage.setResizable(false);
         mainHomeUiStage = stage;
         stage.show();
     }

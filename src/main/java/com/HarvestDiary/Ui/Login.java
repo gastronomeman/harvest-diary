@@ -34,6 +34,7 @@ public class Login extends Application {
         Scene scene = new Scene(root);
         scene.getRoot().requestFocus();
         stage.setScene(scene);
+        stage.setResizable(false);
         loginUiStage = stage;
         stage.show();
     }

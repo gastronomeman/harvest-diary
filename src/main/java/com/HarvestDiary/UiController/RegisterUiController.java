@@ -2,7 +2,7 @@ package com.HarvestDiary.UiController;
 
 import com.HarvestDiary.Ui.Login;
 import com.HarvestDiary.Ui.Register;
-import com.HarvestDiary.otherTools.CaptchaGenerator;
+import com.HarvestDiary.otherTools.Captcha;
 import com.HarvestDiary.otherTools.SettingFontIcon;
 import com.jfoenix.controls.JFXButton;
 import de.felixroske.jfxsupport.FXMLController;
@@ -16,8 +16,6 @@ import javafx.stage.Stage;
 import lombok.extern.slf4j.Slf4j;
 
 import org.kordamp.ikonli.antdesignicons.AntDesignIconsOutlined;
-import org.kordamp.ikonli.bootstrapicons.BootstrapIcons;
-import org.kordamp.ikonli.javafx.FontIcon;
 
 
 import java.io.IOException;
@@ -66,15 +64,20 @@ public class RegisterUiController {
         exit.setGraphic(SettingFontIcon.setColor(AntDesignIconsOutlined.EXPORT, Color.web("#617172")));
 
         //设置验证码
-        captcha.setImage(CaptchaGenerator.generateImages());
-
+        Captcha captcha = new Captcha();
+        captcha.generateImages();//生成验证码图片
+        this.captcha.setImage(captcha.getImage());//设置图片到页面
+        log.info(captcha.getCode());
 
     }
 
 
     @FXML
     void changeCaptcha(MouseEvent mouseEvent) throws IOException {
-        captcha.setImage(CaptchaGenerator.generateImages());
+        Captcha captcha = new Captcha();
+        captcha.generateImages();
+        this.captcha.setImage(captcha.getImage());
+        log.info(captcha.getCode());
     }
 
     @FXML
