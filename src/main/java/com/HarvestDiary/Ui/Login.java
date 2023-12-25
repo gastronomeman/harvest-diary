@@ -17,7 +17,7 @@ public class Login extends Application {
         launch(args);
     }
 
-    @Getter
+    @Getter//创建get方法
     private static Stage loginUiStage;
 
     @Override

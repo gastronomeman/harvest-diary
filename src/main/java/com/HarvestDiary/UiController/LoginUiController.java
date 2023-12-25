@@ -1,7 +1,7 @@
 package com.HarvestDiary.UiController;
 
 import com.HarvestDiary.Ui.Login;
-import com.HarvestDiary.Ui.Main.MainHome;
+import com.HarvestDiary.Ui.MainDiary;
 import com.HarvestDiary.Ui.Register;
 import de.felixroske.jfxsupport.FXMLController;
 import javafx.fxml.FXML;
@@ -54,7 +54,7 @@ public class LoginUiController {
         Login.getLoginUiStage().close();
         log.info("关闭登录页面");
 
-        new MainHome().start(new Stage());
+        new MainDiary().start(new Stage());
     }
 
 }
