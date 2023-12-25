@@ -83,7 +83,7 @@ public class SideListController {
 
         List<Parent> mainUI = getFxmlLoader();
 
-        //判断事件按钮
+        //判断事件按钮切换场景
         switch (buttonId) {
             case "exit" -> {
                 MainDiary.getMainDiaryUiStage().close();
@@ -114,6 +114,7 @@ public class SideListController {
     }
 
     /*
+        右侧的fxml文件
         homeUI      ： 0
         calendarUI  ： 1
         diaryUI     ： 2
@@ -136,6 +137,7 @@ public class SideListController {
         return new ArrayList<>(Arrays.asList(homeUI, calendarUI, diaryUI, settingUI));
     }
     private void choseButton(JFXButton chose) {
+        //把图标背景色全设置为未选中的样式
         for (JFXButton jfxButton : buttons) {
             jfxButton.setStyle(
                     "-fx-background-radius: 15;" + "-fx-border-radius: 15;"
