@@ -83,7 +83,7 @@ public class SideListController {
 
         List<Parent> mainUI = getFxmlLoader();
 
-        //判断事件按钮
+        //判断事件按钮切换场景
         switch (buttonId) {
             case "exit" -> {
                 MainDiary.getMainDiaryUiStage().close();
@@ -114,6 +114,7 @@ public class SideListController {
     }
 
     /*
+        右侧的fxml文件
         homeUI      ： 0
         calendarUI  ： 1
         diaryUI     ： 2
@@ -136,6 +137,7 @@ public class SideListController {
         return new ArrayList<>(Arrays.asList(homeUI, calendarUI, diaryUI, settingUI));
     }
     private void choseButton(JFXButton chose) {
+        //把图标背景色全设置为未选中的样式
         for (JFXButton jfxButton : buttons) {
             jfxButton.setStyle(
                     "-fx-background-radius: 15;" + "-fx-border-radius: 15;"
@@ -154,10 +156,10 @@ public class SideListController {
     }
     private void resettingColor() {
         //统一颜色
-        home.setGraphic(SettingFontIcon.setSizeAndColor(AntDesignIconsOutlined.HOME, 25, Color.web("#f9e9cd")));
-        calendar.setGraphic(SettingFontIcon.setSizeAndColor(AntDesignIconsOutlined.CALENDAR, 25, Color.web("#f9e9cd")));
-        diary.setGraphic(SettingFontIcon.setSizeAndColor(AntDesignIconsOutlined.BOOK, 25, Color.web("#f9e9cd")));
-        setting.setGraphic(SettingFontIcon.setSizeAndColor(AntDesignIconsOutlined.SETTING, 25, Color.web("#f9e9cd")));
-        exit.setGraphic(SettingFontIcon.setSizeAndColor(AntDesignIconsOutlined.IMPORT, 25, Color.web("#f9e9cd")));
+        home.setGraphic(SettingFontIcon.setSizeAndColor(AntDesignIconsOutlined.HOME, 25, Color.WHITE));
+        calendar.setGraphic(SettingFontIcon.setSizeAndColor(AntDesignIconsOutlined.CALENDAR, 25, Color.WHITE));
+        diary.setGraphic(SettingFontIcon.setSizeAndColor(AntDesignIconsOutlined.BOOK, 25, Color.WHITE));
+        setting.setGraphic(SettingFontIcon.setSizeAndColor(AntDesignIconsOutlined.SETTING, 25, Color.WHITE));
+        exit.setGraphic(SettingFontIcon.setSizeAndColor(AntDesignIconsOutlined.IMPORT, 25, Color.WHITE));
     }
 }
