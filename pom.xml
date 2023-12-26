@@ -104,6 +104,14 @@
 			<version>5.8.23</version>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/com.calendarfx/view -->
+<!--		calendarfx更丰富的calendar类-->
+		<dependency>
+			<groupId>com.calendarfx</groupId>
+			<artifactId>view</artifactId>
+			<version>11.12.6</version>
+		</dependency>
+
 
 	</dependencies>
 
