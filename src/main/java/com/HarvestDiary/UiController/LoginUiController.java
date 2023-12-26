@@ -5,6 +5,7 @@ import com.HarvestDiary.Ui.MainDiary;
 import com.HarvestDiary.Ui.Register;
 import de.felixroske.jfxsupport.FXMLController;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Circle;
@@ -50,11 +51,31 @@ public class LoginUiController {
     }
 
     @FXML
+    void changeUiAlert(MouseEvent event) throws Exception {
+        Login.getLoginUiStage().close();
+        log.info("关闭登录页面");
+        showAlert();
+        new Register().start(new Stage());
+        log.info("打开注册页面");
+    }
+
+    @FXML
     void changeMain(MouseEvent event) throws Exception {
         Login.getLoginUiStage().close();
         log.info("关闭登录页面");
 
         new MainDiary().start(new Stage());
+        log.info("打开注册页面");
+    }
+
+    private void showAlert() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("提示");
+        alert.setHeaderText("你选择了本地登录");
+        alert.setContentText("要在页面选上本地登录的按钮方可不联网进行操作");
+
+        // 显示提示框并等待用户响应
+        alert.showAndWait();
     }
 
 }

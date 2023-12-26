@@ -42,18 +42,9 @@ public class UserInfoUtil {
         //System.out.println(url);
         HttpResponse response = HttpUtil.createGet(url).execute();
         // 获取响应结果
-        String result = response.body();
-        // 将字符串数据转换为 JSON 对象
-        JSONObject jsonObject = JSONUtil.parseObj(result);
 
-        // 获取 data 字段的数据
-        JSONObject data = jsonObject.getJSONObject("data");
 
-        if (data.getStr("weather") == null){
-            return "网络不好...";
-        }else {
-            return data.getStr("weather");
-        }
+        return response.body();
     }
 
 }

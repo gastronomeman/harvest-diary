@@ -11,8 +11,8 @@ import javafx.stage.Stage;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-public class calenderapp extends Application  {
-    @Override
+public class calenderapp {
+   /* @Override
     public void start(Stage stage) throws Exception {
         CalendarView calendarView=new CalendarView();
 
@@ -64,5 +64,5 @@ public class calenderapp extends Application  {
 
     public static void main(String[] args) {
         launch(args);
-    }
+    }*/
 }
