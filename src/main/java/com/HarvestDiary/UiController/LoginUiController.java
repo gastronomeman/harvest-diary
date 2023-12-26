@@ -3,7 +3,10 @@ package com.HarvestDiary.UiController;
 import com.HarvestDiary.Ui.Login;
 import com.HarvestDiary.Ui.MainDiary;
 import com.HarvestDiary.Ui.Register;
+import com.HarvestDiary.otherTools.OperationalDocument;
+import com.HarvestDiary.pojo.User;
 import de.felixroske.jfxsupport.FXMLController;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.image.ImageView;
@@ -52,9 +55,19 @@ public class LoginUiController {
 
     @FXML
     void changeUiAlert(MouseEvent event) throws Exception {
+        if (OperationalDocument.existFile("user.json")){
+            showAlert("你选择了本地已有一个账户");
+            return;
+        }
         Login.getLoginUiStage().close();
         log.info("关闭登录页面");
-        showAlert();
+        Thread thread = new Thread(() -> {
+            Platform.runLater(() -> {
+                OperationalDocument.saveFile("localhost.login", "验证是否是本地登录");
+            });
+        });
+        thread.start();
+        showAlert("你选择了本地登录");
         new Register().start(new Stage());
         log.info("打开注册页面");
     }
@@ -63,19 +76,27 @@ public class LoginUiController {
     void changeMain(MouseEvent event) throws Exception {
         Login.getLoginUiStage().close();
         log.info("关闭登录页面");
-
+        checkUser();
         new MainDiary().start(new Stage());
         log.info("打开注册页面");
     }
 
-    private void showAlert() {
+    private void showAlert(String s) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("提示");
-        alert.setHeaderText("你选择了本地登录");
-        alert.setContentText("要在页面选上本地登录的按钮方可不联网进行操作");
+        alert.setHeaderText(s);
+        alert.setContentText("要在页面选上本地登录的按钮方可以不需要联网进行操作,\n软件只能有一个本地用户");
 
         // 显示提示框并等待用户响应
         alert.showAndWait();
+    }
+
+    private boolean checkUser(){
+        User user = OperationalDocument.readUser();
+        System.out.println(user);
+
+
+        return false;
     }
 
 }
