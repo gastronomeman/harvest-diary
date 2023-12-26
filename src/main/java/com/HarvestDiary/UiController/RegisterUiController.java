@@ -4,8 +4,8 @@ import cn.hutool.json.JSONUtil;
 import com.HarvestDiary.Ui.Login;
 import com.HarvestDiary.Ui.Register;
 import com.HarvestDiary.otherTools.Captcha;
+import com.HarvestDiary.otherTools.OperationalDocument;
 import com.HarvestDiary.otherTools.SettingFontIcon;
-import com.HarvestDiary.otherTools.transformJSON;
 import com.HarvestDiary.pojo.User;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
@@ -13,7 +13,6 @@ import de.felixroske.jfxsupport.FXMLController;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
@@ -94,17 +93,23 @@ public class RegisterUiController {
         captcha.setImage(c.getImage());//设置图片到页面
         log.info(c.getCode());
 
-
+        Thread thread = new Thread(() -> {
+            Platform.runLater(() -> {
+                if (OperationalDocument.existFile("localhost.login")){
+                    localhost.setSelected(true);
+                }
+            });
+        });
+        thread.start();
 
     }
 
 
     @FXML
     void changeCaptcha(MouseEvent mouseEvent) throws IOException {
-        Captcha captcha = new Captcha();
-        captcha.generateImages();
-        this.captcha.setImage(captcha.getImage());
-        log.info(captcha.getCode());
+        c.generateImages();
+        this.captcha.setImage(c.getImage());
+        log.info(c.getCode());
     }
 
     @FXML
@@ -186,7 +191,7 @@ public class RegisterUiController {
         // 使用Hutool将JavaBean转换为JSON字符串
         String jsonString = JSONUtil.toJsonStr(user);
 
-        transformJSON.save(jsonString);
+        OperationalDocument.saveJSON(jsonString);
     }
 
 }
