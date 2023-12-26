@@ -1,13 +1,16 @@
 package com.HarvestDiary.UiController;
 
+import cn.hutool.json.JSONUtil;
 import com.HarvestDiary.Ui.Login;
 import com.HarvestDiary.Ui.Register;
 import com.HarvestDiary.otherTools.Captcha;
 import com.HarvestDiary.otherTools.SettingFontIcon;
+import com.HarvestDiary.otherTools.transformJSON;
 import com.HarvestDiary.pojo.User;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import de.felixroske.jfxsupport.FXMLController;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
@@ -108,6 +111,10 @@ public class RegisterUiController {
     void changeUi(MouseEvent event) throws Exception {
         if (localhost.isSelected()){
             if (filterUser()){
+                Thread thread = new Thread(() -> {
+                    Platform.runLater(this::addUserJson);
+                });
+                thread.start();
                 Register.getRegisterUiStage().close();
                 log.info("关闭注册页面");
 
@@ -169,10 +176,17 @@ public class RegisterUiController {
         tip.setText("");
         return true;
     }
-    private void addUser(){
+
+    private void addUserJson(){
         User user = new User();
         user.setUserNumber(userNumber.getText());
+        user.setUsername(username.getText());
+        user.setPassword(password.getText());
+        user.setPhone(phone.getText());
+        // 使用Hutool将JavaBean转换为JSON字符串
+        String jsonString = JSONUtil.toJsonStr(user);
 
+        transformJSON.save(jsonString);
     }
 
 }

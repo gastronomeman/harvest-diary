@@ -1,8 +1,6 @@
 package com.HarvestDiary;
 
 import com.HarvestDiary.Ui.Login;
-import com.HarvestDiary.otherTools.d;
-import com.HarvestDiary.otherTools.e;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
