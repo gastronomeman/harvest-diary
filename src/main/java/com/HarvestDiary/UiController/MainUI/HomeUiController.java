@@ -3,8 +3,10 @@ package com.HarvestDiary.UiController.MainUI;
 import cn.hutool.core.date.ChineseDate;
 import cn.hutool.core.date.chinese.SolarTerms;
 import com.HarvestDiary.otherTools.SettingFontIcon;
+import com.HarvestDiary.otherTools.UserInfoUtil;
 import com.jfoenix.controls.JFXButton;
 import de.felixroske.jfxsupport.FXMLController;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
@@ -29,6 +31,10 @@ import java.util.Date;
 public class HomeUiController {
     @FXML
     private VBox HomeUI;
+
+    @FXML
+    private Label weather;
+
     @FXML
     private Label chineseDate;
     @FXML
@@ -86,6 +92,17 @@ public class HomeUiController {
         //获取中国传统节日或者工作日或者休息日
         festival.setText(typeDay(chineseCalendar, nowDate));
 
+
+
+        //weather.setText("天气：" + UserInfoUtil.getAddressWeather());
+        /*Thread weatherThread = new Thread(() -> {
+            Platform.runLater(() -> {
+                weather.setText("天气：" + UserInfoUtil.getAddressWeather());
+            });
+        });
+        weatherThread.start();*/
+
+
     }
 
     //格式化DataPicker
@@ -114,7 +131,6 @@ public class HomeUiController {
             }
         };
     }
-
     //查找节气，如果是节气当天显示节气，如果不是当前这显示**（节气）后，**（节气）前
     private String findSolarTerms(LocalDate day) {
         if (!SolarTerms.getTerm(day).isEmpty()) {
@@ -140,7 +156,6 @@ public class HomeUiController {
         } while (SolarTerms.getTerm(day).isEmpty());
         return SolarTerms.getTerm(day);
     }
-
     //判断是否是中国传统节日或者工作日或者休息日
     private String typeDay(ChineseDate cDay,  LocalDate day){
         String festival = cDay.getFestivals();
@@ -155,4 +170,5 @@ public class HomeUiController {
             }
         }
     }
+
 }

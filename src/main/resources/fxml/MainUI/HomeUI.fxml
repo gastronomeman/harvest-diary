@@ -49,7 +49,7 @@
                 </VBox>
                 <HBox alignment="CENTER" prefHeight="100.0" prefWidth="180.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
                     <children>
-                        <Label text="天气：">
+                        <Label fx:id="weather" text="天气：...">
                             <font>
                                 <Font size="13.0" />
                             </font>
@@ -82,7 +82,7 @@
                         <Insets right="20.0" />
                      </HBox.margin>
                   </Label>
-                  <JFXButton style="-fx-background-color: #999;" text="..." />
+                  <JFXButton style="-fx-background-color: #fff;" text="..." />
                </children>
             </HBox>
             </children>
@@ -119,7 +119,7 @@
             </StackPane>
             <HBox alignment="CENTER_LEFT" prefHeight="90.0" prefWidth="120.0" GridPane.columnIndex="3" GridPane.rowIndex="2">
                <children>
-                  <JFXButton fx:id="change" alignment="CENTER" contentDisplay="TOP" ellipsisString="" prefHeight="30.0" prefWidth="80.0" text="换一换" textAlignment="CENTER">
+                  <JFXButton fx:id="change" alignment="CENTER" contentDisplay="TOP" ellipsisString="" prefHeight="50.0" prefWidth="70.0" text="换一换" textAlignment="CENTER">
                      <HBox.margin>
                         <Insets left="5.0" />
                      </HBox.margin>
