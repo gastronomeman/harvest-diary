@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXToggleButton?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -35,8 +36,7 @@
                               <Separator maxWidth="500.0" minWidth="500.0" prefHeight="2.0" prefWidth="500.0" />
                               <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                                  <children>
-                                    <Label text="修改头像：" />
-                                    <Button mnemonicParsing="false" onAction="#removeImageConfig" prefWidth="70.0" text="确认" />
+                                    <JFXToggleButton text="本地登录" />
                                  </children>
                               </HBox>
                               <Separator maxWidth="500.0" minWidth="500.0" prefWidth="500.0" />
@@ -58,6 +58,13 @@
                                  <children>
                                     <Label text="注销账号：" />
                                     <Button mnemonicParsing="false" onAction="#clearAcConfig" prefWidth="70.0" text="确认" />
+                                 </children>
+                              </HBox>
+                              <Separator maxWidth="500.0" minWidth="500.0" prefHeight="2.0" prefWidth="500.0" />
+                              <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                                 <children>
+                                    <Label text="修改头像：" />
+                                    <Button mnemonicParsing="false" onAction="#removeImageConfig" prefWidth="70.0" text="确认" />
                                  </children>
                               </HBox>
                            </children>
