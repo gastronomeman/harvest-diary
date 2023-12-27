@@ -72,11 +72,25 @@ public class LoginUiController {
 
         if (OperationalDocument.readFile("app.config").contains("autoLogin:true;")) {
             autoLogin.setSelected(true);
-            Login.getLoginUiStage().close();
-            new MainDiary().start(new Stage());
-        }else {
-            autoLogin.setSelected(false);
+
+            Thread thread = new Thread(() -> {
+                Platform.runLater(() -> {
+                    try {
+                        new MainDiary().start(new Stage());
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                    Login.getLoginUiStage().close();
+                });
+            });
+
+          thread.start();
         }
+        autoLogin.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            if (!autoLogin.isSelected()){
+                OperationalDocument.replace("autoLogin:true;", "autoLogin:false;", "app.config");
+            }
+        });
 
 
     }
