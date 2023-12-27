@@ -64,7 +64,7 @@
                   <Font name="System Italic" size="24.0" />
                </font>
             </Label>
-            <TextField accessibleRole="TEXT" prefHeight="35.0" prefWidth="250.0" promptText="请输入你的账号">
+            <TextField fx:id="userNumber" accessibleRole="TEXT" prefHeight="35.0" prefWidth="250.0" promptText="请输入你的账号">
                <font>
                   <Font size="18.0" />
                </font></TextField>
@@ -77,7 +77,7 @@
                   <Font name="System Italic" size="24.0" />
                </font>
             </Label>
-            <PasswordField prefHeight="35.0" prefWidth="250.0" promptText="请输入你的密码">
+            <PasswordField fx:id="password" prefHeight="35.0" prefWidth="250.0" promptText="请输入你的密码">
                <HBox.margin>
                   <Insets top="5.0" />
                </HBox.margin>
@@ -91,12 +91,12 @@
       </HBox>
       <HBox alignment="CENTER" prefHeight="51.0" prefWidth="500.0">
          <children>
-            <JFXCheckBox checkedColor="#617172" text="记住密码" textFill="#617172">
+            <JFXCheckBox fx:id="rememberPW"  checkedColor="#617172" text="记住密码" textFill="#617172">
                <HBox.margin>
                   <Insets right="35.0" />
                </HBox.margin>
             </JFXCheckBox>
-            <JFXCheckBox checkedColor="#617172" text="自动登录" textFill="#617172">
+            <JFXCheckBox fx:id="autoLogin" checkedColor="#617172" text="自动登录" textFill="#617172">
                <HBox.margin>
                   <Insets right="30.0" />
                </HBox.margin>
