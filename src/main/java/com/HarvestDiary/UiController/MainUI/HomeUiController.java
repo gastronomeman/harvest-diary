@@ -10,6 +10,9 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -23,6 +26,7 @@ import java.io.IOException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Random;
 
 
 @Slf4j
@@ -48,6 +52,8 @@ public class HomeUiController {
     private StackPane imageBackground;
     @FXML
     private JFXButton change;
+    @FXML
+    private ImageView pic;
 
     @FXML
     public void initialize() throws IOException {
@@ -67,9 +73,17 @@ public class HomeUiController {
 
 
     }
+    @FXML
+    void changePic(MouseEvent event) {
+        pic.setImage(new Image(randomPic()));
+    }
 
-
-
+    private String randomPic() {
+        Random r = new Random();
+        int i = r.nextInt(1, 9);
+        return "image/MainUi/home/1000" + i + ".jpg";
+    }
+    //设置上方的日期
     private void setDataTime() {
         //设置日期为现在时间
         LocalDate nowDate = LocalDate.now();
@@ -86,7 +100,6 @@ public class HomeUiController {
         }));
 
     }
-
     //格式化DataPicker
     private StringConverter<LocalDate> dateFormatter() {
         // 创建日期格式化器

@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
 
-<VBox alignment="TOP_CENTER" prefHeight="500.0" prefWidth="80.0" style="-fx-background-color: #80766e;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.HarvestDiary.UiController.MainUI.SideListController">
+<VBox alignment="TOP_CENTER" prefHeight="500.0" prefWidth="80.0" style="-fx-background-color: linear-gradient(to bottom left,#6186A5, #C8C7BD);" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.HarvestDiary.UiController.MainUI.SideListController">
    <children>
       <StackPane fx:id="avatarBackground" prefHeight="90.0" prefWidth="80.0">
          <children>
@@ -17,13 +17,13 @@
                   <Image url="@../../image/kls.png" />
                </image>
             </ImageView>
-            <Circle fill="#ff212100" radius="30.0" stroke="#f9e9cd" strokeType="INSIDE" strokeWidth="2.0" />
+            <Circle fill="#ff212100" radius="30.0" stroke="#FAD9C2" strokeType="INSIDE" strokeWidth="2.0" />
             <JFXButton prefHeight="60.0" prefWidth="60.0" text=" " />
          </children>
       </StackPane>
       <VBox alignment="TOP_CENTER" prefHeight="270.0" prefWidth="80.0">
          <children>
-            <JFXButton fx:id="home" contentDisplay="CENTER" graphicTextGap="0.0" onAction="#switchUi" prefHeight="50.0" prefWidth="50.0" style="-fx-border-radius: 15; -fx-border-color: #f7e8aa; -fx-border-width: 2; -fx-effect: dropshadow(three-pass-box,  #f7e8aa, 10, 0, 0, 0); -fx-background-radius: 15;" text=" ">
+            <JFXButton fx:id="home" contentDisplay="CENTER" graphicTextGap="0.0" onAction="#switchUi" prefHeight="50.0" prefWidth="50.0" style="-fx-border-radius: 15; -fx-border-color: linear-gradient(to bottom right, #FAD9C2, #F3AC9E); -fx-border-width: 2; -fx-effect: dropshadow(three-pass-box,  #f7e8aa, 10, 0, 0, 0); -fx-background-radius: 15;" text=" ">
                <VBox.margin>
                   <Insets top="20.0" />
                </VBox.margin>

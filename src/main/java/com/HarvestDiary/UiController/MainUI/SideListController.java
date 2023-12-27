@@ -150,7 +150,7 @@ public class SideListController {
         chose.setStyle(
                 "-fx-background-radius: 15;" +
                 "-fx-border-radius: 15;" +
-                "-fx-border-color: #f7e8aa; " +
+                "-fx-border-color:  linear-gradient(to bottom right, #FAD9C2, #F3AC9E);" +
                 "-fx-border-width: 2; " +
                 "-fx-effect: dropshadow(three-pass-box,  #f7e8aa, 10, 0, 0, 0);"
         );
