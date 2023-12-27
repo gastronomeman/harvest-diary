@@ -2,6 +2,7 @@ package com.HarvestDiary.UiController.MainUI;
 
 import com.HarvestDiary.Ui.Login;
 import com.HarvestDiary.Ui.MainDiary;
+import com.HarvestDiary.otherTools.OperationalDocument;
 import com.HarvestDiary.otherTools.SettingFontIcon;
 import com.jfoenix.controls.JFXButton;
 import de.felixroske.jfxsupport.FXMLController;
@@ -86,6 +87,7 @@ public class SideListController {
         //判断事件按钮切换场景
         switch (buttonId) {
             case "exit" -> {
+                OperationalDocument.replace("autoLogin:true;", "autoLogin:false;", "app.config");
                 MainDiary.getMainDiaryUiStage().close();
                 new Login().start(new Stage());
             }
