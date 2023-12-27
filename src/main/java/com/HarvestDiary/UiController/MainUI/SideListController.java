@@ -9,11 +9,9 @@ import de.felixroske.jfxsupport.FXMLController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -127,10 +125,10 @@ public class SideListController {
                 Objects.requireNonNull(MainDiary.class.getClassLoader().getResource("fxml/MainUI/HomeUI.fxml"))
         );
         Parent calendarUI = FXMLLoader.load(
-                Objects.requireNonNull(MainDiary.class.getClassLoader().getResource("fxml/MainUI/CalendarUI.fxml"))
+                Objects.requireNonNull(MainDiary.class.getClassLoader().getResource("fxml/MainUI/calendarUI.fxml"))
         );
         Parent diaryUI = FXMLLoader.load(
-                Objects.requireNonNull(MainDiary.class.getClassLoader().getResource("fxml/MainUI/DiaryUI.fxml"))
+                Objects.requireNonNull(MainDiary.class.getClassLoader().getResource("fxml/MainUI/diaryUI.fxml"))
         );
 
         Parent settingUI = FXMLLoader.load(
