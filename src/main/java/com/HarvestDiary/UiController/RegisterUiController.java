@@ -9,6 +9,7 @@ import com.HarvestDiary.otherTools.SettingFontIcon;
 import com.HarvestDiary.pojo.User;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
+import com.jfoenix.controls.JFXToggleButton;
 import de.felixroske.jfxsupport.FXMLController;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -93,24 +94,18 @@ public class RegisterUiController {
         c.generateImages();//生成验证码图片
         captcha.setImage(c.getImage());//设置图片到页面
         log.info(c.getCode());
-
-        Thread thread = new Thread(() -> {
-            Platform.runLater(() -> {
-                String s = OperationalDocument.readFile("app.config");
-                if (s.contains("localhostLogin:true;")) {
-                    localhost.setSelected(true);
-                }
-            });
-        });
-        thread.start();
+        
 
         localhost.selectedProperty().addListener((observable, oldValue, newValue) -> {
             String s = OperationalDocument.readFile("app.config");
+
             if (localhost.isSelected()
-                    && s.contains("localhostLogin:true;")
+                    && s.contains("localhostUser:true;")
                     && OperationalDocument.existFile("user.json")){
                 showAlert();
                 localhost.setSelected(false);
+            } else if (localhost.isSelected() && !s.contains("localhostUser:true;")) {
+                OperationalDocument.continuationFile("localhostUser:true;");
             }
 
         });
@@ -148,7 +143,7 @@ public class RegisterUiController {
     void exitUi(MouseEvent event) throws Exception {
         Register.getRegisterUiStage().close();
         log.info("关闭注册页面");
-        OperationalDocument.replace("localhostLogin:false;", "localhostLogin:true;", "app.config");
+
         new Login().start(new Stage());
         log.info("打开登录页面");
     }

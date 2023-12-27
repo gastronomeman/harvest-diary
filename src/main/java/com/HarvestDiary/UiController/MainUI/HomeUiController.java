@@ -23,8 +23,7 @@ import java.io.IOException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
-import java.util.Date;
+
 
 @Slf4j
 @FXMLController
@@ -69,39 +68,22 @@ public class HomeUiController {
 
     }
 
+
+
     private void setDataTime() {
-        //让DatePicker显示格式为yyyy-MM-dd
-        datePicker.setConverter(dateFormatter());
         //设置日期为现在时间
         LocalDate nowDate = LocalDate.now();
+        //让DatePicker显示格式为yyyy-MM-dd
+        datePicker.setConverter(dateFormatter());
+        //把值设置进日历
         datePicker.setValue(nowDate);
 
+        SwitchDate(nowDate);
+
+        //改变日期标题也变
         datePicker.valueProperty().addListener(((observable, oldValue, newValue) -> {
-            log.info(String.valueOf(newValue));
+                SwitchDate(newValue);
         }));
-
-        //设置农历日月
-        ChineseDate chineseCalendar = new ChineseDate(nowDate);
-
-        //大字
-        chineseDate.setText(chineseCalendar.getChineseMonthName() + chineseCalendar.getChineseDay());
-        //天干地支+生肖
-        chineseYear.setText(chineseCalendar.getCyclical() + chineseCalendar.getChineseZodiac() + "年");
-        //24节气判断
-        solarTerms24.setText(findSolarTerms(nowDate));
-        //获取中国传统节日或者工作日或者休息日
-        festival.setText(typeDay(chineseCalendar, nowDate));
-
-
-
-        //weather.setText("天气：" + UserInfoUtil.getAddressWeather());
-        /*Thread weatherThread = new Thread(() -> {
-            Platform.runLater(() -> {
-                weather.setText("天气：" + UserInfoUtil.getAddressWeather());
-            });
-        });
-        weatherThread.start();*/
-
 
     }
 
@@ -169,6 +151,19 @@ public class HomeUiController {
                 return "工作日";
             }
         }
+    }
+    //切换日期
+    private void SwitchDate(LocalDate date){
+        //设置农历日月
+        ChineseDate chineseCalendar = new ChineseDate(date);
+        //大字
+        chineseDate.setText(chineseCalendar.getChineseMonthName() + chineseCalendar.getChineseDay());
+        //天干地支+生肖
+        chineseYear.setText(chineseCalendar.getCyclical() + chineseCalendar.getChineseZodiac() + "年");
+        //24节气判断
+        solarTerms24.setText(findSolarTerms(date));
+        //获取中国传统节日或者工作日或者休息日
+        festival.setText(typeDay(chineseCalendar, date));
     }
 
 }

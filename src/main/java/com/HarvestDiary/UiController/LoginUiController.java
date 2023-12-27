@@ -1,12 +1,14 @@
 package com.HarvestDiary.UiController;
 
 import cn.hutool.json.JSONUtil;
+import com.HarvestDiary.Ui.ForgotPassword;
 import com.HarvestDiary.Ui.Login;
 import com.HarvestDiary.Ui.MainDiary;
 import com.HarvestDiary.Ui.Register;
 import com.HarvestDiary.otherTools.OperationalDocument;
 import com.HarvestDiary.pojo.User;
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXToggleButton;
 import de.felixroske.jfxsupport.FXMLController;
 import com.jfoenix.controls.JFXCheckBox;
 import javafx.application.Platform;
@@ -32,7 +34,8 @@ public class LoginUiController {
 
     @FXML
     private JFXButton registerUI;
-
+    @FXML
+    private JFXToggleButton localhost;
     @FXML
     private TextField userNumber;
 
@@ -40,6 +43,8 @@ public class LoginUiController {
     private JFXCheckBox autoLogin;
     @FXML
     private JFXCheckBox rememberPW;
+    @FXML
+    private JFXButton forgotPw;
 
     /**
      * 初始化方法，用于设置 JavaFX 控制器的初始状态。
@@ -61,14 +66,22 @@ public class LoginUiController {
         avatar.setClip(clip);
 
 
+
+
+        //保存密码，输入进文本框
         if (OperationalDocument.readFile("app.config").contains("rememberPW:true;")) {
             rememberPW.setSelected(true);
             User user = JSONUtil.toBean(OperationalDocument.readFile("user.json"), User.class);
             userNumber.setText(user.getUserNumber());
             password.setText(user.getPassword());
-        }else {
-            rememberPW.setSelected(false);
         }
+        //取消保存密码，去除属性
+        rememberPW.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            if (!rememberPW.isSelected()){
+                OperationalDocument.replace("rememberPW:true;", "rememberPW:false;", "app.config");
+            }
+        });
+
 
         if (OperationalDocument.readFile("app.config").contains("autoLogin:true;")) {
             autoLogin.setSelected(true);
@@ -92,6 +105,16 @@ public class LoginUiController {
             }
         });
 
+        if (OperationalDocument.readFile("app.config").contains("localhostLogin:true;")){
+            localhost.setSelected(true);
+        }
+        localhost.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            if (localhost.isSelected()){
+                OperationalDocument.replace("localhostLogin:false;", "localhostLogin:true;", "app.config");
+            }else {
+                OperationalDocument.replace("localhostLogin:true;", "localhostLogin:false;", "app.config");
+            }
+        });
 
     }
 
@@ -105,28 +128,10 @@ public class LoginUiController {
         log.info("打开注册页面");
     }
 
-    @FXML
-    void changeUiAlert(MouseEvent event) throws Exception {
-        if (OperationalDocument.existFile("user.json")) {
-            showAlert("你选择了本地已有一个账户");
-            return;
-        }
-        Login.getLoginUiStage().close();
-        log.info("关闭登录页面");
-        Thread thread = new Thread(() -> {
-            Platform.runLater(() -> {
-                OperationalDocument.continuationFile("localhostLogin:true;");
-            });
-        });
-        thread.start();
-        showAlert("你选择了本地登录");
-        new Register().start(new Stage());
-        log.info("打开注册页面");
-    }
 
     @FXML
     void changeMain(MouseEvent event) throws Exception {
-        if (checkUser()) {
+        if (checkUser() && OperationalDocument.readFile("app.config").contains("localhostLogin:true;")) {
             Login.getLoginUiStage().close();
             log.info("关闭登录页面");
             if (autoLogin.isSelected()) {
@@ -140,13 +145,19 @@ public class LoginUiController {
             new MainDiary().start(new Stage());
             log.info("打开注册页面");
         } else {
-            showAlert("账号或密码不正确，请重新输入");
+            showAlert();
         }
+    }
+
+    @FXML
+    void changFUi(MouseEvent event) throws Exception {
+        Login.getLoginUiStage().close();
+        new ForgotPassword().start(new Stage());
     }
 
 
     private boolean checkUser() {
-        if (userNumber.getText().isEmpty() && password.getText().isEmpty()) {
+        if (userNumber.getText().isEmpty() || password.getText().isEmpty()) {
             return false;
         }
         if (!OperationalDocument.existFile("user.json")) {
@@ -158,10 +169,10 @@ public class LoginUiController {
                 user.getPassword().equals(password.getText());
     }
 
-    private void showAlert(String s) {
+    private void showAlert() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("提示");
-        alert.setHeaderText(s);
+        alert.setHeaderText("账号或密码不正确，请重新输入");
         alert.setContentText("要在页面选上本地登录的按钮方可以不需要联网进行操作,\n软件只能有一个本地用户");
 
         // 显示提示框并等待用户响应

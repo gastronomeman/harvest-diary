@@ -179,7 +179,7 @@
       </HBox>
       <HBox alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="420.0">
          <children>
-            <JFXCheckBox fx:id="localhost" text="本地登录">
+            <JFXCheckBox fx:id="localhost" text="本地注册">
                <HBox.margin>
                   <Insets right="240.0" />
                </HBox.margin>

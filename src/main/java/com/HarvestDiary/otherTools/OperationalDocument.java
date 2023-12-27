@@ -55,7 +55,6 @@ public class OperationalDocument {
         FileWriter fileWriter = new FileWriter(filePath.toFile(), "UTF-8");
         fileWriter.write(content);
 
-        System.out.println("Text file saved at: " + filePath);
 
     }
     public static void removeFile(String fileName){
@@ -80,6 +79,7 @@ public class OperationalDocument {
 
         // 使用 Hutool 追加内容到文件
         FileWriter writer = new FileWriter(FileUtil.file(filePath.toString()), "UTF-8");
+
         System.out.println(content);
 
         writer.write(content);
