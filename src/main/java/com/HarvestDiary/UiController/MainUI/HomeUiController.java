@@ -2,6 +2,7 @@ package com.HarvestDiary.UiController.MainUI;
 
 import cn.hutool.core.date.ChineseDate;
 import cn.hutool.core.date.chinese.SolarTerms;
+import cn.hutool.core.util.RandomUtil;
 import com.HarvestDiary.otherTools.SettingFontIcon;
 import com.HarvestDiary.otherTools.UserInfoUtil;
 import com.jfoenix.controls.JFXButton;
@@ -26,6 +27,7 @@ import java.io.IOException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 import java.util.Random;
 
 
@@ -71,18 +73,25 @@ public class HomeUiController {
 
         change.setGraphic(SettingFontIcon.setColor(AntDesignIconsOutlined.SYNC, Color.web("#617172")));
 
+        pic.setImage(new Image(randomPic(pic.getImage())));
 
     }
+
     @FXML
     void changePic(MouseEvent event) {
-        pic.setImage(new Image(randomPic()));
+        Thread thread = new Thread(() -> {
+            Platform.runLater(() -> {
+                pic.setImage(new Image(randomPic(pic.getImage())));
+            });
+        });
+        thread.start();
     }
 
-    private String randomPic() {
-        Random r = new Random();
-        int i = r.nextInt(1, 9);
-        return "image/MainUi/home/1000" + i + ".jpg";
+    //随机更换图片
+    private String randomPic(Image image) {
+        return "image/MainUi/home/1000" + RandomUtil.randomInt(1, 9) + ".jpg";
     }
+
     //设置上方的日期
     private void setDataTime() {
         //设置日期为现在时间
@@ -96,10 +105,11 @@ public class HomeUiController {
 
         //改变日期标题也变
         datePicker.valueProperty().addListener(((observable, oldValue, newValue) -> {
-                SwitchDate(newValue);
+            SwitchDate(newValue);
         }));
 
     }
+
     //格式化DataPicker
     private StringConverter<LocalDate> dateFormatter() {
         // 创建日期格式化器
@@ -126,6 +136,7 @@ public class HomeUiController {
             }
         };
     }
+
     //查找节气，如果是节气当天显示节气，如果不是当前这显示**（节气）后，**（节气）前
     private String findSolarTerms(LocalDate day) {
         if (!SolarTerms.getTerm(day).isEmpty()) {
@@ -137,6 +148,7 @@ public class HomeUiController {
             return formerlySolarTerms + "后，" + futureSolarTerms + "前";
         }
     }
+
     //查找下一个节气
     private String futureSolarTerms(LocalDate day) {
         do {
@@ -144,6 +156,7 @@ public class HomeUiController {
         } while (SolarTerms.getTerm(day).isEmpty());
         return SolarTerms.getTerm(day);
     }
+
     //查找上一个节气
     private String formerlySolarTerms(LocalDate day) {
         do {
@@ -151,22 +164,24 @@ public class HomeUiController {
         } while (SolarTerms.getTerm(day).isEmpty());
         return SolarTerms.getTerm(day);
     }
+
     //判断是否是中国传统节日或者工作日或者休息日
-    private String typeDay(ChineseDate cDay,  LocalDate day){
+    private String typeDay(ChineseDate cDay, LocalDate day) {
         String festival = cDay.getFestivals();
-        if (!festival.isEmpty()){
+        if (!festival.isEmpty()) {
             return festival;
-        }else {
+        } else {
             DayOfWeek dayOfWeek = day.getDayOfWeek();
-            if (dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY){
+            if (dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY) {
                 return "休息日";
-            }else {
+            } else {
                 return "工作日";
             }
         }
     }
+
     //切换日期
-    private void SwitchDate(LocalDate date){
+    private void SwitchDate(LocalDate date) {
         //设置农历日月
         ChineseDate chineseCalendar = new ChineseDate(date);
         //大字

@@ -1,5 +1,8 @@
 package com.HarvestDiary.UiController;
 
+import cn.hutool.core.util.StrUtil;
+import cn.hutool.http.HttpRequest;
+import cn.hutool.http.HttpResponse;
 import cn.hutool.json.JSONUtil;
 import com.HarvestDiary.Ui.Login;
 import com.HarvestDiary.Ui.Register;
@@ -9,7 +12,6 @@ import com.HarvestDiary.otherTools.SettingFontIcon;
 import com.HarvestDiary.pojo.User;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
-import com.jfoenix.controls.JFXToggleButton;
 import de.felixroske.jfxsupport.FXMLController;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -67,7 +69,7 @@ public class RegisterUiController {
     Captcha c = new Captcha();
 
     /**
-     * 初始化方法，用于设置 JavaFX 控制器的初始状态。
+     * 初始化渲染方法
      */
     @FXML
     public void initialize() throws IOException {
@@ -94,52 +96,63 @@ public class RegisterUiController {
         c.generateImages();//生成验证码图片
         captcha.setImage(c.getImage());//设置图片到页面
         log.info(c.getCode());
-        
-
-        localhost.selectedProperty().addListener((observable, oldValue, newValue) -> {
-            String s = OperationalDocument.readFile("app.config");
-
-            if (localhost.isSelected()
-                    && s.contains("localhostUser:true;")
-                    && OperationalDocument.existFile("user.json")){
-                showAlert();
-                localhost.setSelected(false);
-            } else if (localhost.isSelected() && !s.contains("localhostUser:true;")) {
-                OperationalDocument.continuationFile("localhostUser:true;");
-            }
-
-        });
 
     }
 
 
-    @FXML
+    @FXML//点击按钮重新生成验证码
     void changeCaptcha(MouseEvent mouseEvent) throws IOException {
         c.generateImages();
         this.captcha.setImage(c.getImage());
         log.info(c.getCode());
     }
 
-    @FXML
+    @FXML//判断是否存在本地账户
+    void localhostCheck(MouseEvent event) {
+        if (localhost.isSelected()){
+            if (OperationalDocument.existFile("user.json")){
+                showAlert("已有一个本地账户不可勾选");
+            }
+        }
+    }
+
+    @FXML//登陆成功，切换到登陆界面
     void changeUi(MouseEvent event) throws Exception {
-        if (localhost.isSelected()) {
-            if (filterUser()) {
-                Thread thread = new Thread(() -> {
-                    Platform.runLater(this::addUserJson);
-                });
-                thread.start();
+        if (filterUser()){
+            if (localhost.isSelected()){
+                addUserToLocal();
+                showAlert("注册成功！");
                 Register.getRegisterUiStage().close();
                 log.info("关闭注册页面");
 
                 new Login().start(new Stage());
                 log.info("打开登录页面");
+                return;
             }
-        }
+            Boolean b;
+            Thread thread = new Thread(() -> {
+                Platform.runLater(() -> {
+                    if (addUserToServer()){
+                        showAlert("注册成功！");
+                        Register.getRegisterUiStage().close();
+                        log.info("关闭注册页面");
 
+                        try {
+                            new Login().start(new Stage());
+                        } catch (Exception e) {
+                            throw new RuntimeException(e);
+                        }
+                        log.info("打开登录页面");
+                    }
+                });
+            });
+            thread.start();
+
+        }
 
     }
 
-    @FXML
+    @FXML//退出注册页面
     void exitUi(MouseEvent event) throws Exception {
         Register.getRegisterUiStage().close();
         log.info("关闭注册页面");
@@ -164,12 +177,11 @@ public class RegisterUiController {
             tip.setText("密码不能为空");
             return false;
         }
-
-
         if (phone.getText().trim().isEmpty()) {
             tip.setText("电话不能为空");
             return false;
         }
+
         String regex = "^(?:(?:\\+|00)86)?1(?:(?:3[0-9])|(?:4[5-79])|(?:5[0-35-9])|(?:6[5-7])|(?:7[0-8])|(?:8[0-9])|(?:9[189]))\\d{8}$";
         if (!Pattern.matches(regex, phone.getText())) {
             tip.setText("电话不正确");
@@ -189,10 +201,12 @@ public class RegisterUiController {
         return true;
     }
 
-    //获取本地用户数据
-    private void addUserJson() {
+
+
+    //为本地注册的用户添加数据去本地
+    private void addUserToLocal() { //获取本地用户数据添加到本地文件
         User user = new User();
-        user.setUserNumber(userNumber.getText());
+        user.setUserId(userNumber.getText());
         user.setUsername(username.getText());
         user.setPassword(password.getText());
         user.setPhone(phone.getText());
@@ -203,11 +217,42 @@ public class RegisterUiController {
         OperationalDocument.saveFile("user.json", jsonString);
     }
 
-    private void showAlert() {
+    //添加用户到服务器
+    private Boolean addUserToServer(){
+        User user = new User();
+        user.setUserId(userNumber.getText());
+        user.setUsername(username.getText());
+        user.setPassword(password.getText());
+        user.setPhone(phone.getText());
+
+        // 使用Hutool将JavaBean转换为JSON字符串
+        String jsonString = JSONUtil.toJsonStr(user);
+
+        HttpResponse response = HttpRequest.post("http://localhost:8080/user/register")
+                .header("Content-Type", "application/json")
+                .body(JSONUtil.toJsonStr(user))
+                .execute();
+        System.out.println(response.body());
+        String json = "{" + StrUtil.subBetween(response.body(), "{", "}") + "}";
+        System.out.println(json);
+        if (JSONUtil.parseObj(json).getStr("data") == null){
+            if (JSONUtil.parseObj(json).getStr("msg").equals("error1")){
+                tip.setText("用户账号已存在");
+                return false;
+            }else if (JSONUtil.parseObj(json).getStr("msg").equals("error2")){
+                tip.setText("电话已被注册");
+                return false;
+            }
+        }
+        return true;
+    }
+
+    //弹窗
+    private void showAlert(String s) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("提示");
-        alert.setHeaderText("已有一个本地账户不可勾选");
-        alert.setContentText("要在页面选上本地登录的按钮方可以不需要联网进行操作,\n软件只能有一个本地用户");
+        alert.setHeaderText(s);
+        alert.setContentText("\t要在页面选上本地登录的按钮方可以不需要联网进行操作,\n软件只能有一个本地用户");
 
         // 显示提示框并等待用户响应
         alert.showAndWait();

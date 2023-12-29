@@ -67,7 +67,9 @@ public class OperationalDocument {
 
     }
     public static void continuationFile(String content){
-
+        if (readFile("app.config").contains(content)){
+            return;
+        }
         content = readFile("app.config") + content;
         System.out.println(content);
 

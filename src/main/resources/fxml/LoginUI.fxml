@@ -92,7 +92,7 @@
       </HBox>
       <HBox alignment="CENTER" prefHeight="51.0" prefWidth="500.0">
          <children>
-            <JFXCheckBox fx:id="rememberPW" checkedColor="#617172" text="记住密码" textFill="#617172">
+            <JFXCheckBox fx:id="rememberPw" checkedColor="#617172" text="记住密码" textFill="#617172">
                <HBox.margin>
                   <Insets right="35.0" />
                </HBox.margin>

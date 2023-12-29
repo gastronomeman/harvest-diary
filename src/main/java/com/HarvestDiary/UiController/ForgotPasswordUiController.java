@@ -128,7 +128,7 @@ public class ForgotPasswordUiController {
             tip.setText("验证码错误！");
             return false;
         }else {
-            showAlert("你的账号是：" + user.getUserNumber() + "\n" +
+            showAlert("你的账号是：" + user.getUserId() + "\n" +
                         "密码是：" + user.getPassword() );
             return true;
         }
