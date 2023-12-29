@@ -71,9 +71,11 @@ public class LoginUiController {
 
         // 将圆形裁剪区域应用于图像视图
         avatar.setClip(clip);
+        userStatus = new UserStatus("1", false, false, false);
 
-        userStatus = JSONUtil.toBean(OperationalDocument.readFile("userStatus.json"), UserStatus.class);
-
+        if (OperationalDocument.existFile("userStatus.json")){
+            userStatus = JSONUtil.toBean(OperationalDocument.readFile("userStatus.json"), UserStatus.class);
+        }
         if (userStatus.getRememberPw()) {
             User user = JSONUtil.toBean(OperationalDocument.readFile("user.json"), User.class);
             userNumber.setText(user.getUserId());

@@ -54,8 +54,6 @@ public class OperationalDocument {
         // 使用 Hutool 的 FileWriter 写入文本内容
         FileWriter fileWriter = new FileWriter(filePath.toFile(), "UTF-8");
         fileWriter.write(content);
-
-
     }
     public static void removeFile(String fileName){
         // 创建文件夹（如果不存在）
@@ -66,26 +64,7 @@ public class OperationalDocument {
         FileUtil.del(filePath);
 
     }
-    public static void continuationFile(String content){
-        if (readFile("app.config").contains(content)){
-            return;
-        }
-        content = readFile("app.config") + content;
-        System.out.println(content);
 
-        content = encryptionString(content);
-        // 创建文件夹（如果不存在）
-        FileUtil.mkdir(folderPath);
-        // 构造文件路径
-        Path filePath = Paths.get(folderPath, "app.config");
-
-        // 使用 Hutool 追加内容到文件
-        FileWriter writer = new FileWriter(FileUtil.file(filePath.toString()), "UTF-8");
-
-        System.out.println(content);
-
-        writer.write(content);
-    }
     public static String readFile(String fileName){
         // 构造文件路径
         Path filePath = Paths.get(folderPath, fileName);

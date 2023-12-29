@@ -112,6 +112,7 @@ public class RegisterUiController {
     void localhostCheck(MouseEvent event) {
         if (localhost.isSelected()){
             if (OperationalDocument.existFile("user.json")){
+                localhost.setSelected(false);
                 showAlert("已有一个本地账户不可勾选");
             }
         }
@@ -120,6 +121,7 @@ public class RegisterUiController {
     @FXML//登陆成功，切换到登陆界面
     void changeUi(MouseEvent event) throws Exception {
         if (filterUser()){
+            //本地注册
             if (localhost.isSelected()){
                 addUserToLocal();
                 showAlert("注册成功！");
@@ -130,7 +132,7 @@ public class RegisterUiController {
                 log.info("打开登录页面");
                 return;
             }
-            Boolean b;
+            //线上注册
             Thread thread = new Thread(() -> {
                 Platform.runLater(() -> {
                     if (addUserToServer()){
@@ -202,8 +204,6 @@ public class RegisterUiController {
         return true;
     }
 
-
-
     //为本地注册的用户添加数据去本地
     private void addUserToLocal() { //获取本地用户数据添加到本地文件
         User user = new User();
@@ -229,15 +229,16 @@ public class RegisterUiController {
 
             // 使用Hutool将JavaBean转换为JSON字符串
             String jsonString = JSONUtil.toJsonStr(user);
-
+            //发送POST连接
             HttpResponse response = HttpRequest.post(Poetry.API + "/user/register")
                     .header("Content-Type", "application/json")
                     .body(JSONUtil.toJsonStr(user))
                     .execute();
-            System.out.println(response.body());
+            //提取出JSON数据
             String json = "{" + StrUtil.subBetween(response.body(), "{", "}") + "}";
-            System.out.println(json);
-            if (JSONUtil.parseObj(json).getStr("data") == null){
+
+            //连接数据库进行判断
+            if (JSONUtil.parseObj(json).getStr("code").equals("0")){
                 if (JSONUtil.parseObj(json).getStr("msg").equals("error1")){
                     tip.setText("用户账号已存在");
                     return false;
@@ -259,7 +260,7 @@ public class RegisterUiController {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("提示");
         alert.setHeaderText(s);
-        alert.setContentText("\t要在页面选上本地登录的按钮方可以不需要联网进行操作,\n软件只能有一个本地用户");
+        alert.setContentText("\t要在页面选上本地登录的按钮方可以不需要联网进行操作,\n软件只能有一个本地用户。");
 
         // 显示提示框并等待用户响应
         alert.showAndWait();
