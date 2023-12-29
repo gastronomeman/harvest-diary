@@ -9,6 +9,7 @@ import com.HarvestDiary.Ui.Register;
 import com.HarvestDiary.otherTools.Captcha;
 import com.HarvestDiary.otherTools.OperationalDocument;
 import com.HarvestDiary.otherTools.SettingFontIcon;
+import com.HarvestDiary.pojo.Poetry;
 import com.HarvestDiary.pojo.User;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
@@ -229,7 +230,7 @@ public class RegisterUiController {
             // 使用Hutool将JavaBean转换为JSON字符串
             String jsonString = JSONUtil.toJsonStr(user);
 
-            HttpResponse response = HttpRequest.post("http://2638645f.r19.cpolar.top/user/register")
+            HttpResponse response = HttpRequest.post(Poetry.API + "/user/register")
                     .header("Content-Type", "application/json")
                     .body(JSONUtil.toJsonStr(user))
                     .execute();
