@@ -125,10 +125,10 @@ public class SideListController {
                 Objects.requireNonNull(MainDiary.class.getClassLoader().getResource("fxml/MainUI/HomeUI.fxml"))
         );
         Parent calendarUI = FXMLLoader.load(
-                Objects.requireNonNull(MainDiary.class.getClassLoader().getResource("fxml/MainUI/calendarUI.fxml"))
+                Objects.requireNonNull(MainDiary.class.getClassLoader().getResource("fxml/MainUI/CalendarUI.fxml"))
         );
         Parent diaryUI = FXMLLoader.load(
-                Objects.requireNonNull(MainDiary.class.getClassLoader().getResource("fxml/MainUI/diaryUI.fxml"))
+                Objects.requireNonNull(MainDiary.class.getClassLoader().getResource("fxml/MainUI/DiaryUi.fxml"))
         );
 
         Parent settingUI = FXMLLoader.load(

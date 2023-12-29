@@ -1,6 +1,68 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.HarvestDiary.UiController.MainUI.DiaryUIController" />
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.HarvestDiary.UiController.MainUI.DiaryUIController">
+   <children>
+      <HBox alignment="CENTER" prefHeight="30.0" prefWidth="600.0">
+         <children>
+            <Separator orientation="VERTICAL" prefHeight="200.0" />
+            <ImageView fitHeight="25.0" fitWidth="25.0" onMouseClicked="#resizeFontUp" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../image/diary/resizeup.png" />
+               </image>
+            </ImageView>
+            <Separator orientation="VERTICAL" prefHeight="200.0" />
+            <ImageView fitHeight="25.0" fitWidth="25.0" onMouseClicked="#resizeFontDown" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../image/diary/resizedown.png" />
+               </image>
+            </ImageView>
+            <Separator orientation="VERTICAL" prefHeight="200.0" />
+         </children>
+      </HBox>
+      <ScrollPane fitToWidth="true" prefHeight="438.0" prefWidth="720.0">
+         <content>
+            <VBox prefHeight="428.0" prefWidth="718.0">
+               <children>
+                  <TextField fx:id="title" prefHeight="23.0" prefWidth="657.0" />
+                  <TextArea fx:id="content" prefHeight="406.0" prefWidth="718.0" />
+               </children>
+            </VBox>
+         </content>
+      </ScrollPane>
+      <HBox alignment="CENTER" prefHeight="54.0" prefWidth="720.0">
+         <children>
+            <HBox alignment="CENTER" onMouseClicked="#SaveAction" prefHeight="46.0" prefWidth="382.0">
+               <children>
+                  <Label contentDisplay="CENTER" text="保存" textAlignment="CENTER" />
+                  <ImageView fitHeight="21.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../image/diary/save.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </HBox>
+            <Separator orientation="VERTICAL" prefHeight="200.0" />
+            <HBox alignment="CENTER" onMouseClicked="#DeleteAction" prefHeight="46.0" prefWidth="345.0">
+               <children>
+                  <Label text="关闭" />
+                  <ImageView fitHeight="28.0" fitWidth="78.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../image/diary/close.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </HBox>
+         </children>
+      </HBox>
+   </children>
+</VBox>

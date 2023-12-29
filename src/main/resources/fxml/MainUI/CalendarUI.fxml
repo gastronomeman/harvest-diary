@@ -5,6 +5,8 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
@@ -12,16 +14,24 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="vContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<VBox fx:id="vContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.HarvestDiary.UiController.MainUI.CalendarUIController">
    <children>
       <VBox alignment="CENTER" prefHeight="501.0" prefWidth="720.0">
          <children>
             <HBox fx:id="titleBar" prefHeight="30.0" prefWidth="720.0">
                <children>
-                  <HBox alignment="CENTER" prefHeight="94.0" prefWidth="174.0">
+                  <HBox alignment="CENTER" prefHeight="94.0" prefWidth="174.0" spacing="30.0">
                      <children>
-                        <Button fx:id="PreviousMouth" mnemonicParsing="false" text=" " />
-                        <Button fx:id="NextMouth" mnemonicParsing="false" text=" " />
+                        <ImageView fitHeight="68.0" fitWidth="47.0" onMouseClicked="#decrementMonth" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../image/calendarUi/caret-left.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="62.0" fitWidth="49.0" onMouseClicked="#incrementMonth" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../image/calendarUi/caret-right.png" />
+                           </image>
+                        </ImageView>
                      </children>
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="75.0" prefWidth="330.0" spacing="100.0">
