@@ -219,30 +219,36 @@ public class RegisterUiController {
 
     //添加用户到服务器
     private Boolean addUserToServer(){
-        User user = new User();
-        user.setUserId(userNumber.getText());
-        user.setUsername(username.getText());
-        user.setPassword(password.getText());
-        user.setPhone(phone.getText());
+        try {
+            User user = new User();
+            user.setUserId(userNumber.getText());
+            user.setUsername(username.getText());
+            user.setPassword(password.getText());
+            user.setPhone(phone.getText());
 
-        // 使用Hutool将JavaBean转换为JSON字符串
-        String jsonString = JSONUtil.toJsonStr(user);
+            // 使用Hutool将JavaBean转换为JSON字符串
+            String jsonString = JSONUtil.toJsonStr(user);
 
-        HttpResponse response = HttpRequest.post("http://localhost:8080/user/register")
-                .header("Content-Type", "application/json")
-                .body(JSONUtil.toJsonStr(user))
-                .execute();
-        System.out.println(response.body());
-        String json = "{" + StrUtil.subBetween(response.body(), "{", "}") + "}";
-        System.out.println(json);
-        if (JSONUtil.parseObj(json).getStr("data") == null){
-            if (JSONUtil.parseObj(json).getStr("msg").equals("error1")){
-                tip.setText("用户账号已存在");
-                return false;
-            }else if (JSONUtil.parseObj(json).getStr("msg").equals("error2")){
-                tip.setText("电话已被注册");
-                return false;
+            HttpResponse response = HttpRequest.post("http://10.19.209.61:8080/user/register")
+                    .header("Content-Type", "application/json")
+                    .body(JSONUtil.toJsonStr(user))
+                    .execute();
+            System.out.println(response.body());
+            String json = "{" + StrUtil.subBetween(response.body(), "{", "}") + "}";
+            System.out.println(json);
+            if (JSONUtil.parseObj(json).getStr("data") == null){
+                if (JSONUtil.parseObj(json).getStr("msg").equals("error1")){
+                    tip.setText("用户账号已存在");
+                    return false;
+                }else if (JSONUtil.parseObj(json).getStr("msg").equals("error2")){
+                    tip.setText("电话已被注册");
+                    return false;
+                }
             }
+
+        }catch (Exception e){
+            showAlert("网络连接异常请稍后尝试");
+            return false;
         }
         return true;
     }
