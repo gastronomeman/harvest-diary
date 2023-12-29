@@ -229,7 +229,7 @@ public class RegisterUiController {
             // 使用Hutool将JavaBean转换为JSON字符串
             String jsonString = JSONUtil.toJsonStr(user);
 
-            HttpResponse response = HttpRequest.post("https://ee4ffd2.r12.cpolar.top/user/register")
+            HttpResponse response = HttpRequest.post("http://2638645f.r19.cpolar.top/user/register")
                     .header("Content-Type", "application/json")
                     .body(JSONUtil.toJsonStr(user))
                     .execute();
