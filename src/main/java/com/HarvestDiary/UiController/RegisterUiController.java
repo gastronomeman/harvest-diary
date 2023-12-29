@@ -235,7 +235,7 @@ public class RegisterUiController {
                     .body(JSONUtil.toJsonStr(user))
                     .execute();
             //提取出JSON数据
-            String json = "{" + StrUtil.subBetween(response.body(), "{", "}") + "}";
+            String json = response.body();
 
             //连接数据库进行判断
             if (JSONUtil.parseObj(json).getStr("code").equals("0")){

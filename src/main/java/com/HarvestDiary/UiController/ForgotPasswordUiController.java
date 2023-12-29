@@ -1,14 +1,20 @@
 package com.HarvestDiary.UiController;
 
+import cn.hutool.core.util.StrUtil;
+import cn.hutool.http.HttpRequest;
+import cn.hutool.http.HttpResponse;
 import cn.hutool.json.JSONUtil;
 import com.HarvestDiary.Ui.ForgotPassword;
 import com.HarvestDiary.Ui.Login;
 import com.HarvestDiary.otherTools.Captcha;
 import com.HarvestDiary.otherTools.OperationalDocument;
 import com.HarvestDiary.otherTools.SettingFontIcon;
+import com.HarvestDiary.pojo.Poetry;
 import com.HarvestDiary.pojo.User;
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXToggleButton;
 import de.felixroske.jfxsupport.FXMLController;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
@@ -54,6 +60,9 @@ public class ForgotPasswordUiController {
     @FXML
     private TextField username;
 
+    @FXML
+    private JFXToggleButton localhost;
+
     //设置验证码
     Captcha c = new Captcha();
 
@@ -93,11 +102,25 @@ public class ForgotPasswordUiController {
 
     @FXML
     void changeUi(MouseEvent event) throws Exception {
-        if (checkUser()){
+        if (localhost.isSelected() && checkUser()){
             ForgotPassword.getForgotPasswordUiStage().close();
 
             new Login().start(new Stage());
         }
+        Thread thread = new Thread(() -> {
+            Platform.runLater(() -> {
+                if (!localhost.isSelected() && checksUser()){
+                    ForgotPassword.getForgotPasswordUiStage().close();
+
+                    try {
+                        new Login().start(new Stage());
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            });
+        });
+        thread.start();
     }
 
     @FXML
@@ -106,6 +129,7 @@ public class ForgotPasswordUiController {
 
         new Login().start(new Stage());
     }
+
     private boolean checkUser() {
         if (username.getText().isEmpty() ||
                 phone.getText().isEmpty() ||
@@ -133,6 +157,34 @@ public class ForgotPasswordUiController {
             return true;
         }
 
+    }
+    private boolean checksUser(){
+        if (username.getText().isEmpty() ||
+                phone.getText().isEmpty() ||
+                captchaText.getText().isEmpty()) {
+            return false;
+        }
+        User user = new User();
+        user.setUsername(username.getText());
+        user.setPhone(phone.getText());
+        HttpResponse response = HttpRequest.post(Poetry.API + "/user/findPassword")
+                .header("Content-Type", "application/json")
+                .body(JSONUtil.toJsonStr(user))
+                .execute();
+
+        String json = response.body();
+
+        if (JSONUtil.parseObj(json).getStr("code").equals("0")){
+            showAlert("昵称或电话填写错误，请重新尝试");
+            return false;
+        }
+        String data = JSONUtil.parseObj(json).getStr("data");
+        System.out.println(data);
+        showAlert("你的账号是：" + JSONUtil.parseObj(data).getStr("userId")
+                + "\n" +
+                "密码是：" + JSONUtil.parseObj(data).getStr("password") );
+
+        return JSONUtil.parseObj(json).getStr("code").equals("1");
     }
     private void showAlert(String s) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);

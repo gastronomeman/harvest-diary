@@ -181,7 +181,7 @@ public class LoginUiController {
                 .body(JSONUtil.toJsonStr(user))
                 .execute();
         //提取出JSON数据
-        String json = "{" + StrUtil.subBetween(response.body(), "{", "}") + "}";
+        String json = response.body();
 
         if (JSONUtil.parseObj(json).getStr("code").equals("0") && JSONUtil.parseObj(json).getStr("msg").equals("error3")) {
             showAlert("账号密码错误，请重新输入！");
