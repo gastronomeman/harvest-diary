@@ -56,6 +56,7 @@ public class DiaryUIController {
         backgroundColor.getItems().add("藕荷");  //#edc3ae
     }
 
+
     private void setIcon() {
         amplify.setGraphic(SettingFontIcon.setSizeAndColor(AntDesignIconsOutlined.ZOOM_IN, 20, Color.web("#617172")));
         reduce.setGraphic(SettingFontIcon.setSizeAndColor(AntDesignIconsOutlined.ZOOM_OUT, 20, Color.web("#617172")));

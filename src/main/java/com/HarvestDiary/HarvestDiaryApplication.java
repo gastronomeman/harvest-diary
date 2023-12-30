@@ -12,9 +12,9 @@ public class HarvestDiaryApplication {
 	public static void main(String[] args) throws IOException {
 		SpringApplication.run(HarvestDiaryApplication.class, args);
 
-		if (!OperationalDocument.existFile("app.config")){
-			OperationalDocument.saveFile("app.config", "");//创建配置文件
-		}
+		// 设置 Java 虚拟机的 -Djava.awt.headless=true 系统属性
+		//System.setProperty("java.awt.headless", "true");
+
 
 		Login.main(args);
 	}

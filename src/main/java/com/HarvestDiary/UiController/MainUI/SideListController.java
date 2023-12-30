@@ -130,7 +130,6 @@ public class SideListController {
         });
 
         thread.start();
-
     }
 
     /*
@@ -156,6 +155,7 @@ public class SideListController {
         );
         return new ArrayList<>(Arrays.asList(homeUI, calendarUI, diaryUI, settingUI));
     }
+    //触发按钮选择
     private void choseButton(JFXButton chose) {
         //把图标背景色全设置为未选中的样式
         for (JFXButton jfxButton : buttons) {
