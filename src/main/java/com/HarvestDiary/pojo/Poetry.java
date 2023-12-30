@@ -14,7 +14,7 @@ public class Poetry {
     public static final byte[] XinLuNan = ancientPoetry.getBytes(StandardCharsets.UTF_8);
 
 
-    //API接口地址
-    public final static String API = "http://localhost:8080";
+    //API接口地址http://localhost:8080
+    public final static String API = "http://50b179dc.r16.vip.cpolar.cn";
 
 }

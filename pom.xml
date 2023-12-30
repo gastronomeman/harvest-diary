@@ -77,6 +77,16 @@
 			<artifactId>ikonli-antdesignicons-pack</artifactId>
 			<version>12.3.1</version>
 		</dependency>
+		<dependency>
+			<groupId>org.kordamp.ikonli</groupId>
+			<artifactId>ikonli-fluentui-pack</artifactId>
+			<version>12.3.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.kordamp.ikonli</groupId>
+			<artifactId>ikonli-material-pack</artifactId>
+			<version>12.3.1</version>
+		</dependency>
 
 		<!-- 功能丰富且易用的Java工具库 -->
 		<dependency>
