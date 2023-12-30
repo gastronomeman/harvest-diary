@@ -25,21 +25,27 @@
                   <Insets bottom="10.0" />
                </HBox.margin>
             </Label>
-            <JFXComboBox fx:id="backgroundColor" promptText="芡食白">
+            <JFXComboBox fx:id="backgroundColor" focusColor="BLACK" promptText=" 芡食白" style="-fx-background-color: rgb(128, 128, 128, 0.2);" unFocusColor="TRANSPARENT">
                <HBox.margin>
                   <Insets bottom="10.0" right="10.0" />
                </HBox.margin>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
             </JFXComboBox>
-                <TextField fx:id="title" prefHeight="25.0" prefWidth="350.0">
+                <TextField fx:id="title" prefHeight="25.0" prefWidth="350.0" style="-fx-border-radius: 20; -fx-background-radius: 20;">
                <HBox.margin>
                   <Insets bottom="10.0" />
-               </HBox.margin></TextField>
-                <JFXButton fx:id="amplify" contentDisplay="CENTER" graphicTextGap="0.0" text=" ">
+               </HBox.margin>
+               <font>
+                  <Font size="18.0" />
+               </font></TextField>
+                <JFXButton fx:id="amplify" contentDisplay="CENTER" graphicTextGap="0.0" style="-fx-border-radius: 20; -fx-background-radius: 20;" text=" ">
                     <HBox.margin>
                         <Insets bottom="10.0" left="10.0" />
                     </HBox.margin>
                 </JFXButton>
-                <JFXButton fx:id="reduce" contentDisplay="CENTER" graphicTextGap="0.0" text=" ">
+                <JFXButton fx:id="reduce" contentDisplay="CENTER" graphicTextGap="0.0" style="-fx-background-radius: 20; -fx-border-radius: 20;" text=" ">
                     <HBox.margin>
                         <Insets bottom="10.0" right="80.0" />
                     </HBox.margin>
@@ -50,19 +56,19 @@
          <children>
             <JFXTextArea fx:id="diaryText" focusColor="BLACK" prefHeight="300.0" prefWidth="600.0" style="-fx-background-color: #e2e1e4;" unFocusColor="#999999">
                <font>
-                  <Font size="14.0" />
+                  <Font size="15.0" />
                </font>
             </JFXTextArea>
          </children>
         </HBox>
         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
             <children>
-                <JFXButton fx:id="clear" prefHeight="40.0" prefWidth="100.0" text="清空">
+                <JFXButton fx:id="clear" prefHeight="40.0" prefWidth="100.0" style="-fx-background-radius: 20; -fx-border-radius: 20;" text="清空">
                     <HBox.margin>
                         <Insets right="30.0" />
                     </HBox.margin>
                 </JFXButton>
-                <JFXButton fx:id="save" prefHeight="40.0" prefWidth="100.0" text="保存">
+                <JFXButton fx:id="save" prefHeight="40.0" prefWidth="100.0" style="-fx-background-radius: 20; -fx-border-radius: 20;" text="保存">
                     <HBox.margin>
                         <Insets left="30.0" />
                     </HBox.margin>

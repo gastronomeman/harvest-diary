@@ -57,7 +57,7 @@
                                 <Insets right="20.0" />
                             </HBox.margin>
                         </Label>
-                        <Label fx:id="festival" prefHeight="22.0" text="儿童节">
+                        <Label fx:id="festival" prefHeight="22.0" text=" ">
                             <font>
                                 <Font size="13.0" />
                             </font>

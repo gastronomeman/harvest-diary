@@ -1,6 +1,7 @@
 package com.HarvestDiary.UiController.MainUI;
 
 import cn.hutool.core.date.ChineseDate;
+import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.date.chinese.SolarTerms;
 
 import cn.hutool.core.util.RandomUtil;
@@ -35,6 +36,7 @@ import java.io.IOException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 
 
 @Slf4j
@@ -134,17 +136,24 @@ public class HomeUiController {
 
     private String getString() {
         String s = " ";
-        if (!address.getText().equals("地址：...")) {
+        if (Objects.equals(datePicker.getValue(), LocalDate.now())) {
+            if (!address.getText().equals("地址：...")) {
+                s = DateUtil.now() + "\n" +
+                        chineseYear.getText() + " " + chineseDate.getText() + " \n" +
+                        solarTerms24.getText() + " " + festival.getText() + " \n" +
+                        address.getText() + " ，" + weather.getText() + " ，" +
+                        wind.getText();
+            } else {
+                s = DateUtil.now() + "\n" +
+                        chineseYear.getText() + " " + chineseDate.getText() + " \n" +
+                        solarTerms24.getText() + " " + festival.getText() + " \n";
+            }
+        } else {
             s = datePicker.getValue() + "\n" +
-                chineseYear.getText() + " " + chineseDate.getText() + " \n" +
-                solarTerms24.getText() + " " + festival.getText() + " \n" +
-                address.getText() + "," + weather.getText() + "," +
-                wind.getText();
-        }else {
-            s = datePicker.getValue() + "\n" +
-                chineseYear.getText() + " " + chineseDate.getText() + " \n" +
-                solarTerms24.getText() + " " + festival.getText() + " \n";
+                    chineseYear.getText() + " " + chineseDate.getText() + " \n" +
+                    solarTerms24.getText() + " " + festival.getText();
         }
+
         return s;
     }
 
