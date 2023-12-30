@@ -130,6 +130,7 @@ public class LoginUiController {
             Platform.runLater(() -> {
                 try {
                     if (serverLogin()) {
+                        System.out.println("=============");
                         setLocalLogin();
 
                         Login.getLoginUiStage().close();
@@ -188,7 +189,7 @@ public class LoginUiController {
             return false;
         }
 
-        return JSONUtil.parseObj(json).get("code").equals("1");
+        return JSONUtil.parseObj(json).getStr("code").equals("1");
     }
 
     //点击登录设置一系列消息到json数组里，如果是服务器登陆，把sUser也到json数组
