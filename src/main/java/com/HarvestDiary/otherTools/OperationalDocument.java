@@ -42,15 +42,32 @@ public class OperationalDocument {
         return content;
     }
     public static void saveDir(String fileName) {
+        // 创建文件夹（如果不存在）
+        FileUtil.mkdir(folderPath);
+        //储存日记的文件夹
         FileUtil.mkdir(folderPath + "\\" + fileName);
     }
-
     public static void saveFile(String fileName, String content) {
         //加密
         content = encryptionString(content);
 
         // 创建文件夹（如果不存在）
         FileUtil.mkdir(folderPath);
+
+        // 构造文件路径
+        Path filePath = Paths.get(folderPath, fileName);
+
+
+        // 使用 Hutool 的 FileWriter 写入文本内容
+        FileWriter fileWriter = new FileWriter(filePath.toFile(), "UTF-8");
+        fileWriter.write(content);
+    }
+    public static void writeDiary(String fileName, String content){
+        //加密
+        content = encryptionString(content);
+
+        // 创建文件夹（如果不存在）
+        FileUtil.mkdir(folderPath + "\\diary");
 
         // 构造文件路径
         Path filePath = Paths.get(folderPath, fileName);

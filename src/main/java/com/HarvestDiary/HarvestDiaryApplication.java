@@ -12,7 +12,6 @@ public class HarvestDiaryApplication {
 	public static void main(String[] args) throws IOException {
 		SpringApplication.run(HarvestDiaryApplication.class, args);
 
-		//System.setProperty("java.awt.headless", "true");
 
 		Login.main(args);
 	}
