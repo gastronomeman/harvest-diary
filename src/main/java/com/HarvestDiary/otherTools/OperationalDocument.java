@@ -36,10 +36,15 @@ public class OperationalDocument {
         SymmetricCrypto aes = new SymmetricCrypto(SymmetricAlgorithm.AES, Poetry.XinLuNan);
         // 加密
         byte[] encryptedData = aes.encrypt(content);
+
         content = Base64.encode(encryptedData);
 
         return content;
     }
+    public static void saveDir(String fileName) {
+        FileUtil.mkdir(folderPath + "\\" + fileName);
+    }
+
     public static void saveFile(String fileName, String content) {
         //加密
         content = encryptionString(content);
@@ -91,6 +96,7 @@ public class OperationalDocument {
         s = s.replace(oldStr, newStr);
         OperationalDocument.saveFile(fileName, s);
     }
+
     public static ArrayList<String> readFileToList(String fileName){
         return (ArrayList<String>) StrUtil.split(readFile(fileName), ';');
     }

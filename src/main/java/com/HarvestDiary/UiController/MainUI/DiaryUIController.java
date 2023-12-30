@@ -6,9 +6,13 @@ import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextArea;
 import de.felixroske.jfxsupport.FXMLController;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.util.StringConverter;
 import lombok.extern.slf4j.Slf4j;
 import org.kordamp.ikonli.antdesignicons.AntDesignIconsOutlined;
@@ -17,6 +21,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 
 @Slf4j
@@ -38,6 +43,7 @@ public class DiaryUIController {
     private JFXButton save;
     @FXML
     private TextField title;
+    private int fontSize = 15;
 
     @FXML
     public void initialize() {
@@ -48,12 +54,35 @@ public class DiaryUIController {
 
         title.setText(String.valueOf(datePicker.getValue()));
         setIcon();
+
+
         backgroundColor.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             String color = hm.get(newValue);
             diaryText.setStyle("-fx-background-color: " + color);
         });
 
 
+    }
+
+    @FXML
+    void getToMax(MouseEvent event) {
+        if (fontSize >= 50) return;
+        fontSize += 5;
+        diaryText.setFont(Font.font(fontSize));
+    }
+
+    @FXML
+    void getToMin(MouseEvent event) {
+        if (fontSize <= 10) return;
+        fontSize -= 5;
+        diaryText.setFont(Font.font(fontSize));
+    }
+
+    @FXML
+    void clearTextArea(MouseEvent event) {
+        if (showAlert("是否确定清除文本内容！！！")){
+            diaryText.setText("");
+        }
     }
 
     private HashMap<String, String> setComboBoxItems() {
@@ -124,5 +153,16 @@ public class DiaryUIController {
                 }
             }
         };
+    }
+
+    private boolean showAlert(String s) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("提示");
+        alert.setHeaderText("请查看警告：注意！注意！注意！");
+        alert.setContentText(s);
+
+        // 显示提示框并等待用户响应
+        Optional<ButtonType> result = alert.showAndWait();
+        return result.isPresent() && result.get() == ButtonType.OK;
     }
 }
