@@ -8,6 +8,7 @@ import com.HarvestDiary.otherTools.SettingFontIcon;
 import com.HarvestDiary.pojo.UserStatus;
 import com.jfoenix.controls.JFXButton;
 import de.felixroske.jfxsupport.FXMLController;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -76,45 +77,59 @@ public class SideListController {
     @FXML
     void switchUi(ActionEvent event) throws Exception {
         //获取事件
-        String buttonId = ((Button) event.getSource()).getId();
-        log.info(buttonId);
+        Thread thread = new Thread(() -> {
+            Platform.runLater(() -> {
+                try {
+                    String buttonId = ((Button) event.getSource()).getId();
+                    log.info(buttonId);
 
+                    HBox root = (HBox) MainDiary.getMainDiaryUiStage().getScene().getRoot();
 
-        HBox root = (HBox) MainDiary.getMainDiaryUiStage().getScene().getRoot();
+                    List<Parent> mainUI = null;
 
-        List<Parent> mainUI = getFxmlLoader();
+                    mainUI = getFxmlLoader();
+                    //判断事件按钮切换场景
+                    switch (buttonId) {
+                        case "exit" -> {
+                            UserStatus u = JSONUtil.toBean(OperationalDocument.readFile("userStatus.json"), UserStatus.class);
+                            u.setAutoLogin(false);
+                            OperationalDocument.saveFile("userStatus.json", JSONUtil.toJsonStr(u));
 
-        //判断事件按钮切换场景
-        switch (buttonId) {
-            case "exit" -> {
-                UserStatus u = JSONUtil.toBean(OperationalDocument.readFile("userStatus.json"), UserStatus.class);
-                u.setAutoLogin(false);
-                OperationalDocument.saveFile("userStatus.json", JSONUtil.toJsonStr(u));
+                            MainDiary.getMainDiaryUiStage().close();
+                            new Login().start(new Stage());
+                        }
+                        case "home" -> {
 
-                MainDiary.getMainDiaryUiStage().close();
-                new Login().start(new Stage());
-            }
-            case "home" -> {
-                root.getChildren().remove(1);
-                root.getChildren().add(mainUI.get(0));
-                choseButton(home);
-            }
-            case "calendar" -> {
-                root.getChildren().remove(1);
-                root.getChildren().add(mainUI.get(1));
-                choseButton(calendar);
-            }
-            case "diary" -> {
-                root.getChildren().remove(1);
-                root.getChildren().add(mainUI.get(2));
-                choseButton(diary);
-            }
-            case "setting" -> {
-                root.getChildren().remove(1);
-                root.getChildren().add(mainUI.get(3));
-                choseButton(setting);
-            }
-        }
+                            root.getChildren().remove(1);
+                            root.getChildren().add(mainUI.get(0));
+                            choseButton(home);
+                        }
+                        case "calendar" -> {
+
+                            root.getChildren().remove(1);
+                            root.getChildren().add(mainUI.get(1));
+                            choseButton(calendar);
+                        }
+                        case "diary" -> {
+                            root.getChildren().remove(1);
+                            root.getChildren().add(mainUI.get(2));
+                            choseButton(diary);
+                        }
+                        case "setting" -> {
+                            root.getChildren().remove(1);
+                            root.getChildren().add(mainUI.get(3));
+                            choseButton(setting);
+                        }
+                    }
+
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+
+            });
+        });
+
+        thread.start();
 
     }
 
@@ -159,6 +174,7 @@ public class SideListController {
         );
 
     }
+    //初始化颜色
     private void resettingColor() {
         //统一颜色
         home.setGraphic(SettingFontIcon.setSizeAndColor(AntDesignIconsOutlined.HOME, 25, Color.WHITE));
