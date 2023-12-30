@@ -2,9 +2,14 @@ package com.HarvestDiary.UiController.MainUI;
 
 import cn.hutool.core.date.ChineseDate;
 import cn.hutool.core.date.chinese.SolarTerms;
+import cn.hutool.core.swing.clipboard.ClipboardUtil;
 import cn.hutool.core.util.RandomUtil;
+import cn.hutool.json.JSONObject;
+import cn.hutool.json.JSONUtil;
+import com.HarvestDiary.otherTools.OperationalDocument;
 import com.HarvestDiary.otherTools.SettingFontIcon;
-import com.HarvestDiary.otherTools.UserInfoUtil;
+import com.HarvestDiary.otherTools.AddressInfoUtil;
+import com.HarvestDiary.pojo.AddressInfo;
 import com.jfoenix.controls.JFXButton;
 import de.felixroske.jfxsupport.FXMLController;
 import javafx.application.Platform;
@@ -13,33 +18,34 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.util.StringConverter;
 import lombok.extern.slf4j.Slf4j;
 import org.kordamp.ikonli.antdesignicons.AntDesignIconsOutlined;
+import org.kordamp.ikonli.fluentui.FluentUiRegularMZ;
+
+import java.awt.*;
 
 import java.io.IOException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Objects;
-import java.util.Random;
 
 
 @Slf4j
 @FXMLController
 public class HomeUiController {
+
     @FXML
     private VBox HomeUI;
-
     @FXML
     private Label weather;
-
     @FXML
     private Label chineseDate;
     @FXML
@@ -56,25 +62,44 @@ public class HomeUiController {
     private JFXButton change;
     @FXML
     private ImageView pic;
+    @FXML
+    private JFXButton copy;
+    @FXML
+    private JFXButton backToToday;
+    @FXML
+    private Label address;
+    @FXML
+    private Label wind;
+
 
     @FXML
     public void initialize() throws IOException {
+        backToToday.setGraphic(SettingFontIcon.setSizeAndColor(AntDesignIconsOutlined.RELOAD, 14, Color.web("#617172")));
+
         // 创建圆角边框
         // 创建 Rectangle 作为剪裁区域
         Rectangle clip = new Rectangle(480, 270); // 替换为你希望的剪裁区域大小
         clip.setArcWidth(20); // 圆角宽度
         clip.setArcHeight(20); // 圆角高度
 
-        //顶部日历天气设置
+        //顶部日历设置
         setDataTime();
-
 
         imageBackground.setClip(clip);
 
-        change.setGraphic(SettingFontIcon.setColor(AntDesignIconsOutlined.SYNC, Color.web("#617172")));
-
         pic.setImage(new Image(randomPic(pic.getImage())));
 
+        change.setGraphic(SettingFontIcon.setSizeAndColor(AntDesignIconsOutlined.SYNC, 22, Color.web("#617172")));
+        copy.setGraphic(SettingFontIcon.setSizeAndColor(AntDesignIconsOutlined.COPY, 22, Color.web("#617172")));
+
+        //设置地址天气
+        setWeather();
+
+    }
+
+    @FXML
+    void backToToday(MouseEvent event) {
+        setDataTime();
     }
 
     @FXML
@@ -82,6 +107,30 @@ public class HomeUiController {
         Thread thread = new Thread(() -> {
             Platform.runLater(() -> {
                 pic.setImage(new Image(randomPic(pic.getImage())));
+            });
+        });
+        thread.start();
+    }
+
+    @FXML
+    void copyInfo(MouseEvent event) {
+        String s = datePicker.getValue() + "\n" +
+                chineseYear.getText() + " " + chineseDate.getText() + " \n" +
+                solarTerms24.getText() + " " + festival.getText() + " \n" +
+                address.getText() + "," + weather.getText() + "," +
+                wind.getText();
+
+        Thread thread = new Thread(() -> {
+            Platform.runLater(() -> {
+                // 获取系统剪贴板
+                Clipboard clipboard = Clipboard.getSystemClipboard();
+
+                // 创建 ClipboardContent 对象，用于保存要复制的字符串
+                ClipboardContent content = new ClipboardContent();
+                content.putString(s);
+
+                // 将 ClipboardContent 对象设置到剪贴板
+                clipboard.setContent(content);
             });
         });
         thread.start();
@@ -194,4 +243,22 @@ public class HomeUiController {
         festival.setText(typeDay(chineseCalendar, date));
     }
 
+    //设置天气图标和获取天气消息
+    private void setWeather() {
+        address.setGraphic(SettingFontIcon.setSizeAndColor(FluentUiRegularMZ.MY_LOCATION_24, 20, Color.web("#617172")));
+        weather.setGraphic(SettingFontIcon.setSizeAndColor(FluentUiRegularMZ.WEATHER_HAIL_DAY_20, 20, Color.web("#617172")));
+        wind.setGraphic(SettingFontIcon.setSizeAndColor(FluentUiRegularMZ.WEATHER_BLOWING_SNOW_20, 20, Color.web("#617172")));
+        Thread thread = new Thread(() -> {
+            Platform.runLater(() -> {
+
+                JSONObject json = JSONUtil.parseObj(AddressInfoUtil.getAddressWeather());
+                address.setText("地址：" + json.getStr("address").replaceAll(".*\\s", "").trim());
+                weather.setText("天气：" + json.getStr("weather"));
+                wind.setText("风力：" + json.getStr("windDirection") + "风 " +
+                        json.getStr("windPower"));
+            });
+        });
+        thread.start();
+
+    }
 }

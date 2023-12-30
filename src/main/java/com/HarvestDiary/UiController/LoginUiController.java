@@ -72,16 +72,24 @@ public class LoginUiController {
         // 将圆形裁剪区域应用于图像视图
         avatar.setClip(clip);
         userStatus = new UserStatus("1", false, false, false);
-
+        //获取数据赋值到bean类
         if (OperationalDocument.existFile("userStatus.json")){
             userStatus = JSONUtil.toBean(OperationalDocument.readFile("userStatus.json"), UserStatus.class);
         }
-        if (userStatus.getRememberPw()) {
+        //核对数据进行设置
+        //记住密码
+        if (userStatus.getRememberPw() && userStatus.getLocalLogin()) {
             User user = JSONUtil.toBean(OperationalDocument.readFile("user.json"), User.class);
             userNumber.setText(user.getUserId());
             password.setText(user.getPassword());
             rememberPw.setSelected(true);
+        }if (userStatus.getRememberPw() && !userStatus.getLocalLogin()){
+            User user = JSONUtil.toBean(OperationalDocument.readFile("sUser.json"), User.class);
+            userNumber.setText(user.getUserId());
+            password.setText(user.getPassword());
+            rememberPw.setSelected(true);
         }
+        //自动登录
         if (userStatus.getAutoLogin()) {
             autoLogin.setSelected(true);
             Thread thread = new Thread(() -> {
@@ -95,6 +103,10 @@ public class LoginUiController {
                 });
             });
             thread.start();
+        }
+        //本地登录
+        if (userStatus.getLocalLogin()){
+            localhost.setSelected(true);
         }
     }
 
@@ -120,6 +132,7 @@ public class LoginUiController {
         if (localhost.isSelected()) {
             if (localLogin()) {
                 setLocalLogin();
+                log.info("{}", userStatus);
                 Login.getLoginUiStage().close();
                 new MainDiary().start(new Stage());
                 return;
@@ -130,7 +143,7 @@ public class LoginUiController {
             Platform.runLater(() -> {
                 try {
                     if (serverLogin()) {
-                        System.out.println("=============");
+
                         setLocalLogin();
 
                         Login.getLoginUiStage().close();
