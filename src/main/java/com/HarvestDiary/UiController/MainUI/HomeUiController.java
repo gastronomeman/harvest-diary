@@ -2,14 +2,14 @@ package com.HarvestDiary.UiController.MainUI;
 
 import cn.hutool.core.date.ChineseDate;
 import cn.hutool.core.date.chinese.SolarTerms;
-import cn.hutool.core.swing.clipboard.ClipboardUtil;
+
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
-import com.HarvestDiary.otherTools.OperationalDocument;
+
 import com.HarvestDiary.otherTools.SettingFontIcon;
 import com.HarvestDiary.otherTools.AddressInfoUtil;
-import com.HarvestDiary.pojo.AddressInfo;
+
 import com.jfoenix.controls.JFXButton;
 import de.felixroske.jfxsupport.FXMLController;
 import javafx.application.Platform;
@@ -30,7 +30,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.kordamp.ikonli.antdesignicons.AntDesignIconsOutlined;
 import org.kordamp.ikonli.fluentui.FluentUiRegularMZ;
 
-import java.awt.*;
 
 import java.io.IOException;
 import java.time.DayOfWeek;
@@ -114,11 +113,8 @@ public class HomeUiController {
 
     @FXML
     void copyInfo(MouseEvent event) {
-        String s = datePicker.getValue() + "\n" +
-                chineseYear.getText() + " " + chineseDate.getText() + " \n" +
-                solarTerms24.getText() + " " + festival.getText() + " \n" +
-                address.getText() + "," + weather.getText() + "," +
-                wind.getText();
+        String s = getString();
+
 
         Thread thread = new Thread(() -> {
             Platform.runLater(() -> {
@@ -134,6 +130,22 @@ public class HomeUiController {
             });
         });
         thread.start();
+    }
+
+    private String getString() {
+        String s = " ";
+        if (!address.getText().equals("地址：...")) {
+            s = datePicker.getValue() + "\n" +
+                chineseYear.getText() + " " + chineseDate.getText() + " \n" +
+                solarTerms24.getText() + " " + festival.getText() + " \n" +
+                address.getText() + "," + weather.getText() + "," +
+                wind.getText();
+        }else {
+            s = datePicker.getValue() + "\n" +
+                chineseYear.getText() + " " + chineseDate.getText() + " \n" +
+                solarTerms24.getText() + " " + festival.getText() + " \n";
+        }
+        return s;
     }
 
     //随机更换图片
@@ -250,7 +262,6 @@ public class HomeUiController {
         wind.setGraphic(SettingFontIcon.setSizeAndColor(FluentUiRegularMZ.WEATHER_BLOWING_SNOW_20, 20, Color.web("#617172")));
         Thread thread = new Thread(() -> {
             Platform.runLater(() -> {
-
                 JSONObject json = JSONUtil.parseObj(AddressInfoUtil.getAddressWeather());
                 address.setText("地址：" + json.getStr("address").replaceAll(".*\\s", "").trim());
                 weather.setText("天气：" + json.getStr("weather"));

@@ -12,9 +12,7 @@ public class HarvestDiaryApplication {
 	public static void main(String[] args) throws IOException {
 		SpringApplication.run(HarvestDiaryApplication.class, args);
 
-		// 设置 Java 虚拟机的 -Djava.awt.headless=true 系统属性
 		//System.setProperty("java.awt.headless", "true");
-
 
 		Login.main(args);
 	}
