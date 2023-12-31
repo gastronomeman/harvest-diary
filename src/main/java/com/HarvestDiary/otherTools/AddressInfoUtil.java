@@ -24,11 +24,16 @@ public class AddressInfoUtil {
 
     //获取用户所在地天气
     public static String getAddressWeather() {
+
         String url = "https://www.mxnzp.com/api/weather/current/" + getAddressCity() + "?app_id=yd8hjgswgpjhmnfv&app_secret=1v0kRyednMC1WqzVo85Wwxb5ZsFXUMEm";
 
         HttpResponse response = HttpUtil.createGet(url).execute();
-
-        return JSONUtil.parseObj(response.body()).getStr("data");
+        JSONObject json = JSONUtil.parseObj(response.body());
+        System.out.println(json);
+        if (!json.getStr("code").equals("101")){
+            return json.getStr("data");
+        }
+        return json.getStr("code");
     }
 
 }

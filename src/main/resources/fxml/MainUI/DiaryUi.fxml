@@ -68,7 +68,7 @@
                         <Insets right="30.0" />
                     </HBox.margin>
                 </JFXButton>
-                <JFXButton fx:id="save" prefHeight="45.0" prefWidth="120.0" style="-fx-background-radius: 25; -fx-border-radius: 25; -fx-border-color: linear-gradient(to bottom RIGHT, #FAD9C2, #F3AC9E); -fx-background-color: rgba(150, 150, 150, 0.2);" text="保存">
+                <JFXButton fx:id="save" onMouseClicked="#saveDiary" prefHeight="45.0" prefWidth="120.0" style="-fx-background-radius: 25; -fx-border-radius: 25; -fx-border-color: linear-gradient(to bottom RIGHT, #FAD9C2, #F3AC9E); -fx-background-color: rgba(150, 150, 150, 0.2);" text="保存">
                     <HBox.margin>
                         <Insets left="30.0" />
                     </HBox.margin>

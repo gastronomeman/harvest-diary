@@ -13,6 +13,7 @@ import com.HarvestDiary.pojo.User;
 import lombok.extern.slf4j.Slf4j;
 
 
+import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -30,8 +31,7 @@ public class OperationalDocument {
     private static final String folderPath = FileUtil.normalize(Paths.get(rootPath, folderName).toString());
 
 
-
-    public static String encryptionString(String content){
+    public static String encryptionString(String content) {
         // 创建AES加密工具
         SymmetricCrypto aes = new SymmetricCrypto(SymmetricAlgorithm.AES, Poetry.XinLuNan);
         // 加密
@@ -41,12 +41,14 @@ public class OperationalDocument {
 
         return content;
     }
+
     public static void saveDir(String fileName) {
         // 创建文件夹（如果不存在）
         FileUtil.mkdir(folderPath);
         //储存日记的文件夹
         FileUtil.mkdir(folderPath + "\\" + fileName);
     }
+
     public static void saveFile(String fileName, String content) {
         //加密
         content = encryptionString(content);
@@ -62,7 +64,8 @@ public class OperationalDocument {
         FileWriter fileWriter = new FileWriter(filePath.toFile(), "UTF-8");
         fileWriter.write(content);
     }
-    public static void writeDiary(String fileName, String content){
+
+    public static void writeDiary(String fileName, String content) {
         //加密
         content = encryptionString(content);
 
@@ -70,14 +73,15 @@ public class OperationalDocument {
         FileUtil.mkdir(folderPath + "\\diary");
 
         // 构造文件路径
-        Path filePath = Paths.get(folderPath, fileName);
+        Path filePath = Paths.get(folderPath + "\\diary", fileName);
 
 
         // 使用 Hutool 的 FileWriter 写入文本内容
         FileWriter fileWriter = new FileWriter(filePath.toFile(), "UTF-8");
         fileWriter.write(content);
     }
-    public static void removeFile(String fileName){
+
+    public static void removeFile(String fileName) {
         // 创建文件夹（如果不存在）
         FileUtil.mkdir(folderPath);
         // 构造文件路径
@@ -87,7 +91,7 @@ public class OperationalDocument {
 
     }
 
-    public static String readFile(String fileName){
+    public static String readFile(String fileName) {
         // 构造文件路径
         Path filePath = Paths.get(folderPath, fileName);
 
@@ -104,17 +108,25 @@ public class OperationalDocument {
         // 解密
         return aes.decryptStr(encryptedData);
     }
-    public static boolean existFile(String fileName){
+
+    public static boolean existFile(String fileName) {
         return FileUtil.exist(FileUtil.file(folderPath, fileName));
     }
 
-    public static void replace(String oldStr, String newStr, String fileName){
+    public static void replace(String oldStr, String newStr, String fileName) {
         String s = OperationalDocument.readFile(fileName);
         s = s.replace(oldStr, newStr);
         OperationalDocument.saveFile(fileName, s);
     }
 
-    public static ArrayList<String> readFileToList(String fileName){
+    public static String readDiary(String fileName) {
+        if (existFile("\\diary\\" + fileName)){
+            return readFile("\\diary\\" + fileName);
+        }
+        return null;
+    }
+
+    public static ArrayList<String> readFileToList(String fileName) {
         return (ArrayList<String>) StrUtil.split(readFile(fileName), ';');
     }
 }

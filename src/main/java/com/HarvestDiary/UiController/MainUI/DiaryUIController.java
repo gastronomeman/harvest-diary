@@ -1,16 +1,23 @@
 package com.HarvestDiary.UiController.MainUI;
 
+import cn.hutool.json.JSONUtil;
+import com.HarvestDiary.otherTools.OperationalDocument;
 import com.HarvestDiary.otherTools.SettingFontIcon;
+import com.HarvestDiary.pojo.Diary;
+import com.HarvestDiary.pojo.UserStatus;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextArea;
 import de.felixroske.jfxsupport.FXMLController;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.util.StringConverter;
@@ -44,45 +51,81 @@ public class DiaryUIController {
     @FXML
     private TextField title;
     private int fontSize = 15;
+    UserStatus userStatus = JSONUtil.toBean(OperationalDocument.readFile("userStatus.json"), UserStatus.class);
+    private final Diary diary = new Diary();
 
     @FXML
     public void initialize() {
+
+        diary.setUserId(userStatus.getUserId());
+
+        //设置日记类的值
         datePicker.setValue(LocalDate.now());
+        //给日记类设置格式为yyyy-MM-dd
         datePicker.setConverter(dateFormatter());
 
+        //获取选项卡里面的键值
         HashMap<String, String> hm = setComboBoxItems();
 
+        //设置标题头为日期
         title.setText(String.valueOf(datePicker.getValue()));
+        //设置图标字体
         setIcon();
+        //给diary设置值
+        diary.setColor(backgroundColor.getPromptText());
 
-
+        //设置键值的方法
         backgroundColor.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            //获取颜色键对应的键
             String color = hm.get(newValue);
+            //给diary设置值
+            diary.setColor(newValue);
+            //设置背景色
             diaryText.setStyle("-fx-background-color: " + color);
         });
-
-
+        // 添加值变化监听器
+        datePicker.valueProperty().addListener((observable, oldValue, newValue) -> {
+            //设置标题头为日期
+            title.setText(String.valueOf(newValue));
+            readDiary(hm);
+        });
+        readDiary(hm);
     }
 
     @FXML
     void getToMax(MouseEvent event) {
         if (fontSize >= 50) return;
         fontSize += 5;
+        diary.setFontSize(fontSize + "");
         diaryText.setFont(Font.font(fontSize));
     }
-
     @FXML
     void getToMin(MouseEvent event) {
         if (fontSize <= 10) return;
         fontSize -= 5;
+        diary.setFontSize(fontSize + "");
         diaryText.setFont(Font.font(fontSize));
     }
 
-    @FXML
+    @FXML//清除文本按钮
     void clearTextArea(MouseEvent event) {
         if (showAlert("是否确定清除文本内容！！！")){
+            title.setText("");
             diaryText.setText("");
         }
+    }
+    @FXML//保存日记
+    void saveDiary(MouseEvent event) {
+        diary.setTime(datePicker.getValue());//设置时间
+        diary.setTitle(title.getText());//设置文章标题
+        diary.setContent(diaryText.getText());//设置文章内容
+        //存文章进本地
+        if (userStatus.getLocalLogin()){
+            OperationalDocument.writeDiary(diary.getUserId() + diary.getTime() + "Local", JSONUtil.toJsonStr(diary));
+        }else {
+            OperationalDocument.writeDiary(diary.getUserId() + diary.getTime(), JSONUtil.toJsonStr(diary));
+        }
+
     }
 
     private HashMap<String, String> setComboBoxItems() {
@@ -119,15 +162,13 @@ public class DiaryUIController {
         hm.put(" 远山紫", "#ccccd6");
         return hm;
     }
-
-
+    //设置按钮的图标
     private void setIcon() {
         amplify.setGraphic(SettingFontIcon.setSizeAndColor(AntDesignIconsOutlined.ZOOM_IN, 20, Color.web("#617172")));
         reduce.setGraphic(SettingFontIcon.setSizeAndColor(AntDesignIconsOutlined.ZOOM_OUT, 20, Color.web("#617172")));
         clear.setGraphic(SettingFontIcon.setSizeAndColor(AntDesignIconsOutlined.CLEAR, 25, Color.web("#617172")));
         save.setGraphic(SettingFontIcon.setSizeAndColor(AntDesignIconsOutlined.SAVE, 25, Color.web("#617172")));
     }
-
     //格式化DataPicker
     private StringConverter<LocalDate> dateFormatter() {
         // 创建日期格式化器
@@ -154,7 +195,28 @@ public class DiaryUIController {
             }
         };
     }
+    private void readDiary(HashMap<String, String> hm){
+        String diaryPath;
+        if (userStatus.getLocalLogin()){
+            diaryPath = OperationalDocument.readDiary(userStatus.getUserId() + datePicker.getValue() + "Local");
+        }else {
+            diaryPath = OperationalDocument.readDiary(userStatus.getUserId() + datePicker.getValue());
+        }
+        if (!(diaryPath == null)){
+            Diary d = JSONUtil.toBean(diaryPath, Diary.class);
+            datePicker.setValue(d.getTime());
 
+            String s = d.getColor();
+            System.out.println(s);
+            backgroundColor.setPromptText(s);
+            //设置背景色
+            diaryText.setStyle("-fx-background-color: " + hm.get(s));
+
+            title.setText(d.getTitle());
+
+            diaryText.setText(d.getContent());
+        }
+    }
     private boolean showAlert(String s) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("提示");

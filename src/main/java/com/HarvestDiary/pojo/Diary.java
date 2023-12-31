@@ -16,5 +16,4 @@ public class Diary {
     private String fontSize;
     private String title;
     private String content;
-
 }

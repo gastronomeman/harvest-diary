@@ -271,11 +271,16 @@ public class HomeUiController {
         wind.setGraphic(SettingFontIcon.setSizeAndColor(FluentUiRegularMZ.WEATHER_BLOWING_SNOW_20, 20, Color.web("#617172")));
         Thread thread = new Thread(() -> {
             Platform.runLater(() -> {
-                JSONObject json = JSONUtil.parseObj(AddressInfoUtil.getAddressWeather());
-                address.setText("地址：" + json.getStr("address").replaceAll(".*\\s", "").trim());
-                weather.setText("天气：" + json.getStr("weather"));
-                wind.setText("风力：" + json.getStr("windDirection") + "风 " +
-                        json.getStr("windPower"));
+                String s = AddressInfoUtil.getAddressWeather();
+                System.out.println(s);
+                if (!s.equals("101")){
+                    JSONObject json = JSONUtil.parseObj(s);
+                    address.setText("地址：" + json.getStr("address").replaceAll(".*\\s", "").trim());
+                    weather.setText("天气：" + json.getStr("weather"));
+                    wind.setText("风力：" + json.getStr("windDirection") + "风 " +
+                            json.getStr("windPower"));
+                }
+
             });
         });
         thread.start();
