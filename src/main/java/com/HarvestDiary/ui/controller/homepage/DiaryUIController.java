@@ -1,4 +1,4 @@
-package com.HarvestDiary.ui.controller.pages;
+package com.HarvestDiary.ui.controller.homepage;
 
 import cn.hutool.json.JSONUtil;
 import com.HarvestDiary.other.tools.OperationalDocument;

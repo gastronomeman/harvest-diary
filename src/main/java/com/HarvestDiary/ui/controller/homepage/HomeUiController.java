@@ -1,4 +1,4 @@
-package com.HarvestDiary.ui.controller.pages;
+package com.HarvestDiary.ui.controller.homepage;
 
 import cn.hutool.core.date.ChineseDate;
 import cn.hutool.core.date.DateUtil;

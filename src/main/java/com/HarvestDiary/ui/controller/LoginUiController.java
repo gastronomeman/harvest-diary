@@ -5,7 +5,7 @@ import cn.hutool.http.HttpResponse;
 import cn.hutool.json.JSONUtil;
 import com.HarvestDiary.ui.ForgotPassword;
 import com.HarvestDiary.ui.Login;
-import com.HarvestDiary.ui.MainDiary;
+import com.HarvestDiary.ui.HomePage;
 import com.HarvestDiary.ui.Register;
 import com.HarvestDiary.other.tools.OperationalDocument;
 import com.HarvestDiary.pojo.Poetry;
@@ -95,7 +95,7 @@ public class LoginUiController {
                 Platform.runLater(() -> {
                     Login.getLoginUiStage().close();
                     try {
-                        new MainDiary().start(new Stage());
+                        new HomePage().start(new Stage());
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
@@ -133,7 +133,7 @@ public class LoginUiController {
                 setLocalLogin();
                 log.info("{}", userStatus);
                 Login.getLoginUiStage().close();
-                new MainDiary().start(new Stage());
+                new HomePage().start(new Stage());
                 return;
             }
         }
@@ -147,7 +147,7 @@ public class LoginUiController {
 
                         Login.getLoginUiStage().close();
 
-                        new MainDiary().start(new Stage());
+                        new HomePage().start(new Stage());
 
                     }
                 } catch (Exception e) {

@@ -1,4 +1,4 @@
-package com.HarvestDiary.ui.controller.pages;
+package com.HarvestDiary.ui.controller.homepage;
 
 import com.HarvestDiary.other.tools.HowManyDaysInTheMonth;
 import com.HarvestDiary.other.tools.RecordMarker;

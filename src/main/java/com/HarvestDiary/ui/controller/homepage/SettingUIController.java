@@ -1,4 +1,4 @@
-package com.HarvestDiary.ui.controller.pages;
+package com.HarvestDiary.ui.controller.homepage;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

@@ -10,7 +10,7 @@ import lombok.Getter;
 
 import java.util.Objects;
 
-public class MainDiary extends Application {
+public class HomePage extends Application {
     public static void main(String[] args) {
         launch(args);
     }
@@ -21,11 +21,11 @@ public class MainDiary extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         Parent sideList = FXMLLoader.load(
-                Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/MainUI/SideList.fxml"))
+                Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/homepage/SideList.fxml"))
         );
 
         Parent homeUI = FXMLLoader.load(
-                Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/MainUI/HomeUI.fxml"))
+                Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/homepage/HomeUI.fxml"))
         );
 
 

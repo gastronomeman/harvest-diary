@@ -1,8 +1,8 @@
-package com.HarvestDiary.ui.controller.pages;
+package com.HarvestDiary.ui.controller.homepage;
 
 import cn.hutool.json.JSONUtil;
 import com.HarvestDiary.ui.Login;
-import com.HarvestDiary.ui.MainDiary;
+import com.HarvestDiary.ui.HomePage;
 import com.HarvestDiary.other.tools.OperationalDocument;
 import com.HarvestDiary.other.tools.SettingFontIcon;
 import com.HarvestDiary.pojo.UserStatus;
@@ -83,7 +83,7 @@ public class SideListController {
                     String buttonId = ((Button) event.getSource()).getId();
                     log.info(buttonId);
 
-                    HBox root = (HBox) MainDiary.getMainDiaryUiStage().getScene().getRoot();
+                    HBox root = (HBox) HomePage.getMainDiaryUiStage().getScene().getRoot();
 
                     List<Parent> mainUI = null;
 
@@ -95,7 +95,7 @@ public class SideListController {
                             u.setAutoLogin(false);
                             OperationalDocument.saveFile("userStatus.json", JSONUtil.toJsonStr(u));
 
-                            MainDiary.getMainDiaryUiStage().close();
+                            HomePage.getMainDiaryUiStage().close();
                             new Login().start(new Stage());
                         }
                         case "home" -> {
@@ -141,17 +141,17 @@ public class SideListController {
      */
     private List<Parent> getFxmlLoader() throws IOException {
         Parent homeUI = FXMLLoader.load(
-                Objects.requireNonNull(MainDiary.class.getClassLoader().getResource("fxml/MainUI/HomeUI.fxml"))
+                Objects.requireNonNull(HomePage.class.getClassLoader().getResource("fxml/homepage/HomeUI.fxml"))
         );
         Parent calendarUI = FXMLLoader.load(
-                Objects.requireNonNull(MainDiary.class.getClassLoader().getResource("fxml/MainUI/CalendarUI.fxml"))
+                Objects.requireNonNull(HomePage.class.getClassLoader().getResource("fxml/homepage/CalendarUI.fxml"))
         );
         Parent diaryUI = FXMLLoader.load(
-                Objects.requireNonNull(MainDiary.class.getClassLoader().getResource("fxml/MainUI/DiaryUi.fxml"))
+                Objects.requireNonNull(HomePage.class.getClassLoader().getResource("fxml/homepage/DiaryUi.fxml"))
         );
 
         Parent settingUI = FXMLLoader.load(
-                Objects.requireNonNull(MainDiary.class.getClassLoader().getResource("fxml/MainUI/SettingUI.fxml"))
+                Objects.requireNonNull(HomePage.class.getClassLoader().getResource("fxml/homepage/SettingUI.fxml"))
         );
         return new ArrayList<>(Arrays.asList(homeUI, calendarUI, diaryUI, settingUI));
     }
