@@ -1,4 +1,4 @@
-package com.HarvestDiary.otherTools;
+package com.HarvestDiary.other.tools;
 
 import javafx.scene.paint.Color;
 import org.kordamp.ikonli.Ikon;

@@ -1,4 +1,4 @@
-package com.HarvestDiary.otherTools;
+package com.HarvestDiary.other.tools;
 
 public class DiaryMarker {
     String title;

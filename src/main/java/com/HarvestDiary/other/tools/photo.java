@@ -1,4 +1,4 @@
-package com.HarvestDiary.otherTools;
+package com.HarvestDiary.other.tools;
 
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.http.HttpUtil;

@@ -1,4 +1,4 @@
-package com.HarvestDiary.otherTools;
+package com.HarvestDiary.other.tools;
 
 import cn.hutool.http.HttpResponse;
 import cn.hutool.http.HttpUtil;

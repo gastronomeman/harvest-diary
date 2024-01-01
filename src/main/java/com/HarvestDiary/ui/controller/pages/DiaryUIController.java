@@ -1,8 +1,8 @@
-package com.HarvestDiary.UiController.MainUI;
+package com.HarvestDiary.ui.controller.pages;
 
 import cn.hutool.json.JSONUtil;
-import com.HarvestDiary.otherTools.OperationalDocument;
-import com.HarvestDiary.otherTools.SettingFontIcon;
+import com.HarvestDiary.other.tools.OperationalDocument;
+import com.HarvestDiary.other.tools.SettingFontIcon;
 import com.HarvestDiary.pojo.Diary;
 import com.HarvestDiary.pojo.UserStatus;
 import com.jfoenix.controls.JFXButton;
@@ -10,14 +10,8 @@ import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextArea;
 import de.felixroske.jfxsupport.FXMLController;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.util.StringConverter;
@@ -27,7 +21,6 @@ import org.kordamp.ikonli.antdesignicons.AntDesignIconsOutlined;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Optional;
 
 
@@ -52,6 +45,8 @@ public class DiaryUIController {
     private JFXButton save;
     @FXML
     private TextField title;
+    @FXML
+    private Label ziShu;
     private int fontSize = 15;
     UserStatus userStatus = JSONUtil.toBean(OperationalDocument.readFile("userStatus.json"), UserStatus.class);
     private final Diary diary = new Diary();
@@ -79,6 +74,8 @@ public class DiaryUIController {
         diary.setColor(backgroundColor.getPromptText());
 
         readDiary(hm);
+        // 更新字符数量
+
 
         //设置键值的方法
         backgroundColor.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
@@ -99,6 +96,11 @@ public class DiaryUIController {
             //设置标题头为日期
             title.setText(String.valueOf(newValue));
             readDiary(hm);
+        });
+        //数字数
+        characterCount(diaryText.getText());
+        diaryText.textProperty().addListener((observable, oldValue, newValue) -> {
+            characterCount(diaryText.getText());
         });
 
     }
@@ -208,6 +210,17 @@ public class DiaryUIController {
                 }
             }
         };
+    }
+    Boolean tip = false;//方法只提示一次
+    //数 字数
+    private void characterCount(String s){
+        // 更新字符数量
+        int characterCount = s.length();
+        if (characterCount > 520 && tip){
+            showAlert("\t字数超过520，若选择了同步上传云端500后的字数将不会上传\n进行同步");
+            tip = true;
+        }
+        ziShu.setText(characterCount + "/520字");
     }
     private void readDiary(HashMap<String, String> hm){
         String diaryPath;

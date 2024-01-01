@@ -1,11 +1,10 @@
-package com.HarvestDiary.otherTools;
+package com.HarvestDiary.other.tools;
 
 
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Date;
 
-import static com.HarvestDiary.otherTools.HowManyDaysInTheMonth.howManyDays;
 public class RecordMarker {
     String name;
      String day;

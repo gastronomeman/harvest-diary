@@ -1,10 +1,10 @@
-package com.HarvestDiary.UiController.MainUI;
+package com.HarvestDiary.ui.controller.pages;
 
 import cn.hutool.json.JSONUtil;
-import com.HarvestDiary.Ui.Login;
-import com.HarvestDiary.Ui.MainDiary;
-import com.HarvestDiary.otherTools.OperationalDocument;
-import com.HarvestDiary.otherTools.SettingFontIcon;
+import com.HarvestDiary.ui.Login;
+import com.HarvestDiary.ui.MainDiary;
+import com.HarvestDiary.other.tools.OperationalDocument;
+import com.HarvestDiary.other.tools.SettingFontIcon;
 import com.HarvestDiary.pojo.UserStatus;
 import com.jfoenix.controls.JFXButton;
 import de.felixroske.jfxsupport.FXMLController;

@@ -1,14 +1,13 @@
-package com.HarvestDiary.UiController;
+package com.HarvestDiary.ui.controller;
 
-import cn.hutool.core.util.StrUtil;
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
 import cn.hutool.json.JSONUtil;
-import com.HarvestDiary.Ui.ForgotPassword;
-import com.HarvestDiary.Ui.Login;
-import com.HarvestDiary.Ui.MainDiary;
-import com.HarvestDiary.Ui.Register;
-import com.HarvestDiary.otherTools.OperationalDocument;
+import com.HarvestDiary.ui.ForgotPassword;
+import com.HarvestDiary.ui.Login;
+import com.HarvestDiary.ui.MainDiary;
+import com.HarvestDiary.ui.Register;
+import com.HarvestDiary.other.tools.OperationalDocument;
 import com.HarvestDiary.pojo.Poetry;
 import com.HarvestDiary.pojo.User;
 import com.HarvestDiary.pojo.UserStatus;

@@ -1,7 +1,7 @@
-package com.HarvestDiary.UiController.MainUI;
+package com.HarvestDiary.ui.controller.pages;
 
-import com.HarvestDiary.otherTools.HowManyDaysInTheMonth;
-import com.HarvestDiary.otherTools.RecordMarker;
+import com.HarvestDiary.other.tools.HowManyDaysInTheMonth;
+import com.HarvestDiary.other.tools.RecordMarker;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -11,7 +11,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-import javax.swing.text.html.ImageView;
 import java.util.ArrayList;
 import java.util.Date;
 

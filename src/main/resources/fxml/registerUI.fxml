@@ -17,7 +17,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="390.0" prefWidth="420.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.HarvestDiary.UiController.RegisterUiController">
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="390.0" prefWidth="420.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.HarvestDiary.ui.controller.RegisterUiController">
    <children>
       <HBox alignment="CENTER" prefHeight="70.0">
          <children>
@@ -38,7 +38,7 @@
                         <Image url="@../image/kls.png" />
                      </image>
                   </ImageView>
-                  <JFXButton prefWidth="70.0" style="-fx-background-color: rgba(114,114,114,0.5);" text="设置头像" textAlignment="CENTER" textFill="WHITE">
+                  <JFXButton opacity="0.0" prefWidth="70.0" style="-fx-background-color: rgba(114,114,114,0.5);" text="设置头像" textAlignment="CENTER" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="10.0" />
                      </font>

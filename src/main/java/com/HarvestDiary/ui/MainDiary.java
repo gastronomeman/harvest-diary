@@ -1,4 +1,4 @@
-package com.HarvestDiary.Ui;
+package com.HarvestDiary.ui;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -8,7 +8,6 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import lombok.Getter;
 
-import java.io.IOException;
 import java.util.Objects;
 
 public class MainDiary extends Application {

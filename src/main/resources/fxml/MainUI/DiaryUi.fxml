@@ -12,13 +12,18 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="720.0" style="-fx-background-color: linear-gradient(to right, #94a6b1, #D5B4BA 50%, #61878A);" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.HarvestDiary.UiController.MainUI.DiaryUIController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="720.0" style="-fx-background-color: linear-gradient(to right, #94a6b1, #D5B4BA 50%, #61878A);" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.HarvestDiary.ui.controller.pages.DiaryUIController">
     <children>
         <HBox alignment="CENTER" prefHeight="50.0" prefWidth="720.0">
             <children>
+            <Label fx:id="ziShu" text="0/520个字">
+               <HBox.margin>
+                  <Insets left="150.0" />
+               </HBox.margin>
+            </Label>
                 <DatePicker fx:id="datePicker">
                <HBox.margin>
-                  <Insets left="220.0" right="10.0" />
+                  <Insets left="15.0" right="10.0" />
                </HBox.margin></DatePicker>
             <JFXButton fx:id="backToToday" onMouseClicked="#backToToday" prefWidth="90.0" style="-fx-background-color: rgba(255, 255, 255, 0.4); -fx-background-radius: 15; -fx-border-color: linear-gradient(to bottom RIGHT, #FAD9C2, #F3AC9E); -fx-border-radius: 15;" text="回到今天">
                <HBox.margin>
@@ -36,7 +41,7 @@
             <children>
             <Label text="背景颜色：" textAlignment="CENTER">
                <HBox.margin>
-                  <Insets bottom="10.0" />
+                  <Insets bottom="10.0" left="20.0" />
                </HBox.margin>
             </Label>
             <JFXComboBox fx:id="backgroundColor" focusColor="TRANSPARENT" promptText=" 芡食白" style="-fx-background-color: rgb(128, 128, 128, 0.5);" unFocusColor="TRANSPARENT">

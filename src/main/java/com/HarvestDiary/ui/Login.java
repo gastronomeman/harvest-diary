@@ -1,4 +1,4 @@
-package com.HarvestDiary.Ui;
+package com.HarvestDiary.ui;
 
 
 import javafx.application.Application;

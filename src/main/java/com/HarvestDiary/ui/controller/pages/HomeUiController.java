@@ -1,4 +1,4 @@
-package com.HarvestDiary.UiController.MainUI;
+package com.HarvestDiary.ui.controller.pages;
 
 import cn.hutool.core.date.ChineseDate;
 import cn.hutool.core.date.DateUtil;
@@ -8,8 +8,8 @@ import cn.hutool.core.util.RandomUtil;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 
-import com.HarvestDiary.otherTools.SettingFontIcon;
-import com.HarvestDiary.otherTools.AddressInfoUtil;
+import com.HarvestDiary.other.tools.SettingFontIcon;
+import com.HarvestDiary.other.tools.AddressInfoUtil;
 
 import com.jfoenix.controls.JFXButton;
 import de.felixroske.jfxsupport.FXMLController;
