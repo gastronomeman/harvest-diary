@@ -12,7 +12,7 @@ public class AddressInfoUtil {
       APP_SECRET:1v0kRyednMC1WqzVo85Wwxb5ZsFXUMEm
        */
     //获取用户IP地址
-    public static String getAddressCity() {
+    public static String getAddressCity() throws Exception {
         // 使用一个提供公网 IP 查询服务的接口
         String url = "https://www.mxnzp.com/api/ip/self?app_id=lpkspetfes0fjqxy&app_secret=wmb1HNJlPExNsUIsT6NHM1yFt9qaBywZ";
         String ipAddress = HttpUtil.get(url);
@@ -23,14 +23,14 @@ public class AddressInfoUtil {
     }
 
     //获取用户所在地天气
-    public static String getAddressWeather() {
+    public static String getAddressWeather() throws Exception {
 
         String url = "https://www.mxnzp.com/api/weather/current/" + getAddressCity() + "?app_id=yd8hjgswgpjhmnfv&app_secret=1v0kRyednMC1WqzVo85Wwxb5ZsFXUMEm";
 
         HttpResponse response = HttpUtil.createGet(url).execute();
         JSONObject json = JSONUtil.parseObj(response.body());
         System.out.println(json);
-        if (!json.getStr("code").equals("101")){
+        if (!json.getStr("code").equals("101")) {
             return json.getStr("data");
         }
         return json.getStr("code");

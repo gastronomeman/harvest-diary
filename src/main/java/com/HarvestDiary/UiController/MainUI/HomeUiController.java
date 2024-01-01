@@ -271,7 +271,13 @@ public class HomeUiController {
         wind.setGraphic(SettingFontIcon.setSizeAndColor(FluentUiRegularMZ.WEATHER_BLOWING_SNOW_20, 20, Color.web("#617172")));
         Thread thread = new Thread(() -> {
             Platform.runLater(() -> {
-                String s = AddressInfoUtil.getAddressWeather();
+                String s = "101";
+                try {
+                    s = AddressInfoUtil.getAddressWeather();
+                }catch (Exception e){
+                    log.info("网络连接异常", e);
+                }
+
                 System.out.println(s);
                 if (!s.equals("101")){
                     JSONObject json = JSONUtil.parseObj(s);
