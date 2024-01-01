@@ -41,6 +41,8 @@ public class DiaryUIController {
     @FXML
     private DatePicker datePicker;
     @FXML
+    private JFXButton backToToday;
+    @FXML
     private JFXTextArea diaryText;
     @FXML
     private JFXButton clear;
@@ -64,6 +66,8 @@ public class DiaryUIController {
         //给日记类设置格式为yyyy-MM-dd
         datePicker.setConverter(dateFormatter());
 
+        backToToday.setGraphic(SettingFontIcon.setSizeAndColor(AntDesignIconsOutlined.RELOAD, 14, Color.web("#617172")));
+
         //获取选项卡里面的键值
         HashMap<String, String> hm = setComboBoxItems();
 
@@ -85,6 +89,11 @@ public class DiaryUIController {
         });
         // 添加值变化监听器
         datePicker.valueProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue == null){
+                showAlert("日期不能为空");
+                datePicker.setValue(LocalDate.now());
+                return;
+            }
             //设置标题头为日期
             title.setText(String.valueOf(newValue));
             readDiary(hm);
@@ -127,7 +136,10 @@ public class DiaryUIController {
         }
 
     }
-
+    @FXML
+    void backToToday(MouseEvent event) {
+        datePicker.setValue(LocalDate.now());
+    }
     private HashMap<String, String> setComboBoxItems() {
         HashMap<String, String> hm = new HashMap<>();
         backgroundColor.getItems().add(" 芡食白");//#e2e1e4
@@ -196,6 +208,7 @@ public class DiaryUIController {
         };
     }
     private void readDiary(HashMap<String, String> hm){
+
         String diaryPath;
         if (userStatus.getLocalLogin()){
             diaryPath = OperationalDocument.readDiary(userStatus.getUserId() + datePicker.getValue() + "Local");
@@ -215,6 +228,9 @@ public class DiaryUIController {
             title.setText(d.getTitle());
 
             diaryText.setText(d.getContent());
+        }else {
+            title.setText("");
+            diaryText.setText("");
         }
     }
     private boolean showAlert(String s) {

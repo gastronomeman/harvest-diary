@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
 <?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXTextArea?>
 <?import javafx.geometry.Insets?>
@@ -15,7 +16,20 @@
     <children>
         <HBox alignment="CENTER" prefHeight="50.0" prefWidth="720.0">
             <children>
-                <DatePicker fx:id="datePicker" />
+                <DatePicker fx:id="datePicker">
+               <HBox.margin>
+                  <Insets left="220.0" right="10.0" />
+               </HBox.margin></DatePicker>
+            <JFXButton fx:id="backToToday" onMouseClicked="#backToToday" prefWidth="90.0" style="-fx-background-color: rgba(255, 255, 255, 0.4); -fx-background-radius: 15; -fx-border-color: linear-gradient(to bottom RIGHT, #FAD9C2, #F3AC9E); -fx-border-radius: 15;" text="回到今天">
+               <HBox.margin>
+                  <Insets left="10.0" />
+               </HBox.margin>
+            </JFXButton>
+            <JFXCheckBox text="是否同步上传云端">
+               <HBox.margin>
+                  <Insets left="35.0" />
+               </HBox.margin>
+            </JFXCheckBox>
             </children>
         </HBox>
         <HBox alignment="CENTER" prefHeight="50.0" prefWidth="720.0">
@@ -61,7 +75,7 @@
             </JFXTextArea>
          </children>
         </HBox>
-        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+        <HBox alignment="CENTER" prefHeight="80.0" prefWidth="720.0">
             <children>
                 <JFXButton fx:id="clear" onMouseClicked="#clearTextArea" prefHeight="45.0" prefWidth="120.0" style="-fx-background-radius: 25; -fx-border-radius: 25; -fx-border-color: linear-gradient(to bottom RIGHT, #FAD9C2, #F3AC9E); -fx-background-color: rgba(150, 150, 150, 0.2);" text="清空">
                     <HBox.margin>
