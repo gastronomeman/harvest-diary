@@ -78,6 +78,8 @@ public class DiaryUIController {
         //给diary设置值
         diary.setColor(backgroundColor.getPromptText());
 
+        readDiary(hm);
+
         //设置键值的方法
         backgroundColor.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             //获取颜色键对应的键
@@ -98,7 +100,7 @@ public class DiaryUIController {
             title.setText(String.valueOf(newValue));
             readDiary(hm);
         });
-        readDiary(hm);
+
     }
 
     @FXML
@@ -129,9 +131,9 @@ public class DiaryUIController {
         diary.setTitle(title.getText());//设置文章标题
         diary.setContent(diaryText.getText());//设置文章内容
         //存文章进本地
-        if (userStatus.getLocalLogin()){
+        if (userStatus.getLocalLogin() && showAlert("是否确认保存")){
             OperationalDocument.writeDiary(diary.getUserId() + diary.getTime() + "Local", JSONUtil.toJsonStr(diary));
-        }else {
+        }else if (showAlert("是否确认保存")){
             OperationalDocument.writeDiary(diary.getUserId() + diary.getTime(), JSONUtil.toJsonStr(diary));
         }
 
@@ -208,8 +210,8 @@ public class DiaryUIController {
         };
     }
     private void readDiary(HashMap<String, String> hm){
-
         String diaryPath;
+
         if (userStatus.getLocalLogin()){
             diaryPath = OperationalDocument.readDiary(userStatus.getUserId() + datePicker.getValue() + "Local");
         }else {
@@ -220,8 +222,10 @@ public class DiaryUIController {
             datePicker.setValue(d.getTime());
 
             String s = d.getColor();
-            System.out.println(s);
-            backgroundColor.setPromptText(s);
+
+            //更改选项选中的选项
+            backgroundColor.getSelectionModel().select(s);
+
             //设置背景色
             diaryText.setStyle("-fx-background-color: " + hm.get(s));
 
@@ -229,7 +233,6 @@ public class DiaryUIController {
 
             diaryText.setText(d.getContent());
         }else {
-            title.setText("");
             diaryText.setText("");
         }
     }
