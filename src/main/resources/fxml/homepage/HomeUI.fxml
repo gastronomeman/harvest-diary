@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="HomeUI" alignment="TOP_CENTER" prefHeight="500.0" prefWidth="720.0" style="-fx-background-color: linear-gradient(to right, #94a6b1, #D5B4BA 50%, #61878A);" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.HarvestDiary.ui.controller.homepage.HomeUiController">
+<VBox fx:id="HomeUI" alignment="TOP_CENTER" prefHeight="500.0" prefWidth="720.0" style="-fx-background-color: linear-gradient(to right, #94a6b1, #D5B4BA 50%, #61878A);" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.harvestdiary.ui.controller.homepage.HomeUiController">
     <children>
         <GridPane alignment="CENTER" prefHeight="130.0" prefWidth="720.0">
             <columnConstraints>

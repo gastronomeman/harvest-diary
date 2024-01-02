@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXCheckBox?>
 <?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXTextArea?>
 <?import javafx.geometry.Insets?>
@@ -12,13 +11,13 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="720.0" style="-fx-background-color: linear-gradient(to right, #94a6b1, #D5B4BA 50%, #61878A);" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.HarvestDiary.ui.controller.homepage.DiaryUIController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="720.0" style="-fx-background-color: linear-gradient(to right, #94a6b1, #D5B4BA 50%, #61878A);" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.harvestdiary.ui.controller.homepage.DiaryUIController">
     <children>
         <HBox alignment="CENTER" prefHeight="50.0" prefWidth="720.0">
             <children>
             <Label fx:id="ziShu" text="0/520个字">
                <HBox.margin>
-                  <Insets left="150.0" />
+                  <Insets />
                </HBox.margin>
             </Label>
                 <DatePicker fx:id="datePicker">
@@ -30,11 +29,6 @@
                   <Insets left="10.0" />
                </HBox.margin>
             </JFXButton>
-            <JFXCheckBox text="是否同步上传云端">
-               <HBox.margin>
-                  <Insets left="35.0" />
-               </HBox.margin>
-            </JFXCheckBox>
             </children>
         </HBox>
         <HBox alignment="CENTER" prefHeight="50.0" prefWidth="720.0">
@@ -87,6 +81,11 @@
                         <Insets right="30.0" />
                     </HBox.margin>
                 </JFXButton>
+            <JFXButton fx:id="putToCloud" onMouseClicked="#saveAll" prefHeight="45.0" prefWidth="150.0" style="-fx-background-radius: 25; -fx-border-radius: 25; -fx-border-color: linear-gradient(to bottom RIGHT, #FAD9C2, #F3AC9E); -fx-background-color: rgba(150, 150, 150, 0.2);" text="保存并上传云端">
+               <HBox.margin>
+                  <Insets left="30.0" right="30.0" />
+               </HBox.margin>
+            </JFXButton>
                 <JFXButton fx:id="save" onMouseClicked="#saveDiary" prefHeight="45.0" prefWidth="120.0" style="-fx-background-radius: 25; -fx-border-radius: 25; -fx-border-color: linear-gradient(to bottom RIGHT, #FAD9C2, #F3AC9E); -fx-background-color: rgba(150, 150, 150, 0.2);" text="保存">
                     <HBox.margin>
                         <Insets left="30.0" />

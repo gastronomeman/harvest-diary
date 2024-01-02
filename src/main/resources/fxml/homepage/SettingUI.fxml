@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox fx:id="SettingUI" alignment="TOP_CENTER" prefHeight="500.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.HarvestDiary.ui.controller.homepage.SettingUIController">
+<VBox fx:id="SettingUI" alignment="TOP_CENTER" prefHeight="500.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.harvestdiary.ui.controller.homepage.SettingUIController">
    <children>
       <TabPane fx:id="settingPane" prefHeight="504.0" prefWidth="720.0">
         <tabs>
