@@ -1,11 +1,15 @@
 package com.HarvestDiary.ui.controller.homepage;
 
+import cn.hutool.http.HttpRequest;
+import cn.hutool.http.HttpResponse;
 import cn.hutool.json.JSONUtil;
 import com.HarvestDiary.other.tools.OperationalDocument;
 import com.HarvestDiary.other.tools.SettingFontIcon;
 import com.HarvestDiary.pojo.Diary;
+import com.HarvestDiary.pojo.Poetry;
 import com.HarvestDiary.pojo.UserStatus;
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextArea;
 import de.felixroske.jfxsupport.FXMLController;
@@ -48,11 +52,14 @@ public class DiaryUIController {
     @FXML
     private Label ziShu;
     private int fontSize = 15;
-    UserStatus userStatus = JSONUtil.toBean(OperationalDocument.readFile("userStatus.json"), UserStatus.class);
+    @FXML
+    private JFXCheckBox putToCloud;
+    UserStatus userStatus;
     private final Diary diary = new Diary();
 
     @FXML
     public void initialize() {
+        userStatus  = JSONUtil.toBean(OperationalDocument.readFile("userStatus.json"), UserStatus.class);
 
         diary.setUserId(userStatus.getUserId());
 
@@ -106,6 +113,13 @@ public class DiaryUIController {
     }
 
     @FXML
+    void ckSelect(MouseEvent event) {
+        if (userStatus.getLocalLogin() && putToCloud.isSelected()){
+            showAlert("\t非常抱歉,本地用户不能使用云端");
+            putToCloud.setSelected(false);
+        }
+    }
+    @FXML
     void getToMax(MouseEvent event) {
         if (fontSize >= 50) return;
         fontSize += 5;
@@ -137,6 +151,13 @@ public class DiaryUIController {
             OperationalDocument.writeDiary(diary.getUserId() + diary.getTime() + "Local", JSONUtil.toJsonStr(diary));
         }else if (showAlert("是否确认保存")){
             OperationalDocument.writeDiary(diary.getUserId() + diary.getTime(), JSONUtil.toJsonStr(diary));
+            if (putToCloud.isSelected()){
+                HttpResponse response = HttpRequest.post(Poetry.API + "/diary/write")
+                        .header("Content-Type", "application/json")
+                        .body(JSONUtil.toJsonStr(diary))
+                        .execute();
+                System.out.println(response.body());
+            }
         }
 
     }
