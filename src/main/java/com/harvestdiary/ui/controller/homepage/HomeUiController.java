@@ -8,9 +8,11 @@ import cn.hutool.core.util.RandomUtil;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 
+import com.harvestdiary.other.tools.OperationalDocument;
 import com.harvestdiary.other.tools.SettingFontIcon;
 import com.harvestdiary.other.tools.AddressInfoUtil;
 
+import com.harvestdiary.pojo.WeatherAS;
 import com.jfoenix.controls.JFXButton;
 import de.felixroske.jfxsupport.FXMLController;
 import javafx.application.Platform;
@@ -271,21 +273,20 @@ public class HomeUiController {
         wind.setGraphic(SettingFontIcon.setSizeAndColor(FluentUiRegularMZ.WEATHER_BLOWING_SNOW_20, 20, Color.web("#617172")));
         Thread thread = new Thread(() -> {
             Platform.runLater(() -> {
-                String s = "101";
-                try {
-                    s = AddressInfoUtil.getAddressWeather();
-                }catch (Exception e){
-                    log.info("网络连接异常", e);
+                if (!OperationalDocument.existFile("weatherAS.json")){
+                    AddressInfoUtil.getAddressWeather();
                 }
 
-                System.out.println(s);
-                if (!s.equals("101")){
-                    JSONObject json = JSONUtil.parseObj(s);
-                    address.setText("地址：" + json.getStr("address").replaceAll(".*\\s", "").trim());
-                    weather.setText("天气：" + json.getStr("weather"));
-                    wind.setText("风力：" + json.getStr("windDirection") + "风 " +
-                            json.getStr("windPower"));
+                WeatherAS weatherAS = JSONUtil.toBean(OperationalDocument.readFile("weatherAS.json"), WeatherAS.class);
+
+                if (!Objects.equals(weatherAS.getTime(), String.valueOf(LocalDate.now()))){
+                    AddressInfoUtil.getAddressWeather();
+                    weatherAS = JSONUtil.toBean(OperationalDocument.readFile("weatherAS.json"), WeatherAS.class);
                 }
+
+                address.setText("地址：" + weatherAS.getAddress());
+                weather.setText("天气：" + weatherAS.getWeather());
+                wind.setText("风力：" + weatherAS.getWind());
 
             });
         });
