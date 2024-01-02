@@ -1,64 +1,78 @@
 package com.harvestdiary.ui.controller.homepage;
 
+
+import com.harvestdiary.other.tools.SettingFontIcon;
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXCheckBox;
+import com.jfoenix.controls.JFXToggleButton;
+import de.felixroske.jfxsupport.FXMLController;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.control.Button;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
+import lombok.extern.slf4j.Slf4j;
+import org.kordamp.ikonli.antdesignicons.AntDesignIconsOutlined;
 
 import java.io.IOException;
 
+@FXMLController
+@Slf4j
 public class SettingUIController {
-
-//    整个Tabpane的id
     @FXML
-    TabPane settingPane;
-
-//    搜索部分的文本输入框的id
+    private CheckBox clean1;
     @FXML
-    TextField search_input;
-
-//    搜索部分的确认搜索按钮
+    private JFXCheckBox clean2;
     @FXML
-    Button search;
-    //    修改图片部分确定跳转按钮事件
+    private JFXToggleButton clean3;
     @FXML
-    private void removeImageConfig() throws IOException {
-//        Tab newTab=new Tab("修改图片");
-//       FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/TabUi/modifytab.fxml"));
-//        Parent newContent=fxmlLoader.load();
-//        newTab.setContent(newContent);
-//        settingPane.getTabs().add(newTab);
+    private JFXButton cleanAll;
+    @FXML
+    private JFXButton cloud;
+    @FXML
+    private DatePicker datePicker;
+    @FXML
+    private JFXButton delDiary;
+    @FXML
+    private JFXButton delUser;
+    @FXML
+    private TextField password;
+    @FXML
+    private TextField phone;
+    @FXML
+    private Label gitee;
+    @FXML
+    private Label github;
+    @FXML
+    private TextField userNumber;
+    @FXML
+    private TextField username;
 
-        createTab("修改图片","/fxml/TabUi/modifytab.fxml");
+    @FXML
+    public void initialize() {
+        setButtonStyle();
+
+    }
+    @FXML
+    void giteeRed(MouseEvent event) {
+        gitee.setTextFill(Color.RED);
 
     }
 
-//    赞助我们部分按钮跳转事件
     @FXML
-    private void sponsorConfig() throws IOException {
-       createTab("赞助我们","/fxml/TabUi/sponsortab.fxml");
-
+    void githubRed(MouseEvent event) {
+        github.setTextFill(Color.RED);
+    }
+    @FXML
+    void toBackColor(MouseEvent event) {
+        github.setTextFill(Color.web("#617172"));
+        gitee.setTextFill(Color.web("#617172"));
     }
 
-    @FXML
-    private void clearDirConfig() throws IOException{
-        createTab("清空日记","/fxml/TabUi/clear_dir.fxml");
+    private void setButtonStyle(){
+        delDiary.setGraphic(SettingFontIcon.setSizeAndColor(AntDesignIconsOutlined.DELETE, 15, Color.web("#617172")));
+        cloud.setGraphic(SettingFontIcon.setSizeAndColor(AntDesignIconsOutlined.CLOUD_SYNC, 22, Color.web("#617172")));
+        delUser.setGraphic(SettingFontIcon.setSizeAndColor(AntDesignIconsOutlined.LOGOUT, 20, Color.web("#617172")));
+        cleanAll.setGraphic(SettingFontIcon.setSizeAndColor(AntDesignIconsOutlined.CLEAR, 20, Color.web("#617172")));
+        github.setGraphic(SettingFontIcon.setSizeAndColor(AntDesignIconsOutlined.GITHUB, 20, Color.web("#617172")));
     }
-
-    @FXML
-    private void clearAcConfig() throws IOException{
-        createTab("注销账户","/fxml/TabUi/clear_ac.fxml");
-
-    }
-
-private void createTab(String name,String path) throws IOException {
-        Tab newTab=new Tab(name);
-        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource(path));
-        Parent newContent=fxmlLoader.load();
-        newTab.setContent(newContent);
-        settingPane.getTabs().add(newTab);
-}
 }
