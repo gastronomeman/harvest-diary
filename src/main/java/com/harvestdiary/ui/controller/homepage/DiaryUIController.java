@@ -4,6 +4,7 @@ import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
 import cn.hutool.json.JSONUtil;
 import com.harvestdiary.other.tools.OperationalDocument;
+import com.harvestdiary.other.tools.RecordMarker;
 import com.harvestdiary.other.tools.SettingFontIcon;
 import com.harvestdiary.pojo.Diary;
 import com.harvestdiary.pojo.Poetry;
@@ -160,6 +161,7 @@ public class DiaryUIController {
         }else if (showAlert("是否确认保存")){
             OperationalDocument.writeDiary(diary.getUserId() + diary.getTime(), JSONUtil.toJsonStr(diary));
         }
+        RecordMarker.CheckFolder();
 
     }
     @FXML
