@@ -86,7 +86,7 @@
                         </Separator>
                     </children>
                 </HBox>
-                <JFXButton fx:id="cloud" prefHeight="65.0" prefWidth="275.0" style="-fx-background-radius: 25; -fx-border-radius: 25; -fx-border-color: linear-gradient(to bottom RIGHT, #FAD9C2, #F3AC9E); -fx-background-color: rgba(150, 150, 150, 0.2);" text="获取云端数据保存回本地">
+                <JFXButton fx:id="cloud" onMouseClicked="#pullDiaryToLocal" prefHeight="65.0" prefWidth="275.0" style="-fx-background-radius: 25; -fx-border-radius: 25; -fx-border-color: linear-gradient(to bottom RIGHT, #FAD9C2, #F3AC9E); -fx-background-color: rgba(150, 150, 150, 0.2);" text="获取云端数据保存回本地">
                     <VBox.margin>
                         <Insets bottom="10.0" top="10.0" />
                     </VBox.margin>

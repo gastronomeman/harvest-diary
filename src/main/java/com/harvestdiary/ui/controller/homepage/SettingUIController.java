@@ -77,6 +77,7 @@ public class SettingUIController {
 
 
     }
+
     @FXML
     void delDiaryBtn(MouseEvent event) {
         //设置文件名字
@@ -90,7 +91,7 @@ public class SettingUIController {
                 return;
             }
             delDiary(fileName);
-            if (!userStatus.getLocalLogin()){
+            if (!userStatus.getLocalLogin()) {
                 delCouldDiary(fileName);
             }
         } else {
@@ -98,6 +99,7 @@ public class SettingUIController {
         }
 
     }
+
     private void delDiary(String fileName) {
         if (OperationalDocument.removeFile("diary\\" + fileName)) {
             showAlert("删除成功！");
@@ -105,7 +107,8 @@ public class SettingUIController {
             showAlert("删除失败！");
         }
     }
-    private void delCouldDiary(String fileName){
+
+    private void delCouldDiary(String fileName) {
         String s = "";
         try {
             Diary diary = JSONUtil.toBean(OperationalDocument.readFile("diary\\" + fileName), Diary.class);
@@ -115,14 +118,15 @@ public class SettingUIController {
                     .execute();
 
             s = JSONUtil.parseObj(response.body()).getStr("code");
-        }catch (Exception e){
+        } catch (Exception e) {
             log.info("删除云端失败", e);
-        }finally {
-            if (s.isEmpty()){
+        } finally {
+            if (s.isEmpty()) {
                 showAlert("删除云端日记失败，请联网后尝试");
             }
         }
     }
+
     private Boolean delDiaryTip() {
         // 创建文本输入对话框
         TextInputDialog textInputDialog = new TextInputDialog();
@@ -147,6 +151,25 @@ public class SettingUIController {
         return false;
     }
 
+
+    @FXML
+    void pullDiaryToLocal(MouseEvent event) {
+      /*  try {
+
+            HttpResponse response = HttpRequest.post(Poetry.API + "/diary/del")
+                    .header("Content-Type", "application/json")
+                    .body(JSONUtil.toJsonStr())
+                    .execute();
+
+            s = JSONUtil.parseObj(response.body()).getStr("code");
+        } catch (Exception e) {
+            log.info("删除云端失败", e);
+        } finally {
+            if (s.isEmpty()) {
+                showAlert("删除云端日记失败，请联网后尝试");
+            }
+        }*/
+    }
 
     @FXML
     void toBackColor(MouseEvent event) {

@@ -15,6 +15,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -74,87 +75,63 @@ public class SideListController {
 
     }
 
+
+    UserStatus u = JSONUtil.toBean(OperationalDocument.readFile("userStatus.json"), UserStatus.class);
+
     @FXML
-    void switchUi(ActionEvent event) throws Exception {
-        //获取事件
-        Thread thread = new Thread(() -> {
-            Platform.runLater(() -> {
-                try {
-                    String buttonId = ((Button) event.getSource()).getId();
-                    log.info(buttonId);
-
-                    HBox root = (HBox) HomePage.getMainDiaryUiStage().getScene().getRoot();
-
-                    List<Parent> mainUI = null;
-
-                    mainUI = getFxmlLoader();
-                    //判断事件按钮切换场景
-                    switch (buttonId) {
-                        case "exit" -> {
-                            UserStatus u = JSONUtil.toBean(OperationalDocument.readFile("userStatus.json"), UserStatus.class);
-                            u.setAutoLogin(false);
-                            OperationalDocument.saveFile("userStatus.json", JSONUtil.toJsonStr(u));
-
-                            HomePage.getMainDiaryUiStage().close();
-                            new Login().start(new Stage());
-                        }
-                        case "home" -> {
-
-                            root.getChildren().remove(1);
-                            root.getChildren().add(mainUI.get(0));
-                            choseButton(home);
-                        }
-                        case "calendar" -> {
-
-                            root.getChildren().remove(1);
-                            root.getChildren().add(mainUI.get(1));
-                            choseButton(calendar);
-                        }
-                        case "diary" -> {
-                            root.getChildren().remove(1);
-                            root.getChildren().add(mainUI.get(2));
-                            choseButton(diary);
-                        }
-                        case "setting" -> {
-                            root.getChildren().remove(1);
-                            root.getChildren().add(mainUI.get(3));
-                            choseButton(setting);
-                        }
-                    }
-
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
-
-            });
-        });
-
-        thread.start();
-    }
-
-    /*
-        右侧的fxml文件
-        homeUI      ： 0
-        calendarUI  ： 1
-        diaryUI     ： 2
-        settingUI   ： 3
-     */
-    private List<Parent> getFxmlLoader() throws IOException {
+    void home(MouseEvent event) throws IOException {
         Parent homeUI = FXMLLoader.load(
                 Objects.requireNonNull(HomePage.class.getClassLoader().getResource("fxml/homepage/HomeUI.fxml"))
         );
+        switchUi(homeUI, home);
+    }
+    @FXML
+    void calendar(MouseEvent event) throws IOException {
         Parent calendarUI = FXMLLoader.load(
                 Objects.requireNonNull(HomePage.class.getClassLoader().getResource("fxml/homepage/CalendarUI.fxml"))
         );
+        switchUi(calendarUI, calendar);
+    }
+
+    @FXML
+    void diary(MouseEvent event) throws IOException {
         Parent diaryUI = FXMLLoader.load(
                 Objects.requireNonNull(HomePage.class.getClassLoader().getResource("fxml/homepage/DiaryUi.fxml"))
         );
+        switchUi(diaryUI, diary);
+    }
 
+    @FXML
+    void setting(MouseEvent event) throws IOException {
         Parent settingUI = FXMLLoader.load(
                 Objects.requireNonNull(HomePage.class.getClassLoader().getResource("fxml/homepage/SettingUI.fxml"))
         );
-        return new ArrayList<>(Arrays.asList(homeUI, calendarUI, diaryUI, settingUI));
+        switchUi(settingUI, setting);
+
     }
+
+    private void switchUi(Parent settingUI, JFXButton setting) {
+        Thread thread = new Thread(() -> {
+            Platform.runLater(() -> {
+                HBox root = (HBox) HomePage.getMainDiaryUiStage().getScene().getRoot();
+                root.getChildren().remove(1);
+                root.getChildren().add(settingUI);
+                choseButton(setting);
+            });
+        });
+        thread.start();
+    }
+
+    @FXML
+    void exit(MouseEvent event) throws Exception {
+        u.setAutoLogin(false);
+        OperationalDocument.saveFile("userStatus.json", JSONUtil.toJsonStr(u));
+
+        HomePage.getMainDiaryUiStage().close();
+        new Login().start(new Stage());
+    }
+
+
     //触发按钮选择
     private void choseButton(JFXButton chose) {
         Thread thread = new Thread(() -> {
