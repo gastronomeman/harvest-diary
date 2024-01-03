@@ -5,9 +5,11 @@ import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.harvestdiary.pojo.WeatherAS;
+import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDate;
 
+@Slf4j
 public class AddressInfoUtil {
     /*
       手机号:13268120482
@@ -43,7 +45,7 @@ public class AddressInfoUtil {
                 OperationalDocument.saveFile("weatherAS.json", JSONUtil.toJsonStr(weatherAS));
             }
         }catch (Exception e){
-
+             log.info(String.valueOf(e));
         }finally {
             if (!OperationalDocument.existFile("weatherAS.json")){
                 weatherAS = new WeatherAS(String.valueOf(LocalDate.now()), "...", "...", "...");

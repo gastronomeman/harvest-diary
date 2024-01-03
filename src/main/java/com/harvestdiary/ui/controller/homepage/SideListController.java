@@ -157,22 +157,26 @@ public class SideListController {
     }
     //触发按钮选择
     private void choseButton(JFXButton chose) {
-        //把图标背景色全设置为未选中的样式
-        for (JFXButton jfxButton : buttons) {
-            jfxButton.setStyle(
-                    "-fx-background-radius: 15;" + "-fx-border-radius: 15;"
-            );
-        }
-        resettingColor();
-        //
-        chose.setStyle(
-                "-fx-background-radius: 15;" +
-                "-fx-border-radius: 15;" +
-                "-fx-border-color:  linear-gradient(to bottom right, #FAD9C2, #F3AC9E);" +
-                "-fx-border-width: 2; " +
-                "-fx-effect: dropshadow(three-pass-box,  #f7e8aa, 10, 0, 0, 0);"
-        );
-
+        Thread thread = new Thread(() -> {
+            Platform.runLater(() -> {
+                //把图标背景色全设置为未选中的样式
+                for (JFXButton jfxButton : buttons) {
+                    jfxButton.setStyle(
+                            "-fx-background-radius: 15;" + "-fx-border-radius: 15;"
+                    );
+                }
+                resettingColor();
+                //
+                chose.setStyle(
+                        "-fx-background-radius: 15;" +
+                                "-fx-border-radius: 15;" +
+                                "-fx-border-color:  linear-gradient(to bottom right, #FAD9C2, #F3AC9E);" +
+                                "-fx-border-width: 2; " +
+                                "-fx-effect: dropshadow(three-pass-box,  #f7e8aa, 10, 0, 0, 0);"
+                );
+            });
+        });
+        thread.start();
     }
     //初始化颜色
     private void resettingColor() {

@@ -77,93 +77,30 @@ public class HomeUiController {
 
     @FXML
     public void initialize() throws IOException {
+        //设置按钮图标
         backToToday.setGraphic(SettingFontIcon.setSizeAndColor(AntDesignIconsOutlined.RELOAD, 14, Color.web("#617172")));
+        //顶部日历设置
+        setDataTime();
+
+        //设置地址天气
+        setWeather();
 
         // 创建圆角边框
         // 创建 Rectangle 作为剪裁区域
         Rectangle clip = new Rectangle(480, 270); // 替换为你希望的剪裁区域大小
         clip.setArcWidth(20); // 圆角宽度
         clip.setArcHeight(20); // 圆角高度
+        imageBackground.setClip(clip);//设置照片的圆角
+        pic.setImage(new Image(randomPic(pic.getImage())));//设置背景图片
 
-        //顶部日历设置
-        setDataTime();
-
-        imageBackground.setClip(clip);
-
-        pic.setImage(new Image(randomPic(pic.getImage())));
-
-        change.setGraphic(SettingFontIcon.setSizeAndColor(AntDesignIconsOutlined.SYNC, 22, Color.web("#617172")));
-        copy.setGraphic(SettingFontIcon.setSizeAndColor(AntDesignIconsOutlined.COPY, 22, Color.web("#617172")));
-
-        //设置地址天气
-        setWeather();
-
+        change.setGraphic(SettingFontIcon.setSizeAndColor(AntDesignIconsOutlined.SYNC, 22, Color.web("#617172")));//设置更换图片
+        copy.setGraphic(SettingFontIcon.setSizeAndColor(AntDesignIconsOutlined.COPY, 22, Color.web("#617172")));//设置复制图片
     }
 
     @FXML
     void backToToday(MouseEvent event) {
         setDataTime();
     }
-
-    @FXML
-    void changePic(MouseEvent event) {
-        Thread thread = new Thread(() -> {
-            Platform.runLater(() -> {
-                pic.setImage(new Image(randomPic(pic.getImage())));
-            });
-        });
-        thread.start();
-    }
-
-    @FXML
-    void copyInfo(MouseEvent event) {
-        String s = getString();
-
-
-        Thread thread = new Thread(() -> {
-            Platform.runLater(() -> {
-                // 获取系统剪贴板
-                Clipboard clipboard = Clipboard.getSystemClipboard();
-
-                // 创建 ClipboardContent 对象，用于保存要复制的字符串
-                ClipboardContent content = new ClipboardContent();
-                content.putString(s);
-
-                // 将 ClipboardContent 对象设置到剪贴板
-                clipboard.setContent(content);
-            });
-        });
-        thread.start();
-    }
-
-    private String getString() {
-        String s = " ";
-        if (Objects.equals(datePicker.getValue(), LocalDate.now())) {
-            if (!address.getText().equals("地址：...")) {
-                s = DateUtil.now() + "\n" +
-                        chineseYear.getText() + " " + chineseDate.getText() + " \n" +
-                        solarTerms24.getText() + " " + festival.getText() + " \n" +
-                        address.getText() + " ，" + weather.getText() + " ，" +
-                        wind.getText();
-            } else {
-                s = DateUtil.now() + "\n" +
-                        chineseYear.getText() + " " + chineseDate.getText() + " \n" +
-                        solarTerms24.getText() + " " + festival.getText() + " \n";
-            }
-        } else {
-            s = datePicker.getValue() + "\n" +
-                    chineseYear.getText() + " " + chineseDate.getText() + " \n" +
-                    solarTerms24.getText() + " " + festival.getText();
-        }
-
-        return s;
-    }
-
-    //随机更换图片
-    private String randomPic(Image image) {
-        return "image/MainUi/home/1000" + RandomUtil.randomInt(1, 9) + ".jpg";
-    }
-
     //设置上方的日期
     private void setDataTime() {
         //设置日期为现在时间
@@ -181,7 +118,6 @@ public class HomeUiController {
         }));
 
     }
-
     //格式化DataPicker
     private StringConverter<LocalDate> dateFormatter() {
         // 创建日期格式化器
@@ -208,7 +144,6 @@ public class HomeUiController {
             }
         };
     }
-
     //查找节气，如果是节气当天显示节气，如果不是当前这显示**（节气）后，**（节气）前
     private String findSolarTerms(LocalDate day) {
         if (!SolarTerms.getTerm(day).isEmpty()) {
@@ -220,7 +155,6 @@ public class HomeUiController {
             return formerlySolarTerms + "后，" + futureSolarTerms + "前";
         }
     }
-
     //查找下一个节气
     private String futureSolarTerms(LocalDate day) {
         do {
@@ -228,7 +162,6 @@ public class HomeUiController {
         } while (SolarTerms.getTerm(day).isEmpty());
         return SolarTerms.getTerm(day);
     }
-
     //查找上一个节气
     private String formerlySolarTerms(LocalDate day) {
         do {
@@ -236,7 +169,6 @@ public class HomeUiController {
         } while (SolarTerms.getTerm(day).isEmpty());
         return SolarTerms.getTerm(day);
     }
-
     //判断是否是中国传统节日或者工作日或者休息日
     private String typeDay(ChineseDate cDay, LocalDate day) {
         String festival = cDay.getFestivals();
@@ -251,7 +183,6 @@ public class HomeUiController {
             }
         }
     }
-
     //切换日期
     private void SwitchDate(LocalDate date) {
         //设置农历日月
@@ -265,7 +196,6 @@ public class HomeUiController {
         //获取中国传统节日或者工作日或者休息日
         festival.setText(typeDay(chineseCalendar, date));
     }
-
     //设置天气图标和获取天气消息
     private void setWeather() {
         address.setGraphic(SettingFontIcon.setSizeAndColor(FluentUiRegularMZ.MY_LOCATION_24, 20, Color.web("#617172")));
@@ -279,7 +209,8 @@ public class HomeUiController {
 
                 WeatherAS weatherAS = JSONUtil.toBean(OperationalDocument.readFile("weatherAS.json"), WeatherAS.class);
 
-                if (!Objects.equals(weatherAS.getTime(), String.valueOf(LocalDate.now()))){
+                if (!Objects.equals(weatherAS.getTime(), String.valueOf(LocalDate.now())) ||
+                    weatherAS.getAddress().equals("...")){
                     AddressInfoUtil.getAddressWeather();
                     weatherAS = JSONUtil.toBean(OperationalDocument.readFile("weatherAS.json"), WeatherAS.class);
                 }
@@ -293,4 +224,64 @@ public class HomeUiController {
         thread.start();
 
     }
+
+
+    @FXML
+    void changePic(MouseEvent event) {
+        Thread thread = new Thread(() -> {
+            Platform.runLater(() -> {
+                pic.setImage(new Image(randomPic(pic.getImage())));
+            });
+        });
+        thread.start();
+    }
+    //随机更换图片
+    private String randomPic(Image image) {
+        return "image/MainUi/home/1000" + RandomUtil.randomInt(1, 9) + ".jpg";
+    }
+
+
+    @FXML
+    void copyInfo(MouseEvent event) {
+        String s = getString();
+
+
+        Thread thread = new Thread(() -> {
+            Platform.runLater(() -> {
+                // 获取系统剪贴板
+                Clipboard clipboard = Clipboard.getSystemClipboard();
+
+                // 创建 ClipboardContent 对象，用于保存要复制的字符串
+                ClipboardContent content = new ClipboardContent();
+                content.putString(s);
+
+                // 将 ClipboardContent 对象设置到剪贴板
+                clipboard.setContent(content);
+            });
+        });
+        thread.start();
+    }
+    private String getString() {
+        String s = " ";
+        if (Objects.equals(datePicker.getValue(), LocalDate.now())) {
+            if (!address.getText().equals("地址：...")) {
+                s = DateUtil.now() + "\n" +
+                        chineseYear.getText() + " " + chineseDate.getText() + " \n" +
+                        solarTerms24.getText() + " " + festival.getText() + " \n" +
+                        address.getText() + " ，" + weather.getText() + " ，" +
+                        wind.getText();
+            } else {
+                s = DateUtil.now() + "\n" +
+                        chineseYear.getText() + " " + chineseDate.getText() + " \n" +
+                        solarTerms24.getText() + " " + festival.getText() + " \n";
+            }
+        } else {
+            s = datePicker.getValue() + "\n" +
+                    chineseYear.getText() + " " + chineseDate.getText() + " \n" +
+                    solarTerms24.getText() + " " + festival.getText();
+        }
+
+        return s;
+    }
+
 }
