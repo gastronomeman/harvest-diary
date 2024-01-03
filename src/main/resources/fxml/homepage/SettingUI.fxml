@@ -6,6 +6,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
@@ -18,7 +19,7 @@
 
 <ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.harvestdiary.ui.controller.homepage.SettingUIController">
     <content>
-        <VBox alignment="TOP_CENTER" prefHeight="600.0" prefWidth="702.0">
+        <VBox alignment="TOP_CENTER" prefHeight="750.0" prefWidth="702.0">
             <children>
                 <HBox maxWidth="650.0" prefHeight="30.0" prefWidth="650.0">
                     <children>
@@ -86,11 +87,20 @@
                         </Separator>
                     </children>
                 </HBox>
-                <JFXButton fx:id="cloud" onMouseClicked="#pullDiaryToLocal" prefHeight="65.0" prefWidth="275.0" style="-fx-background-radius: 25; -fx-border-radius: 25; -fx-border-color: linear-gradient(to bottom RIGHT, #FAD9C2, #F3AC9E); -fx-background-color: rgba(150, 150, 150, 0.2);" text="获取云端数据保存回本地">
-                    <VBox.margin>
-                        <Insets bottom="10.0" top="10.0" />
-                    </VBox.margin>
-                </JFXButton>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                      <JFXButton fx:id="upLoad" onMouseClicked="#upLoad" prefHeight="50.0" prefWidth="180.0" style="-fx-background-radius: 25; -fx-border-radius: 25; -fx-border-color: linear-gradient(to bottom RIGHT, #FAD9C2, #F3AC9E); -fx-background-color: rgba(150, 150, 150, 0.2);" text="上传日记到云端">
+                     <HBox.margin>
+                        <Insets right="20.0" />
+                     </HBox.margin>
+                      </JFXButton>
+                  <JFXButton fx:id="downLoad" onMouseClicked="#downLoad" prefHeight="50.0" prefWidth="180.0" style="-fx-background-radius: 25; -fx-border-radius: 25; -fx-border-color: linear-gradient(to bottom RIGHT, #FAD9C2, #F3AC9E); -fx-background-color: rgba(150, 150, 150, 0.2);" text="下载日记到本地">
+                     <HBox.margin>
+                        <Insets left="20.0" />
+                     </HBox.margin>
+                  </JFXButton>
+               </children>
+            </HBox>
                 <HBox maxWidth="650.0" prefHeight="30.0" prefWidth="650.0">
                     <VBox.margin>
                         <Insets />
@@ -206,7 +216,7 @@
                         <JFXToggleButton fx:id="clean3" text="确认清空数据？" toggleColor="WHITE" />
                     </children>
                 </HBox>
-                <JFXButton fx:id="cleanAll" prefHeight="65.0" prefWidth="165.0" style="-fx-background-radius: 25; -fx-border-radius: 25; -fx-border-color: linear-gradient(to bottom RIGHT, #FAD9C2, #F3AC9E); -fx-background-color: rgba(150, 150, 150, 0.2);" text="确定清空数据！！！">
+                <JFXButton fx:id="cleanAll" prefHeight="50.0" prefWidth="165.0" style="-fx-background-radius: 25; -fx-border-radius: 25; -fx-border-color: linear-gradient(to bottom RIGHT, #FAD9C2, #F3AC9E); -fx-background-color: rgba(150, 150, 150, 0.2);" text="确定清空数据！！！">
                     <VBox.margin>
                         <Insets top="10.0" />
                     </VBox.margin>
@@ -218,28 +228,28 @@
                                 <Insets top="15.0" />
                             </HBox.margin>
                         </Separator>
-                        <Label text="关于我们">
+                        <Label text="关于我们（点击链接复制网址）">
                             <HBox.margin>
                                 <Insets left="5.0" right="5.0" top="8.0" />
                             </HBox.margin>
                         </Label>
-                        <Separator prefWidth="540.0">
+                        <Separator prefWidth="420.0">
                             <HBox.margin>
                                 <Insets top="15.0" />
                             </HBox.margin>
                         </Separator>
                     </children>
                 </HBox>
-                <Label fx:id="github" onMouseEntered="#githubRed" onMouseExited="#toBackColor" text="源码：https://github.com/gastronomeman/harvest-diary.git（路径1：github）" textFill="#617172">
-                    <VBox.margin>
-                        <Insets top="10.0" />
-                    </VBox.margin>
-                </Label>
-                <Label fx:id="gitee" onMouseEntered="#giteeRed" onMouseExited="#toBackColor" text="源码： https://gitee.com/gastronome-0_0/harvest-diary（路径2：gitee）" textFill="#617172">
-                    <VBox.margin>
-                        <Insets bottom="20.0" right="35.0" top="20.0" />
-                    </VBox.margin>
-                </Label>
+            <Hyperlink fx:id="github" onMouseClicked="#copyGithub" text="源码： https://github.com/gastronomeman/harvest-diary.git（路径1：github）" textFill="#617172">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </Hyperlink>
+            <Hyperlink fx:id="gitee" onMouseClicked="#copyGitee" text="源码： https://gitee.com/gastronome-0_0/harvest-diary（路径2：gitee）" textFill="#617172">
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+            </Hyperlink>
             </children>
         </VBox>
     </content>

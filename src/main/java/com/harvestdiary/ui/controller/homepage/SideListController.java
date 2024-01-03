@@ -50,6 +50,8 @@ public class SideListController {
 
     ArrayList<JFXButton> buttons = new ArrayList<>();
 
+    UserStatus u = new UserStatus();
+
     @FXML
     public void initialize() throws IOException {
         // 创建圆形裁剪区域
@@ -74,12 +76,11 @@ public class SideListController {
         home.setGraphic(SettingFontIcon.setSizeAndColor(AntDesignIconsOutlined.HOME, 25, Color.web("#f7e8aa")));
 
 
-
+        u = JSONUtil.toBean(OperationalDocument.readFile("userStatus.json"), UserStatus.class);
 
     }
 
 
-    UserStatus u = JSONUtil.toBean(OperationalDocument.readFile("userStatus.json"), UserStatus.class);
 
     @FXML
     void home(MouseEvent event) throws IOException {

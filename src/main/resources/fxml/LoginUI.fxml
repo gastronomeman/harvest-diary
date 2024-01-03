@@ -127,7 +127,7 @@
                   <Insets />
                </HBox.margin>
             </JFXButton>
-            <JFXToggleButton fx:id="localhost" prefHeight="58.0" prefWidth="142.0" text="本地登录" toggleColor="WHITE" toggleLineColor="#53ce5f">
+            <JFXToggleButton fx:id="localhost" onMouseClicked="#localhost" prefHeight="58.0" prefWidth="142.0" text="本地登录" toggleColor="WHITE" toggleLineColor="#53ce5f">
                <HBox.margin>
                   <Insets />
                </HBox.margin>

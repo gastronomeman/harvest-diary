@@ -14,14 +14,19 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXToggleButton;
 import de.felixroske.jfxsupport.FXMLController;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import lombok.extern.slf4j.Slf4j;
 import org.kordamp.ikonli.antdesignicons.AntDesignIconsOutlined;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -37,7 +42,9 @@ public class SettingUIController {
     @FXML
     private JFXButton cleanAll;
     @FXML
-    private JFXButton cloud;
+    private JFXButton downLoad;
+    @FXML
+    private JFXButton upLoad;
     @FXML
     private DatePicker datePicker;
     @FXML
@@ -49,9 +56,9 @@ public class SettingUIController {
     @FXML
     private TextField phone;
     @FXML
-    private Label gitee;
+    private Hyperlink gitee;
     @FXML
-    private Label github;
+    private Hyperlink github;
     @FXML
     private TextField userNumber;
     @FXML
@@ -153,45 +160,122 @@ public class SettingUIController {
 
 
     @FXML
-    void pullDiaryToLocal(MouseEvent event) {
-      /*  try {
+    void upLoad(MouseEvent event) {
+        if (userStatus.getLocalLogin()) {
+            showAlert("本地用户不能使用云端");
+            return;
+        }
 
-            HttpResponse response = HttpRequest.post(Poetry.API + "/diary/del")
+        List<String> list = OperationalDocument.readDiaries(user.getUserId());
+        List<Diary> diaryList = new ArrayList<>();
+
+        for (String s : list) {
+            Diary d = JSONUtil.toBean(OperationalDocument.readDiary(s), Diary.class);
+            diaryList.add(d);
+        }
+
+
+        String temp = JSONUtil.toJsonStr(diaryList);
+        try {
+            HttpResponse response = HttpRequest.post(Poetry.API + "/diary/setDiary")
                     .header("Content-Type", "application/json")
-                    .body(JSONUtil.toJsonStr())
+                    .body(temp)
                     .execute();
 
-            s = JSONUtil.parseObj(response.body()).getStr("code");
-        } catch (Exception e) {
-            log.info("删除云端失败", e);
-        } finally {
-            if (s.isEmpty()) {
-                showAlert("删除云端日记失败，请联网后尝试");
+            String json = response.body();
+            json = JSONUtil.parseObj(json).getStr("code");
+
+            if (json.equals("1")) {
+                showAlert("日记上传成功！");
             }
-        }*/
+
+            temp = "";
+        } catch (Exception e) {
+            log.info("删除云端失败");
+        } finally {
+            if (!temp.isEmpty()) {
+                showAlert("网络不好，请稍后尝试");
+            }
+        }
+    }
+
+
+
+    @FXML
+    void downLoad(MouseEvent event) {
+        if (userStatus.getLocalLogin()) {
+            showAlert("本地用户不能使用云端");
+            return;
+        }
+        String userId = user.getUserId();
+        try {
+            HttpResponse response = HttpRequest.post(Poetry.API + "/diary/setDiary")
+                    .header("Content-Type", "application/json")
+                    .body(userId)
+                    .execute();
+
+            String json = response.body();
+
+            if (JSONUtil.parseObj(json).getStr("code").equals("1")) {
+                showAlert("数据上传成功！");
+            }
+
+            String data = JSONUtil.parseObj(json).getStr("data");
+            List<Diary> list = JSONUtil.toList(JSONUtil.parseArray(data), Diary.class);
+            System.out.println(list);
+            userId = "";
+        } catch (Exception e) {
+            log.info("删除云端失败");
+        } finally {
+            if (!userId.isEmpty()) {
+                showAlert("网络不好，请稍后尝试");
+            }
+        }
+
+    }
+
+
+    @FXML
+    void copyGitee(MouseEvent event) {
+        Thread thread = new Thread(() -> {
+            Platform.runLater(() -> {
+                // 获取系统剪贴板
+                Clipboard clipboard = Clipboard.getSystemClipboard();
+
+                // 创建 ClipboardContent 对象，用于保存要复制的字符串
+                ClipboardContent content = new ClipboardContent();
+                content.putString("https://gitee.com/gastronome-0_0/harvest-diary");
+
+                // 将 ClipboardContent 对象设置到剪贴板
+                clipboard.setContent(content);
+            });
+        });
+        thread.start();
     }
 
     @FXML
-    void toBackColor(MouseEvent event) {
-        github.setTextFill(Color.web("#617172"));
-        gitee.setTextFill(Color.web("#617172"));
-    }
+    void copyGithub(MouseEvent event) {
+        Thread thread = new Thread(() -> {
+            Platform.runLater(() -> {
+                // 获取系统剪贴板
+                Clipboard clipboard = Clipboard.getSystemClipboard();
 
-    @FXML
-    void githubRed(MouseEvent event) {
-        github.setTextFill(Color.RED);
-    }
+                // 创建 ClipboardContent 对象，用于保存要复制的字符串
+                ClipboardContent content = new ClipboardContent();
+                content.putString("https://github.com/gastronomeman/harvest-diary.git");
 
-    @FXML
-    void giteeRed(MouseEvent event) {
-        gitee.setTextFill(Color.RED);
-
+                // 将 ClipboardContent 对象设置到剪贴板
+                clipboard.setContent(content);
+            });
+        });
+        thread.start();
     }
 
     private void setButtonStyle() {
         datePicker.setValue(LocalDate.now());
         delDiary.setGraphic(SettingFontIcon.setSizeAndColor(AntDesignIconsOutlined.DELETE, 15, Color.web("#617172")));
-        cloud.setGraphic(SettingFontIcon.setSizeAndColor(AntDesignIconsOutlined.CLOUD_SYNC, 22, Color.web("#617172")));
+        upLoad.setGraphic(SettingFontIcon.setSizeAndColor(AntDesignIconsOutlined.CLOUD_UPLOAD, 22, Color.web("#617172")));
+        downLoad.setGraphic(SettingFontIcon.setSizeAndColor(AntDesignIconsOutlined.CLOUD_DOWNLOAD, 22, Color.web("#617172")));
         delUser.setGraphic(SettingFontIcon.setSizeAndColor(AntDesignIconsOutlined.LOGOUT, 20, Color.web("#617172")));
         cleanAll.setGraphic(SettingFontIcon.setSizeAndColor(AntDesignIconsOutlined.CLEAR, 20, Color.web("#617172")));
         github.setGraphic(SettingFontIcon.setSizeAndColor(AntDesignIconsOutlined.GITHUB, 20, Color.web("#617172")));

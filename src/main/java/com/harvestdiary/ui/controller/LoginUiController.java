@@ -224,6 +224,11 @@ public class LoginUiController {
         }
     }
 
+    @FXML
+    void localhost(MouseEvent event) {
+        userNumber.setText("");
+        password.setText("");
+    }
     private void showAlert(String s) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("提示");

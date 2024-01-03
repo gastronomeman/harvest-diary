@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 public class OperationalDocument {
@@ -118,7 +119,8 @@ public class OperationalDocument {
         return null;
     }
 
-    public static ArrayList<String> readFileToList(String fileName) {
+    public static ArrayList<String> readDiaries(String fileName, Boolean local) {
+        //List<>
         return (ArrayList<String>) StrUtil.split(readFile(fileName), ';');
     }
 }
