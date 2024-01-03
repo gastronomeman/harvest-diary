@@ -57,7 +57,7 @@
                                 <Insets left="10.0" />
                             </HBox.margin>
                         </DatePicker>
-                        <JFXButton fx:id="delDiary" prefHeight="35.0" prefWidth="100.0" style="-fx-background-radius: 25; -fx-border-radius: 25; -fx-border-color: linear-gradient(to bottom RIGHT, #FAD9C2, #F3AC9E); -fx-background-color: rgba(150, 150, 150, 0.2);" text="确认删除">
+                        <JFXButton fx:id="delDiary" onMouseClicked="#delDiaryBtn" prefHeight="35.0" prefWidth="100.0" style="-fx-background-radius: 25; -fx-border-radius: 25; -fx-border-color: linear-gradient(to bottom RIGHT, #FAD9C2, #F3AC9E); -fx-background-color: rgba(150, 150, 150, 0.2);" text="确认删除">
                             <HBox.margin>
                                 <Insets left="50.0" />
                             </HBox.margin>

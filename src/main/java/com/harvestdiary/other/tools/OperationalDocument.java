@@ -75,14 +75,11 @@ public class OperationalDocument {
         fileWriter.write(content);
     }
 
-    public static void removeFile(String fileName) {
-        // 创建文件夹（如果不存在）
-        FileUtil.mkdir(folderPath);
+    public static Boolean removeFile(String fileName) {
         // 构造文件路径
         Path filePath = Paths.get(folderPath, fileName);
 
-        FileUtil.del(filePath);
-
+        return FileUtil.del(filePath);
     }
 
     public static String readFile(String fileName) {
