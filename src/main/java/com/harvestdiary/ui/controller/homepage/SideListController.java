@@ -73,6 +73,9 @@ public class SideListController {
         //设置home的颜色
         home.setGraphic(SettingFontIcon.setSizeAndColor(AntDesignIconsOutlined.HOME, 25, Color.web("#f7e8aa")));
 
+
+
+
     }
 
 
@@ -85,6 +88,7 @@ public class SideListController {
         );
         switchUi(homeUI, home);
     }
+
     @FXML
     void calendar(MouseEvent event) throws IOException {
         Parent calendarUI = FXMLLoader.load(
@@ -107,13 +111,12 @@ public class SideListController {
                 Objects.requireNonNull(HomePage.class.getClassLoader().getResource("fxml/homepage/SettingUI.fxml"))
         );
         switchUi(settingUI, setting);
-
     }
 
     private void switchUi(Parent settingUI, JFXButton setting) {
+        HBox root = (HBox) HomePage.getMainDiaryUiStage().getScene().getRoot();
         Thread thread = new Thread(() -> {
             Platform.runLater(() -> {
-                HBox root = (HBox) HomePage.getMainDiaryUiStage().getScene().getRoot();
                 root.getChildren().remove(1);
                 root.getChildren().add(settingUI);
                 choseButton(setting);
@@ -155,6 +158,7 @@ public class SideListController {
         });
         thread.start();
     }
+
     //初始化颜色
     private void resettingColor() {
         //统一颜色
