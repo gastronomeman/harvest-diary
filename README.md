@@ -8,11 +8,7 @@
 
 软件架构如下：
 
-<img title="" src="file:///C:/Users/gastronome/Pictures/Typedown/3b8e0fee-f3a5-40fd-a077-67cf9ff30e4c.png" alt="3b8e0fee-f3a5-40fd-a077-67cf9ff30e4c" style="zoom:50%;">
-
-
-
-
+<img src="assets/001.png" title="" alt="001" style="zoom:67%;">
 
 #### 安装教程
 
