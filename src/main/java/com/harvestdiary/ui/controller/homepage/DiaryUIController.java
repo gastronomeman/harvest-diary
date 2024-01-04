@@ -115,7 +115,8 @@ public class DiaryUIController {
     @FXML
     void saveAll(MouseEvent event) {
         if (userStatus.getLocalLogin()){
-            showAlert("\t非常抱歉,本地用户不能使用云端，\t已经为你存入本地.");
+            showAlert("\t非常抱歉,本地用户不能使用云端。");
+            return;
         }
         saveDiary(event);
         HttpResponse response = HttpRequest.post(Poetry.API + "/diary/write")

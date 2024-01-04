@@ -152,6 +152,7 @@ public class LoginUiController {
 
                         }
                     } catch (Exception e) {
+                        log.info("", e);
                         showAlert("网络连接异常");
                     }
                 });
@@ -203,6 +204,11 @@ public class LoginUiController {
         if (JSONUtil.parseObj(json).getStr("code").equals("0") && JSONUtil.parseObj(json).getStr("msg").equals("error3")) {
             showAlert("账号密码错误，请重新输入！");
             return false;
+        }else {
+            System.out.println(JSONUtil.parseObj(json).getStr("data"));
+            User u = JSONUtil.toBean(JSONUtil.parseObj(json).getStr("data"), User.class);
+
+            OperationalDocument.saveFile("sUser.json", JSONUtil.toJsonStr(u));
         }
 
 
@@ -221,12 +227,7 @@ public class LoginUiController {
         OperationalDocument.saveFile("userStatus.json", json);
 
 
-        if (!localhost.isSelected()) {
-            User user = new User();
-            user.setUserId(userNumber.getText());
-            user.setPassword(password.getText());
-            OperationalDocument.saveFile("sUser.json", JSONUtil.toJsonStr(user));
-        }
+
     }
 
     @FXML

@@ -308,7 +308,7 @@ public class SettingUIController {
     }
 
     private void delServerUser(User u) throws Exception {
-        if (!u.getUserId().equals(user.getUserId()) && u.getPassword().equals(user.getPassword())) {
+        if (!u.equals(user)) {
             showAlert("填写信息错误");
             return;
         }

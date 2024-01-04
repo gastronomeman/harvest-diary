@@ -15,6 +15,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 public class OperationalDocument {
@@ -131,14 +132,19 @@ public class OperationalDocument {
     public static List<String> readDiaries(String userId, Boolean local) {
         //List<>
         List<String> list = FileUtil.listFileNames(folderPath + "\\diary");
-
+        List<String> filteredList = new ArrayList<>();
         if (local) {
-            list.removeIf(s -> !s.startsWith(userId) && !s.endsWith("Local"));
+            filteredList = list.stream()
+                    .filter(s -> s.matches(userId + "\\d{4}-\\d{2}-\\d{2}" + "Local"))
+                    .toList();
+
         } else {
-            list.removeIf(s -> !s.startsWith(userId) && s.endsWith("Local"));
+            filteredList = list.stream()
+                    .filter(s -> s.matches(userId + "\\d{4}-\\d{2}-\\d{2}")) // 匹配 q + yyyy-MM-dd 格式
+                    .toList();
         }
 
 
-        return list;
+        return filteredList;
     }
 }
