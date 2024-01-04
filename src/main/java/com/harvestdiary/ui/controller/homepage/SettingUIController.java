@@ -10,6 +10,8 @@ import com.harvestdiary.pojo.Diary;
 import com.harvestdiary.pojo.Poetry;
 import com.harvestdiary.pojo.User;
 import com.harvestdiary.pojo.UserStatus;
+import com.harvestdiary.ui.HomePage;
+import com.harvestdiary.ui.Login;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXToggleButton;
@@ -21,6 +23,7 @@ import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 import lombok.extern.slf4j.Slf4j;
 import org.kordamp.ikonli.antdesignicons.AntDesignIconsOutlined;
 
@@ -237,27 +240,127 @@ public class SettingUIController {
 
     }
 
+    @FXML
+    void delUser(MouseEvent event) {
+        if (!showAlert("确定注销用户！")) return;
+
+        User u = new User();
+        u.setUserId(userNumber.getText());
+        u.setUsername(username.getText());
+        u.setPassword(password.getText());
+        u.setPhone(phone.getText());
+
+        if (checkIsEmpty()) {
+            showAlert("输入框四项不能为空！");
+            return;
+        }
+
+        if (userStatus.getLocalLogin()) {
+            Platform.runLater(() -> {
+                try {
+                    delLocalUser(u);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            });
+        }else {
+            Platform.runLater(() -> {
+                try {
+                    delServerUser(u);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            });
+        }
+
+
+    }
+
+
+
+    private Boolean checkIsEmpty() {
+        return userNumber.getText().isEmpty() || username.getText().isEmpty()
+                || password.getText().isEmpty() || phone.getText().isEmpty();
+
+    }
+
+    private void delLocalUser(User u) throws Exception {
+        if (!u.equals(user)) {
+            showAlert("填写信息错误");
+            return;
+        }
+
+        List<String> list = OperationalDocument.readDiaries(user.getUserId(), true);
+
+        for (String s : list) {
+            OperationalDocument.removeFile("diary\\" + s);
+        }
+
+
+        OperationalDocument.removeFile("weatherAS.json");
+        OperationalDocument.removeFile("userStatus.json");
+        OperationalDocument.removeFile("user.json");
+
+        showAlert("注销用户成功！");
+
+        HomePage.getMainDiaryUiStage().close();
+        new Login().start(new Stage());
+    }
+
+    private void delServerUser(User u) throws Exception {
+        if (!u.getUserId().equals(user.getUserId()) && u.getPassword().equals(user.getPassword())) {
+            showAlert("填写信息错误");
+            return;
+        }
+
+        String temp = JSONUtil.toJsonStr(u);
+        try {
+            HttpResponse response = HttpRequest.post(Poetry.API + "/user/delUser")
+                    .header("Content-Type", "application/json")
+                    .body(temp)
+                    .execute();
+
+            String json = response.body();
+            json = JSONUtil.parseObj(json).getStr("code");
+
+            if (json.equals("1")) {
+                showAlert("用户注销成功！");
+            }
+
+            temp = "";
+        } catch (Exception e) {
+            log.info("用户注销失败");
+        } finally {
+            if (!temp.isEmpty()) {
+                showAlert("网络不好，请稍后尝试");
+            }
+        }
+
+        List<String> list = OperationalDocument.readDiaries(user.getUserId(), false);
+
+        for (String s : list) {
+            OperationalDocument.removeFile("diary\\" + s);
+        }
+
+        OperationalDocument.removeFile("weatherAS.json");
+        OperationalDocument.removeFile("userStatus.json");
+        OperationalDocument.removeFile("sUser.json");
+
+        HomePage.getMainDiaryUiStage().close();
+        new Login().start(new Stage());
+    }
 
     @FXML
     void copyGitee(MouseEvent event) {
-        Thread thread = new Thread(() -> {
-            Platform.runLater(() -> {
-                // 获取系统剪贴板
-                Clipboard clipboard = Clipboard.getSystemClipboard();
-
-                // 创建 ClipboardContent 对象，用于保存要复制的字符串
-                ClipboardContent content = new ClipboardContent();
-                content.putString("https://gitee.com/gastronome-0_0/harvest-diary");
-
-                // 将 ClipboardContent 对象设置到剪贴板
-                clipboard.setContent(content);
-            });
-        });
-        thread.start();
+        copyUrl("https://gitee.com/gastronome-0_0/harvest-diary");
     }
 
     @FXML
     void copyGithub(MouseEvent event) {
+        copyUrl("https://github.com/gastronomeman/harvest-diary.git");
+    }
+
+    private void copyUrl(String s) {
         Thread thread = new Thread(() -> {
             Platform.runLater(() -> {
                 // 获取系统剪贴板
@@ -265,7 +368,7 @@ public class SettingUIController {
 
                 // 创建 ClipboardContent 对象，用于保存要复制的字符串
                 ClipboardContent content = new ClipboardContent();
-                content.putString("https://github.com/gastronomeman/harvest-diary.git");
+                content.putString(s);
 
                 // 将 ClipboardContent 对象设置到剪贴板
                 clipboard.setContent(content);

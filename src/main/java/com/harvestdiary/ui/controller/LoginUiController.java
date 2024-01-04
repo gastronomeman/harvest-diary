@@ -72,7 +72,7 @@ public class LoginUiController {
         avatar.setClip(clip);
         userStatus = new UserStatus("1", false, false, false);
         //获取数据赋值到bean类
-        if (OperationalDocument.existFile("userStatus.json")){
+        if (OperationalDocument.existFile("userStatus.json")) {
             userStatus = JSONUtil.toBean(OperationalDocument.readFile("userStatus.json"), UserStatus.class);
         }
         //核对数据进行设置
@@ -82,7 +82,8 @@ public class LoginUiController {
             userNumber.setText(user.getUserId());
             password.setText(user.getPassword());
             rememberPw.setSelected(true);
-        }if (userStatus.getRememberPw() && !userStatus.getLocalLogin()){
+        }
+        if (userStatus.getRememberPw() && !userStatus.getLocalLogin()) {
             User user = JSONUtil.toBean(OperationalDocument.readFile("sUser.json"), User.class);
             userNumber.setText(user.getUserId());
             password.setText(user.getPassword());
@@ -93,18 +94,18 @@ public class LoginUiController {
             autoLogin.setSelected(true);
             Thread thread = new Thread(() -> {
                 Platform.runLater(() -> {
-                    Login.getLoginUiStage().close();
                     try {
-                        new HomePage().start(new Stage());
+                        changeMain(null);
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
+
                 });
             });
             thread.start();
         }
         //本地登录
-        if (userStatus.getLocalLogin()){
+        if (userStatus.getLocalLogin()) {
             localhost.setSelected(true);
         }
     }
@@ -136,26 +137,28 @@ public class LoginUiController {
                 new HomePage().start(new Stage());
                 return;
             }
-        }
-        //线上登录
-        Thread thread = new Thread(() -> {
-            Platform.runLater(() -> {
-                try {
-                    if (serverLogin()) {
+        }else {
+            //线上登录
+            Thread thread = new Thread(() -> {
+                Platform.runLater(() -> {
+                    try {
+                        if (serverLogin()) {
 
-                        setLocalLogin();
+                            setLocalLogin();
 
-                        Login.getLoginUiStage().close();
+                            Login.getLoginUiStage().close();
 
-                        new HomePage().start(new Stage());
+                            new HomePage().start(new Stage());
 
+                        }
+                    } catch (Exception e) {
+                        showAlert("网络连接异常");
                     }
-                } catch (Exception e) {
-                    showAlert("网络连接异常");
-                }
+                });
             });
-        });
-        thread.start();
+            thread.start();
+        }
+
     }
 
     //本地登录
@@ -168,6 +171,7 @@ public class LoginUiController {
             showAlert("暂无本地用户");
             return false;
         }
+
         User user = JSONUtil.toBean(OperationalDocument.readFile("user.json"), User.class);
         System.out.println(user);
 
@@ -201,6 +205,7 @@ public class LoginUiController {
             return false;
         }
 
+
         return JSONUtil.parseObj(json).getStr("code").equals("1");
     }
 
@@ -228,7 +233,10 @@ public class LoginUiController {
     void localhost(MouseEvent event) {
         userNumber.setText("");
         password.setText("");
+        rememberPw.setSelected(false);
+        autoLogin.setSelected(false);
     }
+
     private void showAlert(String s) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("提示");

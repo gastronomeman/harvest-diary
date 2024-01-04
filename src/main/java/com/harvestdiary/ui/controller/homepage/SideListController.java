@@ -81,43 +81,79 @@ public class SideListController {
     }
 
 
-
     @FXML
     void home(MouseEvent event) throws IOException {
-        Parent homeUI = FXMLLoader.load(
-                Objects.requireNonNull(HomePage.class.getClassLoader().getResource("fxml/homepage/HomeUI.fxml"))
-        );
-        switchUi(homeUI, home);
+        Platform.runLater(() -> {
+            Parent homeUI = null;
+            try {
+                homeUI = FXMLLoader.load(
+                        Objects.requireNonNull(HomePage.class.getClassLoader().getResource("fxml/homepage/HomeUI.fxml"))
+                );
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            switchUi(homeUI, home);
+        });
+
     }
 
     @FXML
     void calendar(MouseEvent event) throws IOException {
-        Parent calendarUI = FXMLLoader.load(
-                Objects.requireNonNull(HomePage.class.getClassLoader().getResource("fxml/homepage/CalendarUI.fxml"))
-        );
-        switchUi(calendarUI, calendar);
+        Platform.runLater(() -> {
+            Parent calendarUI = null;
+            try {
+                calendarUI = FXMLLoader.load(
+                        Objects.requireNonNull(HomePage.class.getClassLoader().getResource("fxml/homepage/CalendarUI.fxml"))
+                );
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            switchUi(calendarUI, calendar);
+        });
+
+
     }
 
     @FXML
     void diary(MouseEvent event) throws IOException {
-        Parent diaryUI = FXMLLoader.load(
-                Objects.requireNonNull(HomePage.class.getClassLoader().getResource("fxml/homepage/DiaryUi.fxml"))
-        );
-        switchUi(diaryUI, diary);
+        Platform.runLater(() -> {
+            Parent diaryUI = null;
+            try {
+                diaryUI = FXMLLoader.load(
+                        Objects.requireNonNull(HomePage.class.getClassLoader().getResource("fxml/homepage/DiaryUi.fxml"))
+                );
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            switchUi(diaryUI, diary);
+        });
+
+
     }
 
     @FXML
     void setting(MouseEvent event) throws IOException {
-        Parent settingUI = FXMLLoader.load(
-                Objects.requireNonNull(HomePage.class.getClassLoader().getResource("fxml/homepage/SettingUI.fxml"))
-        );
-        switchUi(settingUI, setting);
+        Platform.runLater(() -> {
+            Parent settingUI = null;
+            try {
+                settingUI = FXMLLoader.load(
+                        Objects.requireNonNull(HomePage.class.getClassLoader().getResource("fxml/homepage/SettingUI.fxml"))
+                );
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            switchUi(settingUI, setting);
+        });
+
+
     }
 
     private void switchUi(Parent settingUI, JFXButton setting) {
         HBox root = (HBox) HomePage.getMainDiaryUiStage().getScene().getRoot();
+
         Thread thread = new Thread(() -> {
             Platform.runLater(() -> {
+                root.requestFocus();
                 root.getChildren().remove(1);
                 root.getChildren().add(settingUI);
                 choseButton(setting);

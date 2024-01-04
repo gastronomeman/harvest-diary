@@ -26,6 +26,12 @@ public class OperationalDocument {
     private static final String folderPath = FileUtil.normalize(Paths.get(rootPath, folderName).toString());
 
 
+    /**
+     * 加密工具
+     *
+     * @param content
+     * @return
+     */
     public static String encryptionString(String content) {
         // 创建AES加密工具
         SymmetricCrypto aes = new SymmetricCrypto(SymmetricAlgorithm.AES, Poetry.XinLuNan);
@@ -36,6 +42,7 @@ public class OperationalDocument {
 
         return content;
     }
+
 
     public static void saveDir(String fileName) {
         // 创建文件夹（如果不存在）
@@ -80,7 +87,15 @@ public class OperationalDocument {
         // 构造文件路径
         Path filePath = Paths.get(folderPath, fileName);
 
+        System.out.println(filePath);
+
         return FileUtil.del(filePath);
+    }
+
+    public static void replace(String oldStr, String newStr, String fileName) {
+        String s = OperationalDocument.readFile(fileName);
+        s = s.replace(oldStr, newStr);
+        OperationalDocument.saveFile(fileName, s);
     }
 
     public static String readFile(String fileName) {
@@ -106,14 +121,8 @@ public class OperationalDocument {
         return FileUtil.exist(FileUtil.file(folderPath, fileName));
     }
 
-    public static void replace(String oldStr, String newStr, String fileName) {
-        String s = OperationalDocument.readFile(fileName);
-        s = s.replace(oldStr, newStr);
-        OperationalDocument.saveFile(fileName, s);
-    }
-
     public static String readDiary(String fileName) {
-        if (existFile("\\diary\\" + fileName)){
+        if (existFile("\\diary\\" + fileName)) {
             return readFile("\\diary\\" + fileName);
         }
         return null;
@@ -123,12 +132,11 @@ public class OperationalDocument {
         //List<>
         List<String> list = FileUtil.listFileNames(folderPath + "\\diary");
 
-        if (local){
+        if (local) {
             list.removeIf(s -> !s.startsWith(userId) && !s.endsWith("Local"));
-        }else {
+        } else {
             list.removeIf(s -> !s.startsWith(userId) && s.endsWith("Local"));
         }
-
 
 
         return list;

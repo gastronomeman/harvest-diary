@@ -178,7 +178,7 @@
                         </HBox>
                         <HBox alignment="BOTTOM_CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2">
                             <children>
-                                <JFXButton fx:id="delUser" prefHeight="40.0" prefWidth="120.0" style="-fx-background-radius: 25; -fx-border-radius: 25; -fx-border-color: linear-gradient(to bottom RIGHT, #FAD9C2, #F3AC9E); -fx-background-color: rgba(150, 150, 150, 0.2);" text="确认注销账户" />
+                                <JFXButton fx:id="delUser" onMouseClicked="#delUser" prefHeight="40.0" prefWidth="120.0" style="-fx-background-radius: 25; -fx-border-radius: 25; -fx-border-color: linear-gradient(to bottom RIGHT, #FAD9C2, #F3AC9E); -fx-background-color: rgba(150, 150, 150, 0.2);" text="确认注销账户" />
                             </children>
                         </HBox>
                     </children>
