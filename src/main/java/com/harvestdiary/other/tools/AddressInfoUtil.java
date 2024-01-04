@@ -17,7 +17,7 @@ public class AddressInfoUtil {
       APP_SECRET:1v0kRyednMC1WqzVo85Wwxb5ZsFXUMEm
        */
     //获取用户IP地址
-    public static String getAddressCity(){
+    public static String getAddressCity() {
         // 使用一个提供公网 IP 查询服务的接口
         String url = "https://www.mxnzp.com/api/ip/self?app_id=lpkspetfes0fjqxy&app_secret=wmb1HNJlPExNsUIsT6NHM1yFt9qaBywZ";
         String ipAddress = HttpUtil.get(url);
@@ -28,7 +28,7 @@ public class AddressInfoUtil {
     }
 
     //获取用户所在地天气
-    public static void getAddressWeather(){
+    public static void getAddressWeather() {
         WeatherAS weatherAS = new WeatherAS();
         try {
             String url = "https://www.mxnzp.com/api/weather/current/" + getAddressCity() + "?app_id=yd8hjgswgpjhmnfv&app_secret=1v0kRyednMC1WqzVo85Wwxb5ZsFXUMEm";
@@ -44,16 +44,14 @@ public class AddressInfoUtil {
                 weatherAS.setWind(data.getStr("windDirection") + "风 " + data.getStr("windPower"));
                 OperationalDocument.saveFile("weatherAS.json", JSONUtil.toJsonStr(weatherAS));
             }
-        }catch (Exception e){
-             log.info(String.valueOf(e));
-        }finally {
-            if (!OperationalDocument.existFile("weatherAS.json")){
+        } catch (Exception e) {
+            log.info(String.valueOf(e));
+        } finally {
+            if (!OperationalDocument.existFile("weatherAS.json")) {
                 weatherAS = new WeatherAS(String.valueOf(LocalDate.now()), "...", "...", "...");
                 OperationalDocument.saveFile("weatherAS.json", JSONUtil.toJsonStr(weatherAS));
             }
         }
-
-
 
     }
 
