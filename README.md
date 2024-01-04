@@ -8,7 +8,7 @@
 
 软件架构如下：
 
-<img title="" src="assets/001.png" alt="001" style="zoom:15%;">
+<img title="" src="assets/001.png" alt="001" style="zoom:45%;">
 
 #### 安装教程
 
