@@ -119,8 +119,18 @@ public class OperationalDocument {
         return null;
     }
 
-    public static ArrayList<String> readDiaries(String fileName, Boolean local) {
+    public static List<String> readDiaries(String userId, Boolean local) {
         //List<>
-        return (ArrayList<String>) StrUtil.split(readFile(fileName), ';');
+        List<String> list = FileUtil.listFileNames(folderPath + "\\diary");
+
+        if (local){
+            list.removeIf(s -> !s.startsWith(userId) && !s.endsWith("Local"));
+        }else {
+            list.removeIf(s -> !s.startsWith(userId) && s.endsWith("Local"));
+        }
+
+
+
+        return list;
     }
 }

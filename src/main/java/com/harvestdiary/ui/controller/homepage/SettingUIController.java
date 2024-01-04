@@ -166,7 +166,7 @@ public class SettingUIController {
             return;
         }
 
-        List<String> list = OperationalDocument.readDiaries(user.getUserId());
+        List<String> list = OperationalDocument.readDiaries(user.getUserId(), false);
         List<Diary> diaryList = new ArrayList<>();
 
         for (String s : list) {
@@ -200,7 +200,6 @@ public class SettingUIController {
     }
 
 
-
     @FXML
     void downLoad(MouseEvent event) {
         if (userStatus.getLocalLogin()) {
@@ -209,7 +208,7 @@ public class SettingUIController {
         }
         String userId = user.getUserId();
         try {
-            HttpResponse response = HttpRequest.post(Poetry.API + "/diary/setDiary")
+            HttpResponse response = HttpRequest.post(Poetry.API + "/diary/getDiary")
                     .header("Content-Type", "application/json")
                     .body(userId)
                     .execute();
@@ -217,12 +216,16 @@ public class SettingUIController {
             String json = response.body();
 
             if (JSONUtil.parseObj(json).getStr("code").equals("1")) {
-                showAlert("数据上传成功！");
+                showAlert("日记下载成功！");
             }
 
             String data = JSONUtil.parseObj(json).getStr("data");
             List<Diary> list = JSONUtil.toList(JSONUtil.parseArray(data), Diary.class);
-            System.out.println(list);
+
+            for (Diary diary : list) {
+                OperationalDocument.writeDiary(diary.getUserId() + diary.getTime(), JSONUtil.toJsonStr(diary));
+            }
+
             userId = "";
         } catch (Exception e) {
             log.info("删除云端失败");
