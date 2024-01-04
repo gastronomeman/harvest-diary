@@ -162,7 +162,7 @@ public class DiaryUIController {
         }else if (showAlert("是否确认保存")){
             OperationalDocument.writeDiary(diary.getUserId() + diary.getTime(), JSONUtil.toJsonStr(diary));
         }
-        RecordMarker.CheckFolder();
+//        RecordMarker.CheckFolder();
 
     }
     @FXML

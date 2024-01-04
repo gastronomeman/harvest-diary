@@ -95,38 +95,38 @@ public class RecordMarker {
         }
     }
 
-    public static void CheckFolder (){
-//        找到存放数据的位置
-        String folderPath="HarvestDiary/diary";
-        File folder=new File(folderPath);
-
-//        如果目录下有日记记录，则对他进行解码，如果没有则跳出
-        if (folder.exists() && folder.isDirectory()){
-            File[] files=folder.listFiles();
-            if (files !=null && files.length>0){
-                for (int i=0;i< files.length;i++){
-//                    String a= "\""+ files[i].getName();
-                    String a=files[i].getName();
-                    String DiaryName= OperationalDocument.readFile("\\diary\\" + a);
-                    String[] SplitOrigin=DiaryName.split(",");
-                    String timeOrigin=SplitOrigin[1];
-                    String titleOrigin=SplitOrigin[4];
-
-                    String[]titleSplit=titleOrigin.split(":");
-                    String[] timesplit1=timeOrigin.split(":");
-
-                    String titleFinal=titleSplit[1].substring(1,titleSplit[1].length()-1);
-                    String timeSub=timesplit1[1].substring(1,timesplit1[1].length()-1);
-
-                    String[] timeFinal=RecordMarker.decoding(timeSub.split("-"));
-                    RecordMarker r1=new RecordMarker(titleFinal,timeFinal[2],timeFinal[1],timeFinal[0],"0xffffffff",true,false);
-
-//                    将当前的日记内容创建后之后，进行一次判断，如果原有记录里面已经有这样一模一样的内容了，就不写入了
-                    r1.addRecordToFile();
-                }
-            }
-        }
-    }
+//    public static void CheckFolder (){
+////        找到存放数据的位置
+//        String folderPath="HarvestDiary/diary";
+//        File folder=new File(folderPath);
+//
+////        如果目录下有日记记录，则对他进行解码，如果没有则跳出
+//        if (folder.exists() && folder.isDirectory()){
+//            File[] files=folder.listFiles();
+//            if (files !=null && files.length>0){
+//                for (int i=0;i< files.length;i++){
+////                    String a= "\""+ files[i].getName();
+//                    String a=files[i].getName();
+//                    String DiaryName= OperationalDocument.readFile("\\diary\\" + a);
+//                    String[] SplitOrigin=DiaryName.split(",");
+//                    String timeOrigin=SplitOrigin[1];
+//                    String titleOrigin=SplitOrigin[4];
+//
+//                    String[]titleSplit=titleOrigin.split(":");
+//                    String[] timesplit1=timeOrigin.split(":");
+//
+//                    String titleFinal=titleSplit[1].substring(1,titleSplit[1].length()-1);
+//                    String timeSub=timesplit1[1].substring(1,timesplit1[1].length()-1);
+//
+//                    String[] timeFinal=RecordMarker.decoding(timeSub.split("-"));
+//                    RecordMarker r1=new RecordMarker(titleFinal,timeFinal[2],timeFinal[1],timeFinal[0],"0xffffffff",true,false);
+//
+////                    将当前的日记内容创建后之后，进行一次判断，如果原有记录里面已经有这样一模一样的内容了，就不写入了
+//                    r1.addRecordToFile();
+//                }
+//            }
+//        }
+//    }
 
 
 
