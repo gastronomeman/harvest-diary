@@ -177,8 +177,8 @@ public class DiaryUIController {
         hm.put(" 凤信紫", "#c8adc4");
         backgroundColor.getItems().add(" 水红");  //#f1c4cd
         hm.put(" 水红", "#f1c4cd");
-        backgroundColor.getItems().add(" 鲸鱼灰");//#f1c4cd
-        hm.put(" 鲸鱼灰", "#f1c4cd");
+        backgroundColor.getItems().add(" 鲸鱼灰");//#475164
+        hm.put(" 鲸鱼灰", "#475164");
         backgroundColor.getItems().add(" 星蓝");  //#93b5cf
         hm.put(" 星蓝", "#93b5cf");
         backgroundColor.getItems().add(" 湖水蓝");//#b0d5df
