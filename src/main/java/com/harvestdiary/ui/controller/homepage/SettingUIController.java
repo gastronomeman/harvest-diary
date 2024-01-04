@@ -263,7 +263,7 @@ public class SettingUIController {
                     throw new RuntimeException(e);
                 }
             });
-        }else {
+        } else {
             Platform.runLater(() -> {
                 try {
                     delServerUser(u);
@@ -275,7 +275,6 @@ public class SettingUIController {
 
 
     }
-
 
 
     private Boolean checkIsEmpty() {
@@ -351,6 +350,20 @@ public class SettingUIController {
     }
 
     @FXML
+    void cleanAll(MouseEvent event) {
+        if (clean1.isSelected() && clean2.isSelected() && clean3.isSelected()) {
+            if (showAlert("确定去除全部本地的数据吗？")) {
+                OperationalDocument.removeAll();
+            }
+        } else {
+            clean1.setSelected(false);
+            clean2.setSelected(false);
+            clean3.setSelected(false);
+        }
+
+    }
+
+    @FXML
     void copyGitee(MouseEvent event) {
         copyUrl("https://gitee.com/gastronome-0_0/harvest-diary");
     }
@@ -361,27 +374,28 @@ public class SettingUIController {
     }
 
     private void copyUrl(String s) {
-        Thread thread = new Thread(() -> {
-            Platform.runLater(() -> {
-                // 获取系统剪贴板
-                Clipboard clipboard = Clipboard.getSystemClipboard();
 
-                // 创建 ClipboardContent 对象，用于保存要复制的字符串
-                ClipboardContent content = new ClipboardContent();
-                content.putString(s);
+        Platform.runLater(() -> {
+            // 获取系统剪贴板
+            Clipboard clipboard = Clipboard.getSystemClipboard();
 
-                // 将 ClipboardContent 对象设置到剪贴板
-                clipboard.setContent(content);
-            });
+            // 创建 ClipboardContent 对象，用于保存要复制的字符串
+            ClipboardContent content = new ClipboardContent();
+            content.putString(s);
+
+            // 将 ClipboardContent 对象设置到剪贴板
+            clipboard.setContent(content);
         });
-        thread.start();
+
     }
 
     private void setButtonStyle() {
         datePicker.setValue(LocalDate.now());
         delDiary.setGraphic(SettingFontIcon.setSizeAndColor(AntDesignIconsOutlined.DELETE, 15, Color.web("#617172")));
+
         upLoad.setGraphic(SettingFontIcon.setSizeAndColor(AntDesignIconsOutlined.CLOUD_UPLOAD, 22, Color.web("#617172")));
         downLoad.setGraphic(SettingFontIcon.setSizeAndColor(AntDesignIconsOutlined.CLOUD_DOWNLOAD, 22, Color.web("#617172")));
+
         delUser.setGraphic(SettingFontIcon.setSizeAndColor(AntDesignIconsOutlined.LOGOUT, 20, Color.web("#617172")));
         cleanAll.setGraphic(SettingFontIcon.setSizeAndColor(AntDesignIconsOutlined.CLEAR, 20, Color.web("#617172")));
         github.setGraphic(SettingFontIcon.setSizeAndColor(AntDesignIconsOutlined.GITHUB, 20, Color.web("#617172")));

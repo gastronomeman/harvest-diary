@@ -216,7 +216,7 @@
                         <JFXToggleButton fx:id="clean3" text="确认清空数据？" toggleColor="WHITE" />
                     </children>
                 </HBox>
-                <JFXButton fx:id="cleanAll" prefHeight="50.0" prefWidth="165.0" style="-fx-background-radius: 25; -fx-border-radius: 25; -fx-border-color: linear-gradient(to bottom RIGHT, #FAD9C2, #F3AC9E); -fx-background-color: rgba(150, 150, 150, 0.2);" text="确定清空数据！！！">
+                <JFXButton fx:id="cleanAll" onMouseClicked="#cleanAll" prefHeight="50.0" prefWidth="165.0" style="-fx-background-radius: 25; -fx-border-radius: 25; -fx-border-color: linear-gradient(to bottom RIGHT, #FAD9C2, #F3AC9E); -fx-background-color: rgba(150, 150, 150, 0.2);" text="确定清空数据！！！">
                     <VBox.margin>
                         <Insets top="10.0" />
                     </VBox.margin>

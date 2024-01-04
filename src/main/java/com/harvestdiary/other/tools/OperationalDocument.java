@@ -4,7 +4,6 @@ import cn.hutool.core.codec.Base64;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.file.FileReader;
 import cn.hutool.core.io.file.FileWriter;
-import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.symmetric.SymmetricAlgorithm;
 import cn.hutool.crypto.symmetric.SymmetricCrypto;
 import com.harvestdiary.pojo.Poetry;
@@ -15,7 +14,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Slf4j
 public class OperationalDocument {
@@ -92,7 +90,9 @@ public class OperationalDocument {
 
         return FileUtil.del(filePath);
     }
-
+    public static void removeAll(){
+        FileUtil.del(folderPath);
+    }
     public static void replace(String oldStr, String newStr, String fileName) {
         String s = OperationalDocument.readFile(fileName);
         s = s.replace(oldStr, newStr);
