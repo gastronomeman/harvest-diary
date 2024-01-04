@@ -16,7 +16,6 @@ public class RecordMarker {
     String color;
     boolean diary;
     boolean todo;
-    DiaryMarker diaryName;
 
     public RecordMarker(String name, String day, String month, String year, String color, boolean diary, boolean todo) {
         this.name = name;
