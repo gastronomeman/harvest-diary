@@ -12,14 +12,28 @@
 
 #### 安装教程
 
-1. xxxx
-2. xxxx
-3. xxxx
+- 配置好Maven的依赖
+  
+  <img title="" src="assets/002.jpg" alt="002" style="zoom:67%;">
+
+- 先配置好yml文件的端口，避免端口冲突
+  
+  <img title="" src="assets/003.jpg" alt="003" style="zoom:67%;">
+  
+  ```yml
+  #修改启动端口号
+  server:
+    port: 8090
+  ```
 
 #### 使用说明
 
-1. xxxx
+1. 启动HarvestDiaryApplication.java
+   
+   <img title="" src="assets/004.jpg" alt="004" style="zoom:67%;">
+
 2. xxxx
+
 3. xxxx
 
 #### 参与贡献
@@ -37,3 +51,15 @@
 4. [GVP](https://gitee.com/gvp) 全称是 Gitee 最有价值开源项目，是综合评定出的优秀开源项目
 5. Gitee 官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
 6. Gitee 封面人物是一档用来展示 Gitee 会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+
+

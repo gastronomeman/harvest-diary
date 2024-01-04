@@ -8,11 +8,7 @@ import java.io.IOException;
 
 @SpringBootApplication
 public class HarvestDiaryApplication {
-	public static void main(String[] args) throws IOException {
-		/*if (!OperationalDocument.existFile("userStatus.json")){
-			UserStatus status = new UserStatus();
-			OperationalDocument.saveFile("userStatus.json", JSONUtil.toJsonStr(status));
-		}*/
+	public static void main(String[] args) {
 		SpringApplication.run(HarvestDiaryApplication.class, args);
 		Login.main(args);
 	}
