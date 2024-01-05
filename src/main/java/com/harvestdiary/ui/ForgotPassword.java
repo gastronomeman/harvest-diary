@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import lombok.Getter;
 
@@ -24,7 +25,7 @@ public class ForgotPassword extends Application {
         );
 
         stage.setTitle("忘记密码");
-
+        stage.getIcons().add(new Image("/image/kls.png"));
         Scene scene = new Scene(root);
         scene.getRoot().requestFocus();
         stage.setScene(scene);

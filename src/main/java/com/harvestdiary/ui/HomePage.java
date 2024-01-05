@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import lombok.Getter;
@@ -33,7 +34,7 @@ public class HomePage extends Application {
         hbox.setPrefWidth(800);
         hbox.setPrefHeight(500);
         hbox.getChildren().addAll(sideList, homeUI);
-
+        stage.getIcons().add(new Image("/image/kls.png"));
         Scene scene = new Scene(hbox);
         scene.getRoot().requestFocus();
         stage.setScene(scene);

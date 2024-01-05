@@ -5,6 +5,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import lombok.Getter;
 
@@ -24,7 +25,7 @@ public class Register extends Application {
         Parent root = FXMLLoader.load(
                 Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/registerUI.fxml"))
         );
-
+        stage.getIcons().add(new Image("/image/kls.png"));
         stage.setTitle("注册");
         Scene scene = new Scene(root);
         scene.getRoot().requestFocus();
