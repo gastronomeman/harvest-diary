@@ -100,10 +100,11 @@ public class SettingUIController {
             if (!delDiaryTip()) {
                 return;
             }
-            delDiary(fileName);
             if (!userStatus.getLocalLogin()) {
                 delCouldDiary(fileName);
             }
+            delDiary(fileName);
+
         } else {
             showAlert("日记不存在，请重新选择");
         }
