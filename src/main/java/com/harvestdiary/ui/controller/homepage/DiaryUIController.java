@@ -3,10 +3,7 @@ package com.harvestdiary.ui.controller.homepage;
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
 import cn.hutool.json.JSONUtil;
-import com.harvestdiary.other.tools.HttpUtil;
-import com.harvestdiary.other.tools.OperationalDocument;
-import com.harvestdiary.other.tools.RecordMarker;
-import com.harvestdiary.other.tools.SettingFontIcon;
+import com.harvestdiary.other.tools.*;
 import com.harvestdiary.pojo.Diary;
 import com.harvestdiary.pojo.Poetry;
 import com.harvestdiary.pojo.UserStatus;
@@ -275,13 +272,6 @@ public class DiaryUIController {
         }
     }
     private boolean showAlert(String s) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("提示");
-        alert.setHeaderText("请查看警告：注意！注意！注意！");
-        alert.setContentText(s);
-
-        // 显示提示框并等待用户响应
-        Optional<ButtonType> result = alert.showAndWait();
-        return result.isPresent() && result.get() == ButtonType.OK;
+        return ShowAlert.confirmationAlert(s);
     }
 }

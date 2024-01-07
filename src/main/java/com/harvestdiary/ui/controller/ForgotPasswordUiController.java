@@ -3,12 +3,9 @@ package com.harvestdiary.ui.controller;
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
 import cn.hutool.json.JSONUtil;
-import com.harvestdiary.other.tools.HttpUtil;
+import com.harvestdiary.other.tools.*;
 import com.harvestdiary.ui.ForgotPassword;
 import com.harvestdiary.ui.Login;
-import com.harvestdiary.other.tools.Captcha;
-import com.harvestdiary.other.tools.OperationalDocument;
-import com.harvestdiary.other.tools.SettingFontIcon;
 import com.harvestdiary.pojo.Poetry;
 import com.harvestdiary.pojo.User;
 import com.jfoenix.controls.JFXButton;
@@ -184,12 +181,6 @@ public class ForgotPasswordUiController {
         return JSONUtil.parseObj(json).getStr("code").equals("1");
     }
     private void showAlert(String s) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("提示");
-        alert.setHeaderText("验证成功");
-        alert.setContentText(s);
-
-        // 显示提示框并等待用户响应
-        alert.showAndWait();
+        ShowAlert.informationAlert("验证成功", s);
     }
 }

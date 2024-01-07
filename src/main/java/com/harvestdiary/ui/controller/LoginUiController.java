@@ -4,6 +4,7 @@ import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
 import cn.hutool.json.JSONUtil;
 import com.harvestdiary.other.tools.HttpUtil;
+import com.harvestdiary.other.tools.ShowAlert;
 import com.harvestdiary.ui.ForgotPassword;
 import com.harvestdiary.ui.Login;
 import com.harvestdiary.ui.HomePage;
@@ -237,12 +238,6 @@ public class LoginUiController {
     }
 
     private void showAlert(String s) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("提示");
-        alert.setHeaderText(s);
-        alert.setContentText("\t要在页面选上本地登录的按钮方可以不需要联网进行操作,\n软件只能有一个本地用户。");
-
-        // 显示提示框并等待用户响应
-        alert.showAndWait();
+        ShowAlert.informationAlert(s, "\t要在页面选上本地登录的按钮方可以不需要联网进行操作,\n软件只能有一个本地用户。");
     }
 }
