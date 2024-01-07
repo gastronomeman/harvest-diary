@@ -3,6 +3,7 @@ package com.harvestdiary.ui.controller;
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
 import cn.hutool.json.JSONUtil;
+import com.harvestdiary.other.tools.HttpUtil;
 import com.harvestdiary.ui.Login;
 import com.harvestdiary.ui.Register;
 import com.harvestdiary.other.tools.Captcha;
@@ -226,15 +227,10 @@ public class RegisterUiController {
             user.setPassword(password.getText());
             user.setPhone(phone.getText());
 
-            // 使用Hutool将JavaBean转换为JSON字符串
-            String jsonString = JSONUtil.toJsonStr(user);
+
             //发送POST连接
-            HttpResponse response = HttpRequest.post(Poetry.API + "/user/register")
-                    .header("Content-Type", "application/json")
-                    .body(JSONUtil.toJsonStr(user))
-                    .execute();
             //提取出JSON数据
-            String json = response.body();
+            String json = HttpUtil.httpResponse("/user/register", JSONUtil.toJsonStr(user));;
 
             //连接数据库进行判断
             if (JSONUtil.parseObj(json).getStr("code").equals("0")){
