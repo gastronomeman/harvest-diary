@@ -3,6 +3,7 @@ package com.harvestdiary.ui.controller;
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
 import cn.hutool.json.JSONUtil;
+import com.harvestdiary.other.tools.HttpUtil;
 import com.harvestdiary.ui.ForgotPassword;
 import com.harvestdiary.ui.Login;
 import com.harvestdiary.ui.HomePage;
@@ -194,12 +195,9 @@ public class LoginUiController {
         User user = new User();
         user.setUserId(userNumber.getText());
         user.setPassword(password.getText());
-        HttpResponse response = HttpRequest.post(Poetry.API + "/user/login")
-                .header("Content-Type", "application/json")
-                .body(JSONUtil.toJsonStr(user))
-                .execute();
+
         //提取出JSON数据
-        String json = response.body();
+        String json = HttpUtil.httpResponse("/user/login", JSONUtil.toJsonStr(user));
 
         if (JSONUtil.parseObj(json).getStr("code").equals("0") && JSONUtil.parseObj(json).getStr("msg").equals("error3")) {
             showAlert("账号密码错误，请重新输入！");

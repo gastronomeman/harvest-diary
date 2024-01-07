@@ -3,6 +3,7 @@ package com.harvestdiary.ui.controller;
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
 import cn.hutool.json.JSONUtil;
+import com.harvestdiary.other.tools.HttpUtil;
 import com.harvestdiary.ui.ForgotPassword;
 import com.harvestdiary.ui.Login;
 import com.harvestdiary.other.tools.Captcha;
@@ -166,12 +167,9 @@ public class ForgotPasswordUiController {
         User user = new User();
         user.setUsername(username.getText());
         user.setPhone(phone.getText());
-        HttpResponse response = HttpRequest.post(Poetry.API + "/user/findPassword")
-                .header("Content-Type", "application/json")
-                .body(JSONUtil.toJsonStr(user))
-                .execute();
 
-        String json = response.body();
+
+        String json = HttpUtil.httpResponse("/user/findPassword", JSONUtil.toJsonStr(user));
 
         if (JSONUtil.parseObj(json).getStr("code").equals("0")){
             showAlert("昵称或电话填写错误，请重新尝试");

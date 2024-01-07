@@ -4,6 +4,7 @@ package com.harvestdiary.ui.controller.homepage;
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
 import cn.hutool.json.JSONUtil;
+import com.harvestdiary.other.tools.HttpUtil;
 import com.harvestdiary.other.tools.OperationalDocument;
 import com.harvestdiary.other.tools.SettingFontIcon;
 import com.harvestdiary.pojo.Diary;
@@ -123,12 +124,11 @@ public class SettingUIController {
         String s = "";
         try {
             Diary diary = JSONUtil.toBean(OperationalDocument.readFile("diary\\" + fileName), Diary.class);
-            HttpResponse response = HttpRequest.post(Poetry.API + "/diary/del")
-                    .header("Content-Type", "application/json")
-                    .body(JSONUtil.toJsonStr(diary))
-                    .execute();
 
-            s = JSONUtil.parseObj(response.body()).getStr("code");
+            s = JSONUtil
+                    .parseObj(HttpUtil.httpResponse("/diary/del", JSONUtil.toJsonStr(diary)))
+                    .getStr("code");
+
         } catch (Exception e) {
             log.info("删除云端失败", e);
         } finally {
@@ -181,12 +181,7 @@ public class SettingUIController {
 
         String temp = JSONUtil.toJsonStr(diaryList);
         try {
-            HttpResponse response = HttpRequest.post(Poetry.API + "/diary/setDiary")
-                    .header("Content-Type", "application/json")
-                    .body(temp)
-                    .execute();
-
-            String json = response.body();
+            String json =  HttpUtil.httpResponse("/diary/setDiary", temp);
             json = JSONUtil.parseObj(json).getStr("code");
 
             if (json.equals("1")) {
@@ -315,12 +310,9 @@ public class SettingUIController {
 
         String temp = JSONUtil.toJsonStr(u);
         try {
-            HttpResponse response = HttpRequest.post(Poetry.API + "/user/delUser")
-                    .header("Content-Type", "application/json")
-                    .body(temp)
-                    .execute();
 
-            String json = response.body();
+            String json = HttpUtil.httpResponse("/user/delUser", temp);
+
             json = JSONUtil.parseObj(json).getStr("code");
 
             if (json.equals("1")) {

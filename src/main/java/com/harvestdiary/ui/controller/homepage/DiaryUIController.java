@@ -3,6 +3,7 @@ package com.harvestdiary.ui.controller.homepage;
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
 import cn.hutool.json.JSONUtil;
+import com.harvestdiary.other.tools.HttpUtil;
 import com.harvestdiary.other.tools.OperationalDocument;
 import com.harvestdiary.other.tools.RecordMarker;
 import com.harvestdiary.other.tools.SettingFontIcon;
@@ -119,10 +120,7 @@ public class DiaryUIController {
             return;
         }
         saveDiary(event);
-        HttpResponse response = HttpRequest.post(Poetry.API + "/diary/write")
-                .header("Content-Type", "application/json")
-                .body(JSONUtil.toJsonStr(diary))
-                .execute();
+        HttpUtil.httpResponse("/diary/write", JSONUtil.toJsonStr(diary));
     }
     @FXML
     void getToMax(MouseEvent event) {
