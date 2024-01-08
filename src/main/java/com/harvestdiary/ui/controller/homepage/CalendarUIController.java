@@ -8,6 +8,10 @@ import de.felixroske.jfxsupport.FXMLController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import lombok.extern.slf4j.Slf4j;
 
 import java.text.DateFormatSymbols;
@@ -24,12 +28,24 @@ public class CalendarUIController {
     private Label month;
     @FXML
     private GridPane calendar;
+    @FXML
+    private Label date;
 
 
     List<Lattice> list = new ArrayList<>();
     @FXML
     public void initialize() {
-        setCalendar(LocalDate.now());
+
+
+        LocalDate today = LocalDate.now();
+        setCalendar(today);
+        int day = today.withDayOfMonth(1).getDayOfWeek().getValue() - 1 + today.getDayOfMonth();
+
+        Lattice lattice = list.get(day);
+        lattice.getDate().setTextFill(Color.RED);
+        lattice.getChineseDate().setTextFill(Color.RED);
+
+
 
     }
 
@@ -62,7 +78,20 @@ public class CalendarUIController {
         int day = firstDayOfMonth.getDayOfWeek().getValue();
         int lastDayOfMonthPlus =  35 - day;
         while (lastDayOfMonthPlus >= count) {
-            setLabelDate(firstDayOfMonth, day);
+            ChineseDate chineseDate = new ChineseDate(firstDayOfMonth);
+            Lattice lattice = list.get(day);
+
+
+            lattice.setDate(firstDayOfMonth.getDayOfMonth() + "");
+            if (SolarTerms.getTerm(chineseDate).isEmpty()) {
+                lattice.setChineseDate(chineseDate.getChineseDay());
+            } else {
+                lattice.setChineseDate(SolarTerms.getTerm(chineseDate));
+            }
+
+            if (count > lastDayOfMonth.getDayOfMonth()){
+                lattice.getStackPane().setOpacity(0.3);
+            }
             firstDayOfMonth = firstDayOfMonth.plusDays(1);
             day++;
             count++;
@@ -73,27 +102,27 @@ public class CalendarUIController {
         for (int i = day - 1; i >= 0; i--) {
             firstDayOfMonth = firstDayOfMonth.minusDays(1);
 
-            setLabelDate(firstDayOfMonth, i);
+            ChineseDate chineseDate = new ChineseDate(firstDayOfMonth);
+
+            Lattice lattice = list.get(i);
+
+            lattice.getStackPane().setOpacity(0.3);
+
+            lattice.setDate(firstDayOfMonth.getDayOfMonth() + "");
+            if (SolarTerms.getTerm(chineseDate).isEmpty()) {
+                lattice.setChineseDate(chineseDate.getChineseDay());
+            } else {
+                lattice.setChineseDate(SolarTerms.getTerm(chineseDate));
+            }
 
         }
 
 
     }
 
-    private void setLabelDate(LocalDate firstDayOfMonth, int i) {
-        ChineseDate chineseDate = new ChineseDate(firstDayOfMonth);
 
-        Lattice lattice = list.get(i);
 
-        lattice.setDate(firstDayOfMonth.getDayOfMonth() + "");
-        if (SolarTerms.getTerm(chineseDate).isEmpty()) {
-            lattice.setChineseDate(chineseDate.getChineseDay());
-        } else {
-            lattice.setChineseDate(SolarTerms.getTerm(chineseDate));
-        }
-    }
-
-    private static String getChineseMonth(int month) {
+    private String getChineseMonth(int month) {
         String[] chineseMonths = new DateFormatSymbols(Locale.CHINA).getMonths();
         return chineseMonths[month - 1];
     }

@@ -6,7 +6,6 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,6 +13,7 @@ import lombok.Setter;
 public class Lattice {
     @Setter
     private StackPane stackPane;
+    private final VBox vBox;
     private final Label date;
     private final Label chineseDate;
     @Setter
@@ -22,7 +22,7 @@ public class Lattice {
     public Lattice(){
         stackPane = new StackPane();
 
-        VBox vBox = new VBox();
+        vBox = new VBox();
         vBox.setAlignment(javafx.geometry.Pos.CENTER);
         vBox.setMaxHeight(50.0);
         vBox.setMaxWidth(50.0);
@@ -37,11 +37,12 @@ public class Lattice {
         chineseDate.setFont(Font.font(14));
 
         jfxButton = new JFXButton(" ");
-        jfxButton.setPrefHeight(80.0);
-        jfxButton.setPrefWidth(80.0);
+        jfxButton.setPrefHeight(77.0);
+        jfxButton.setPrefWidth(77.0);
+
         jfxButton.setStyle
-                ("-fx-background-radius: 20;" +
-                        "-fx-border-radius: 20");
+                ("-fx-background-radius: 50;" +
+                        "-fx-border-radius: 50");
 
 
         vBox.getChildren().addAll(date, chineseDate);
