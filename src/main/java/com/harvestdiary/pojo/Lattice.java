@@ -8,16 +8,22 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
+
+import java.time.LocalDate;
 
 @Getter
+@ToString
 public class Lattice {
     @Setter
+    private LocalDate localDate;
+    @Setter
     private StackPane stackPane;
+    @Setter
+    private JFXButton jfxButton;
     private final VBox vBox;
     private final Label date;
     private final Label chineseDate;
-    @Setter
-    private JFXButton jfxButton;
 
     public Lattice(){
         stackPane = new StackPane();

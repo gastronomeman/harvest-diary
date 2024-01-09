@@ -66,8 +66,6 @@ public class DiaryUIController {
         //给日记类设置格式为yyyy-MM-dd
         datePicker.setConverter(dateFormatter());
 
-        backToToday.setGraphic(SettingFontIcon.setSizeAndColor(AntDesignIconsOutlined.RELOAD, 14, Color.web("#617172")));
-
         //获取选项卡里面的键值
         HashMap<String, String> hm = setComboBoxItems();
 
@@ -200,6 +198,7 @@ public class DiaryUIController {
     }
     //设置按钮的图标
     private void setIcon() {
+        backToToday.setGraphic(SettingFontIcon.setSizeAndColor(AntDesignIconsOutlined.RELOAD, 14, Color.web("#617172")));
         amplify.setGraphic(SettingFontIcon.setSizeAndColor(AntDesignIconsOutlined.ZOOM_IN, 20, Color.web("#617172")));
         reduce.setGraphic(SettingFontIcon.setSizeAndColor(AntDesignIconsOutlined.ZOOM_OUT, 20, Color.web("#617172")));
         clear.setGraphic(SettingFontIcon.setSizeAndColor(AntDesignIconsOutlined.CLEAR, 20, Color.web("#617172")));
