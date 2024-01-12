@@ -39,14 +39,13 @@ public class CalendarUIController {
 
 
     List<Lattice> list = new ArrayList<>();
+    LocalDate checkDate = LocalDate.now();
     @FXML
     public void initialize() {
-        backToToday.setGraphic(SettingFontIcon.setSizeAndColor(AntDesignIconsOutlined.RELOAD, 14, Color.web("#617172")));
-        prev.setGraphic(SettingFontIcon.setSizeAndColor(AntDesignIconsOutlined.CARET_LEFT, 18, Color.web("#617172")));
-        next.setGraphic(SettingFontIcon.setSizeAndColor(AntDesignIconsOutlined.CARET_RIGHT, 18, Color.web("#617172")));
+        setIcon();
 
-        setCalendar();
-        setCalendarEvent();
+        setCalendar(checkDate);
+
 
 
     }
@@ -54,48 +53,71 @@ public class CalendarUIController {
     @FXML
     void backToToday(MouseEvent event) {
         resettingCalendar();
-        toRedLattice(list.get(findToday()));
+        checkDate = LocalDate.now();
+        setCalendar(checkDate);
     }
 
-    private void setCalendarEvent() {
-        for (Lattice lattice : list) {
-            lattice.getJfxButton().setOnAction(event -> {
-                resettingCalendar();
-                lattice.getDate().setTextFill(Color.RED);
-                lattice.getChineseDate().setTextFill(Color.RED);
-                toRedLattice(lattice);
-            });
-        }
-    }
+    private void setCalendar(LocalDate today) {
+        clearCalender();
 
-
-    private void resettingCalendar() {
-        for (Lattice lattice : list) {
-            lattice.getDate().setTextFill(Color.BLACK);
-            lattice.getChineseDate().setTextFill(Color.BLACK);
-        }
-    }
-
-    private void setCalendar() {
-        LocalDate today = LocalDate.now();
         // 添加按钮到每个格子
         // 添加Button到每个格子
         int count = 0;
         for (int row = 1; row < 6; row++) {
             for (int col = 0; col < 7; col++) {
                 list.add(new Lattice());
+
                 calendar.add(list.get(count).getStackPane(), col, row);
                 count++;
             }
         }
         getTime(today);
 
+        int day = today.withDayOfMonth(1).getDayOfWeek().getValue() - 1 + today.getDayOfMonth();
+        if (day < 35){
+            toRedLattice(list.get(day));
+        }
 
-        toRedLattice(list.get(findToday()));
+
+        setCalendarEvent();
     }
-    private int findToday(){
-        LocalDate today = LocalDate.now();
-        return today.withDayOfMonth(1).getDayOfWeek().getValue() - 1 + today.getDayOfMonth();
+    private void setCalendarEvent() {
+        for (Lattice lattice : list) {
+            lattice.getJfxButton().setOnAction(event -> {
+                toRedLattice(lattice);
+                if (checkMonth(lattice)){
+                    log.info("这个月：{}", lattice.getLocalDate());
+                    resettingCalendar();
+                    lattice.getDate().setTextFill(Color.RED);
+                    lattice.getChineseDate().setTextFill(Color.RED);
+                }else {
+                    log.info("{}", lattice.getLocalDate());
+                    clearCalender();
+                    setCalendar(lattice.getLocalDate());
+                }
+            });
+        }
+    }
+    private Boolean checkMonth(Lattice lattice){
+        LocalDate day = lattice.getLocalDate();
+        if (day.getMonthValue() == checkDate.getMonthValue()){
+            checkDate = day;
+            return true;
+        }
+        checkDate = day;
+        return false;
+    }
+    private void resettingCalendar() {
+        for (Lattice lattice : list) {
+            lattice.getDate().setTextFill(Color.BLACK);
+            lattice.getChineseDate().setTextFill(Color.BLACK);
+        }
+    }
+    private void clearCalender(){
+        for (Lattice lattice : list) {
+            calendar.getChildren().remove(lattice.getStackPane());
+        }
+        list.clear();
     }
     private void toRedLattice(Lattice lattice) {
         lattice.getDate().setTextFill(Color.RED);
@@ -164,5 +186,9 @@ public class CalendarUIController {
         String[] chineseMonths = new DateFormatSymbols(Locale.CHINA).getMonths();
         return chineseMonths[month - 1];
     }
-
+    private void setIcon(){
+        backToToday.setGraphic(SettingFontIcon.setSizeAndColor(AntDesignIconsOutlined.RELOAD, 14, Color.web("#617172")));
+        prev.setGraphic(SettingFontIcon.setSizeAndColor(AntDesignIconsOutlined.CARET_LEFT, 18, Color.web("#617172")));
+        next.setGraphic(SettingFontIcon.setSizeAndColor(AntDesignIconsOutlined.CARET_RIGHT, 18, Color.web("#617172")));
+    }
 }
