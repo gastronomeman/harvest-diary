@@ -30,10 +30,10 @@ public class Lattice {
 
         vBox = new VBox();
         vBox.setAlignment(javafx.geometry.Pos.CENTER);
-        vBox.setMaxHeight(50.0);
-        vBox.setMaxWidth(50.0);
-        vBox.setPrefHeight(50.0);
-        vBox.setPrefWidth(50.0);
+        vBox.setMaxHeight(77.0);
+        vBox.setMaxWidth(77.0);
+        vBox.setPrefHeight(77.0);
+        vBox.setPrefWidth(77.0);
 
         date = new Label("Label");
         date.setFont(Font.font(14));

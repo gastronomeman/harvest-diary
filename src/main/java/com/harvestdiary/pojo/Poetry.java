@@ -13,6 +13,6 @@ public class Poetry {
 
 
     //API接口地址http://50b179dc.r16.vip.cpolar.cn
-    public final static String API = "http://localhost:8080";
+    public final static String API = "https://d7561a8.r10.cpolar.top";
 
 }

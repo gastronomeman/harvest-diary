@@ -56,6 +56,18 @@ public class CalendarUIController {
         checkDate = LocalDate.now();
         setCalendar(checkDate);
     }
+    @FXML
+    void prev(MouseEvent event) {
+        checkDate = checkDate.minusMonths(1).withDayOfMonth(1);
+        setCalendar(checkDate);
+    }
+    @FXML
+    void next(MouseEvent event) {
+        checkDate = checkDate.plusMonths(1).withDayOfMonth(1);
+        setCalendar(checkDate);
+    }
+
+
 
     private void setCalendar(LocalDate today) {
         clearCalender();
@@ -72,12 +84,13 @@ public class CalendarUIController {
             }
         }
         getTime(today);
-
-        int day = today.withDayOfMonth(1).getDayOfWeek().getValue() - 1 + today.getDayOfMonth();
+        int temp = today.getDayOfWeek().getValue() == 7 ?
+                0 : today.getDayOfWeek().getValue();
+        int day = temp - 1 + today.getDayOfMonth();
+        log.info("{}", day);
         if (day < 35){
             toRedLattice(list.get(day));
         }
-
 
         setCalendarEvent();
     }
@@ -135,8 +148,11 @@ public class CalendarUIController {
 
         // 循环从第一天到最后一天
         int count = 1;
-        int day = firstDayOfMonth.getDayOfWeek().getValue();
+        int day = firstDayOfMonth.getDayOfWeek().getValue() == 7 ?
+                0 : firstDayOfMonth.getDayOfWeek().getValue();
         int lastDayOfMonthPlus =  35 - day;
+
+
         while (lastDayOfMonthPlus >= count) {
             ChineseDate chineseDate = new ChineseDate(firstDayOfMonth);
             Lattice lattice = list.get(day);
@@ -159,7 +175,9 @@ public class CalendarUIController {
         }
 
         firstDayOfMonth = currentDate.withDayOfMonth(1);
-        day = firstDayOfMonth.getDayOfWeek().getValue();
+        day = firstDayOfMonth.getDayOfWeek().getValue() == 7 ?
+                0 : firstDayOfMonth.getDayOfWeek().getValue();
+
         for (int i = day - 1; i >= 0; i--) {
             firstDayOfMonth = firstDayOfMonth.minusDays(1);
 

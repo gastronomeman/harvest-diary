@@ -29,14 +29,14 @@
                         <Insets left="10.0" />
                      </HBox.margin>
                   </JFXButton>
-                  <JFXButton fx:id="prev" contentDisplay="CENTER" graphicTextGap="0.0" prefWidth="25.0" style="-fx-background-color: rgba(255, 255, 255, 0.4); -fx-background-radius: 25; -fx-border-color: linear-gradient(to bottom RIGHT, #FAD9C2, #F3AC9E); -fx-border-radius: 25;" text=" ">
+                  <JFXButton fx:id="prev" contentDisplay="CENTER" graphicTextGap="0.0" onMouseClicked="#prev" prefWidth="30.0" style="-fx-background-color: rgba(255, 255, 255, 0.4); -fx-background-radius: 25; -fx-border-color: linear-gradient(to bottom RIGHT, #FAD9C2, #F3AC9E); -fx-border-radius: 25;" text=" ">
                      <HBox.margin>
-                        <Insets left="5.0" />
+                        <Insets left="10.0" />
                      </HBox.margin>
                   </JFXButton>
-                  <JFXButton fx:id="next" contentDisplay="CENTER" graphicTextGap="0.0" prefWidth="25.0" style="-fx-background-color: rgba(255, 255, 255, 0.4); -fx-background-radius: 25; -fx-border-color: linear-gradient(to bottom RIGHT, #FAD9C2, #F3AC9E); -fx-border-radius: 25;" text=" ">
+                  <JFXButton fx:id="next" contentDisplay="CENTER" graphicTextGap="0.0" onMouseClicked="#next" prefWidth="30.0" style="-fx-background-color: rgba(255, 255, 255, 0.4); -fx-background-radius: 25; -fx-border-color: linear-gradient(to bottom RIGHT, #FAD9C2, #F3AC9E); -fx-border-radius: 25;" text=" ">
                      <HBox.margin>
-                        <Insets left="5.0" />
+                        <Insets left="10.0" />
                      </HBox.margin>
                   </JFXButton>
                </children>
