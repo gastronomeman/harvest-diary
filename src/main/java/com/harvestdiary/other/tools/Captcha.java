@@ -11,6 +11,9 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
+/**
+ * 随机生成五位数的验证码
+ */
 @Getter
 public class Captcha {
     private String code;
