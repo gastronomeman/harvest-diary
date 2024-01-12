@@ -1,6 +1,7 @@
 package com.harvestdiary.ui;
 
 
+import com.harvestdiary.other.tools.SettingFontIcon;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -25,7 +26,8 @@ public class Register extends Application {
         Parent root = FXMLLoader.load(
                 Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/registerUI.fxml"))
         );
-        stage.getIcons().add(new Image("/image/kls.png"));
+
+        SettingFontIcon.setStageIcon(stage);
         stage.setTitle("注册");
         Scene scene = new Scene(root);
         scene.getRoot().requestFocus();

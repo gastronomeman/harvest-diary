@@ -1,6 +1,8 @@
 package com.harvestdiary.other.tools;
 
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 import org.kordamp.ikonli.Ikon;
 import org.kordamp.ikonli.javafx.FontIcon;
 
@@ -15,5 +17,9 @@ public class SettingFontIcon {
         FontIcon fontIcon = new FontIcon(icon);
         fontIcon.setIconColor(color);
         return fontIcon;
+    }
+    public static Stage setStageIcon(Stage stage){
+        stage.getIcons().add(new Image("/image/kls.png"));
+        return stage;
     }
 }

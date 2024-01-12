@@ -1,5 +1,6 @@
 package com.harvestdiary.ui;
 
+import com.harvestdiary.other.tools.SettingFontIcon;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -34,7 +35,7 @@ public class HomePage extends Application {
         hbox.setPrefWidth(800);
         hbox.setPrefHeight(500);
         hbox.getChildren().addAll(sideList, homeUI);
-        stage.getIcons().add(new Image("/image/kls.png"));
+        SettingFontIcon.setStageIcon(stage);
         Scene scene = new Scene(hbox);
         scene.getRoot().requestFocus();
         stage.setScene(scene);
