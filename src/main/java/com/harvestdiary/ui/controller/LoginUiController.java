@@ -1,28 +1,26 @@
 package com.harvestdiary.ui.controller;
 
-import cn.hutool.http.HttpRequest;
-import cn.hutool.http.HttpResponse;
 import cn.hutool.json.JSONUtil;
 import com.harvestdiary.other.tools.HttpUtil;
-import com.harvestdiary.other.tools.ShowAlert;
-import com.harvestdiary.ui.ForgotPassword;
-import com.harvestdiary.ui.Login;
-import com.harvestdiary.ui.HomePage;
-import com.harvestdiary.ui.Register;
 import com.harvestdiary.other.tools.OperationalDocument;
-import com.harvestdiary.pojo.Poetry;
+import com.harvestdiary.other.tools.ShowAlert;
 import com.harvestdiary.pojo.User;
 import com.harvestdiary.pojo.UserStatus;
+import com.harvestdiary.ui.ForgotPassword;
+import com.harvestdiary.ui.HomePage;
+import com.harvestdiary.ui.Login;
+import com.harvestdiary.ui.Register;
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXToggleButton;
 import de.felixroske.jfxsupport.FXMLController;
-import com.jfoenix.controls.JFXCheckBox;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
@@ -127,7 +125,12 @@ public class LoginUiController {
         Login.getLoginUiStage().close();
         new ForgotPassword().start(new Stage());
     }
-
+    @FXML
+    void login(KeyEvent event) throws Exception {
+        if (event.getCode() == KeyCode.ENTER) {
+            changeMain(null);
+        }
+    }
     @FXML
     void changeMain(MouseEvent event) throws Exception {
         //本地登录
@@ -163,6 +166,8 @@ public class LoginUiController {
         }
 
     }
+
+
 
     //本地登录
     private boolean localLogin() {

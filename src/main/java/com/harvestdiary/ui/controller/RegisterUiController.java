@@ -17,6 +17,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -114,7 +116,12 @@ public class RegisterUiController {
             }
         }
     }
-
+    @FXML
+    void register(KeyEvent event) throws Exception {
+        if (event.getCode() == KeyCode.ENTER) {
+            changeUi(null);
+        }
+    }
     @FXML//登陆成功，切换到登陆界面
     void changeUi(MouseEvent event) throws Exception {
         if (filterUser()){
@@ -151,6 +158,7 @@ public class RegisterUiController {
         }
 
     }
+
 
     @FXML//退出注册页面
     void exitUi(MouseEvent event) throws Exception {
@@ -246,6 +254,7 @@ public class RegisterUiController {
         }
         return true;
     }
+
 
     //弹窗
     private void showAlert(String s) {
